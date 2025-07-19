@@ -3,1001 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Répétiteur de Mathématiques - Première D</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f0f9ff;
-        }
-        
-        .math-formula {
-            font-family: 'Times New Roman', serif;
-        }
-        
-        .solution {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-        }
-        
-        .solution.show {
-            max-height: 1000px;
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        .progress-bar {
-            transition: width 0.5s ease;
-        }
-    </style>
-</head>
-<body>
-    <div class="min-h-screen flex flex-col">
-        <!-- Header -->
-        <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
-            <div class="container mx-auto px-4 py-6">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="flex items-center mb-4 md:mb-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                        </svg>
-                        <h1 class="text-2xl md:text-3xl font-bold">MathExcel Cameroun</h1>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <span class="hidden md:inline text-sm">Programme:</span>
-                        <span class="bg-white text-blue-800 font-semibold px-3 py-1 rounded-full text-sm">Première D</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="flex-grow container mx-auto px-4 py-8">
-            <!-- Tabs -->
-            <div class="mb-6 bg-white rounded-xl shadow-md overflow-hidden">
-                <div class="flex flex-wrap text-sm font-medium text-center border-b">
-                    <button class="tab-button flex-grow py-4 px-2 md:px-6 focus:outline-none active" data-tab="algebre">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                        </svg>
-                        Algèbre
-                    </button>
-                    <button class="tab-button flex-grow py-4 px-2 md:px-6 focus:outline-none" data-tab="analyse">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-                        </svg>
-                        Analyse
-                    </button>
-                    <button class="tab-button flex-grow py-4 px-2 md:px-6 focus:outline-none" data-tab="geometrie">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
-                        </svg>
-                        Géométrie
-                    </button>
-                    <button class="tab-button flex-grow py-4 px-2 md:px-6 focus:outline-none" data-tab="probabilites">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-                        </svg>
-                        Probabilités
-                    </button>
-                </div>
-            </div>
-
-            <!-- Tab Contents -->
-            <div class="tab-content active" id="algebre">
-                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold text-blue-800 mb-4">Équations du Second Degré</h2>
-                        <p class="mb-4">Résoudre une équation du second degré de la forme ax² + bx + c = 0 en utilisant le discriminant.</p>
-                        
-                        <div class="bg-blue-50 p-4 rounded-lg mb-6">
-                            <h3 class="font-semibold text-blue-800 mb-2">Formule du discriminant</h3>
-                            <p class="math-formula text-lg mb-2">Δ = b² - 4ac</p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>Si Δ > 0, l'équation admet deux solutions réelles distinctes</li>
-                                <li>Si Δ = 0, l'équation admet une solution réelle double</li>
-                                <li>Si Δ < 0, l'équation n'admet pas de solution réelle</li>
-                            </ul>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-lg mb-6">
-                            <div class="bg-gray-50 p-4 border-b">
-                                <h3 class="font-semibold">Exemple 1</h3>
-                                <p class="math-formula">Résoudre l'équation : 2x² - 5x + 2 = 0</p>
-                            </div>
-                            <div class="p-4">
-                                <div class="mb-4">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Calculez le discriminant :</label>
-                                    <div class="flex">
-                                        <input type="text" id="discriminant1" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse...">
-                                        <button onclick="checkDiscriminant(1)" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
-                                    </div>
-                                    <p id="discriminant1-feedback" class="mt-1 text-sm"></p>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <button onclick="toggleSolution(1)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Voir la solution complète
-                                    </button>
-                                    <div id="solution1" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                        <p class="mb-2"><strong>Étape 1:</strong> Identifions les coefficients</p>
-                                        <p class="math-formula mb-2">a = 2, b = -5, c = 2</p>
-                                        
-                                        <p class="mb-2"><strong>Étape 2:</strong> Calculons le discriminant</p>
-                                        <p class="math-formula mb-2">Δ = b² - 4ac = (-5)² - 4 × 2 × 2 = 25 - 16 = 9</p>
-                                        
-                                        <p class="mb-2"><strong>Étape 3:</strong> Comme Δ > 0, l'équation admet deux solutions réelles distinctes</p>
-                                        <p class="math-formula mb-2">x₁ = (-b - √Δ) / 2a = (5 - 3) / 4 = 2/4 = 0,5</p>
-                                        <p class="math-formula mb-2">x₂ = (-b + √Δ) / 2a = (5 + 3) / 4 = 8/4 = 2</p>
-                                        
-                                        <p class="font-semibold">Les solutions sont donc x₁ = 0,5 et x₂ = 2</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-lg">
-                            <div class="bg-gray-50 p-4 border-b">
-                                <h3 class="font-semibold">Exemple 2</h3>
-                                <p class="math-formula">Résoudre l'équation : 3x² + 6x + 3 = 0</p>
-                            </div>
-                            <div class="p-4">
-                                <div class="mb-4">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Calculez le discriminant :</label>
-                                    <div class="flex">
-                                        <input type="text" id="discriminant2" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse...">
-                                        <button onclick="checkDiscriminant(2)" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
-                                    </div>
-                                    <p id="discriminant2-feedback" class="mt-1 text-sm"></p>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <button onclick="toggleSolution(2)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Voir la solution complète
-                                    </button>
-                                    <div id="solution2" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                        <p class="mb-2"><strong>Étape 1:</strong> Identifions les coefficients</p>
-                                        <p class="math-formula mb-2">a = 3, b = 6, c = 3</p>
-                                        
-                                        <p class="mb-2"><strong>Étape 2:</strong> Calculons le discriminant</p>
-                                        <p class="math-formula mb-2">Δ = b² - 4ac = 6² - 4 × 3 × 3 = 36 - 36 = 0</p>
-                                        
-                                        <p class="mb-2"><strong>Étape 3:</strong> Comme Δ = 0, l'équation admet une solution réelle double</p>
-                                        <p class="math-formula mb-2">x = -b / 2a = -6 / (2 × 3) = -6/6 = -1</p>
-                                        
-                                        <p class="font-semibold">La solution est donc x = -1 (solution double)</p>
-                                        
-                                        <p class="mt-2 text-sm text-gray-600">On peut aussi factoriser : 3x² + 6x + 3 = 3(x² + 2x + 1) = 3(x + 1)²</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold text-blue-800 mb-4">Exercices à faire</h2>
-                        
-                        <div class="space-y-6">
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <p class="font-medium mb-2">Exercice 1: Résoudre les équations suivantes</p>
-                                <ol class="list-decimal pl-5 space-y-2">
-                                    <li>x² - 4x + 4 = 0</li>
-                                    <li>2x² + 5x - 3 = 0</li>
-                                    <li>-x² + 2x - 1 = 0</li>
-                                </ol>
-                                <button onclick="toggleSolution(3)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    Voir les solutions
-                                </button>
-                                <div id="solution3" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                    <div class="mb-3">
-                                        <p class="font-medium">1. x² - 4x + 4 = 0</p>
-                                        <p>a = 1, b = -4, c = 4</p>
-                                        <p>Δ = b² - 4ac = (-4)² - 4 × 1 × 4 = 16 - 16 = 0</p>
-                                        <p>Δ = 0, donc une solution double : x = -b/(2a) = 4/2 = 2</p>
-                                        <p class="font-semibold">Solution : x = 2 (double)</p>
-                                    </div>
-                                    
-                                    <div class="mb-3">
-                                        <p class="font-medium">2. 2x² + 5x - 3 = 0</p>
-                                        <p>a = 2, b = 5, c = -3</p>
-                                        <p>Δ = b² - 4ac = 5² - 4 × 2 × (-3) = 25 + 24 = 49</p>
-                                        <p>Δ > 0, donc deux solutions réelles :</p>
-                                        <p>x₁ = (-b - √Δ)/(2a) = (-5 - 7)/(2×2) = -12/4 = -3</p>
-                                        <p>x₂ = (-b + √Δ)/(2a) = (-5 + 7)/(2×2) = 2/4 = 0,5</p>
-                                        <p class="font-semibold">Solutions : x₁ = -3 et x₂ = 0,5</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <p class="font-medium">3. -x² + 2x - 1 = 0</p>
-                                        <p>a = -1, b = 2, c = -1</p>
-                                        <p>Δ = b² - 4ac = 2² - 4 × (-1) × (-1) = 4 - 4 = 0</p>
-                                        <p>Δ = 0, donc une solution double : x = -b/(2a) = -2/(-2) = 1</p>
-                                        <p class="font-semibold">Solution : x = 1 (double)</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <p class="font-medium mb-2">Exercice 2: Factoriser les expressions suivantes</p>
-                                <ol class="list-decimal pl-5 space-y-2">
-                                    <li>x² - 9</li>
-                                    <li>4x² - 12x + 9</li>
-                                    <li>x² + 6x + 9</li>
-                                </ol>
-                                <button onclick="toggleSolution(4)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    Voir les solutions
-                                </button>
-                                <div id="solution4" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                    <div class="mb-3">
-                                        <p class="font-medium">1. x² - 9</p>
-                                        <p>C'est une différence de carrés : a² - b² = (a+b)(a-b)</p>
-                                        <p>x² - 9 = x² - 3² = (x+3)(x-3)</p>
-                                    </div>
-                                    
-                                    <div class="mb-3">
-                                        <p class="font-medium">2. 4x² - 12x + 9</p>
-                                        <p>On peut factoriser par 1 : 4x² - 12x + 9 = 4(x² - 3x) + 9</p>
-                                        <p>Mais on peut aussi reconnaître un carré parfait :</p>
-                                        <p>4x² - 12x + 9 = (2x)² - 2(2x)(3) + 3²</p>
-                                        <p>= (2x - 3)²</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <p class="font-medium">3. x² + 6x + 9</p>
-                                        <p>On reconnaît un carré parfait : x² + 6x + 9 = x² + 2(x)(3) + 3²</p>
-                                        <p>= (x + 3)²</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-content" id="analyse">
-                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold text-blue-800 mb-4">Limites et Continuité</h2>
-                        
-                        <div class="bg-blue-50 p-4 rounded-lg mb-6">
-                            <h3 class="font-semibold text-blue-800 mb-2">Règles de calcul des limites</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>lim(x→a) [f(x) + g(x)] = lim(x→a) f(x) + lim(x→a) g(x)</li>
-                                <li>lim(x→a) [f(x) × g(x)] = lim(x→a) f(x) × lim(x→a) g(x)</li>
-                                <li>lim(x→a) [f(x) / g(x)] = lim(x→a) f(x) / lim(x→a) g(x), si lim(x→a) g(x) ≠ 0</li>
-                                <li>lim(x→+∞) (1/x) = 0</li>
-                                <li>lim(x→+∞) (x^n) = +∞ pour n > 0</li>
-                            </ul>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-lg mb-6">
-                            <div class="bg-gray-50 p-4 border-b">
-                                <h3 class="font-semibold">Exemple 1</h3>
-                                <p class="math-formula">Calculer la limite de f(x) = (3x² - 2x + 1) / (x² + 4) quand x tend vers +∞</p>
-                            </div>
-                            <div class="p-4">
-                                <div class="mb-4">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Quelle est la limite ?</label>
-                                    <div class="flex">
-                                        <input type="text" id="limite1" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse...">
-                                        <button onclick="checkLimite(1)" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
-                                    </div>
-                                    <p id="limite1-feedback" class="mt-1 text-sm"></p>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <button onclick="toggleSolution(5)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Voir la solution complète
-                                    </button>
-                                    <div id="solution5" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                        <p class="mb-2"><strong>Méthode:</strong> Pour calculer la limite d'une fraction rationnelle quand x tend vers l'infini, on divise le numérateur et le dénominateur par la plus grande puissance de x.</p>
-                                        
-                                        <p class="math-formula mb-2">f(x) = (3x² - 2x + 1) / (x² + 4)</p>
-                                        
-                                        <p class="mb-2">Divisons par x² (la plus grande puissance) :</p>
-                                        <p class="math-formula mb-2">f(x) = (3 - 2/x + 1/x²) / (1 + 4/x²)</p>
-                                        
-                                        <p class="mb-2">Quand x tend vers +∞ :</p>
-                                        <p class="math-formula mb-2">lim(x→+∞) (2/x) = 0</p>
-                                        <p class="math-formula mb-2">lim(x→+∞) (1/x²) = 0</p>
-                                        <p class="math-formula mb-2">lim(x→+∞) (4/x²) = 0</p>
-                                        
-                                        <p class="mb-2">Donc :</p>
-                                        <p class="math-formula mb-2">lim(x→+∞) f(x) = (3 - 0 + 0) / (1 + 0) = 3/1 = 3</p>
-                                        
-                                        <p class="font-semibold">La limite est 3</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-lg">
-                            <div class="bg-gray-50 p-4 border-b">
-                                <h3 class="font-semibold">Exemple 2</h3>
-                                <p class="math-formula">Étudier la continuité de la fonction f définie par :</p>
-                                <p class="math-formula">f(x) = { (x² - 4) / (x - 2) si x ≠ 2</p>
-                                <p class="math-formula">        { 4 si x = 2</p>
-                            </div>
-                            <div class="p-4">
-                                <div class="mb-4">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">La fonction est-elle continue en x = 2 ?</label>
-                                    <div class="flex space-x-4">
-                                        <button onclick="checkContinuite('oui')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Oui</button>
-                                        <button onclick="checkContinuite('non')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Non</button>
-                                    </div>
-                                    <p id="continuite-feedback" class="mt-1 text-sm"></p>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <button onclick="toggleSolution(6)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Voir la solution complète
-                                    </button>
-                                    <div id="solution6" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                        <p class="mb-2"><strong>Méthode:</strong> Pour étudier la continuité en x = 2, nous devons vérifier si la limite de f(x) quand x tend vers 2 est égale à f(2).</p>
-                                        
-                                        <p class="mb-2">Calculons la limite de f(x) quand x tend vers 2 :</p>
-                                        <p class="math-formula mb-2">lim(x→2) f(x) = lim(x→2) (x² - 4) / (x - 2)</p>
-                                        <p class="math-formula mb-2">= lim(x→2) ((x - 2)(x + 2)) / (x - 2)</p>
-                                        <p class="math-formula mb-2">= lim(x→2) (x + 2) = 2 + 2 = 4</p>
-                                        
-                                        <p class="mb-2">Or, f(2) = 4 d'après la définition de la fonction.</p>
-                                        
-                                        <p class="mb-2">Donc, lim(x→2) f(x) = f(2) = 4</p>
-                                        
-                                        <p class="font-semibold">La fonction est continue en x = 2.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold text-blue-800 mb-4">Exercices à faire</h2>
-                        
-                        <div class="space-y-6">
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <p class="font-medium mb-2">Exercice 1: Calculer les limites suivantes</p>
-                                <ol class="list-decimal pl-5 space-y-2">
-                                    <li>lim(x→+∞) (2x³ + x) / (x³ - 5x² + 1)</li>
-                                    <li>lim(x→0) (sin(x)) / x</li>
-                                    <li>lim(x→1) (x² - 1) / (x - 1)</li>
-                                </ol>
-                                <button onclick="toggleSolution(7)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    Voir les solutions
-                                </button>
-                                <div id="solution7" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                    <div class="mb-3">
-                                        <p class="font-medium">1. lim(x→+∞) (2x³ + x) / (x³ - 5x² + 1)</p>
-                                        <p>Divisons par x³ (plus haute puissance) :</p>
-                                        <p>(2x³ + x) / (x³ - 5x² + 1) = (2 + 1/x²) / (1 - 5/x + 1/x³)</p>
-                                        <p>Quand x→+∞, 1/x², 5/x et 1/x³ tendent vers 0</p>
-                                        <p>Donc lim(x→+∞) (2x³ + x) / (x³ - 5x² + 1) = 2/1 = 2</p>
-                                    </div>
-                                    
-                                    <div class="mb-3">
-                                        <p class="font-medium">2. lim(x→0) (sin(x)) / x</p>
-                                        <p>C'est une limite fondamentale : lim(x→0) (sin(x)) / x = 1</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <p class="font-medium">3. lim(x→1) (x² - 1) / (x - 1)</p>
-                                        <p>Factorisons le numérateur :</p>
-                                        <p>(x² - 1) / (x - 1) = ((x - 1)(x + 1)) / (x - 1) = x + 1</p>
-                                        <p>Donc lim(x→1) (x² - 1) / (x - 1) = 1 + 1 = 2</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <p class="font-medium mb-2">Exercice 2: Étudier la continuité des fonctions suivantes</p>
-                                <ol class="list-decimal pl-5 space-y-2">
-                                    <li>f(x) = { (x² - 1) / (x - 1) si x ≠ 1</li>
-                                    <li style="margin-left: 20px;">{ 3 si x = 1</li>
-                                    <li>g(x) = { x² si x ≤ 0</li>
-                                    <li style="margin-left: 20px;">{ 2x + 1 si x > 0</li>
-                                </ol>
-                                <button onclick="toggleSolution(8)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    Voir les solutions
-                                </button>
-                                <div id="solution8" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                    <div class="mb-3">
-                                        <p class="font-medium">1. Fonction f</p>
-                                        <p>Pour x ≠ 1 : f(x) = (x² - 1) / (x - 1) = (x - 1)(x + 1) / (x - 1) = x + 1</p>
-                                        <p>Donc lim(x→1) f(x) = 1 + 1 = 2</p>
-                                        <p>Or f(1) = 3</p>
-                                        <p>Comme lim(x→1) f(x) ≠ f(1), la fonction f n'est pas continue en x = 1</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <p class="font-medium">2. Fonction g</p>
-                                        <p>Calculons les limites à gauche et à droite en x = 0 :</p>
-                                        <p>lim(x→0⁻) g(x) = lim(x→0⁻) x² = 0</p>
-                                        <p>lim(x→0⁺) g(x) = lim(x→0⁺) (2x + 1) = 1</p>
-                                        <p>Comme lim(x→0⁻) g(x) ≠ lim(x→0⁺) g(x), la fonction g n'est pas continue en x = 0</p>
-                                        <p>La fonction g est continue sur ]-∞, 0[ et sur ]0, +∞[</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-content" id="geometrie">
-                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold text-blue-800 mb-4">Géométrie dans l'espace</h2>
-                        
-                        <div class="bg-blue-50 p-4 rounded-lg mb-6">
-                            <h3 class="font-semibold text-blue-800 mb-2">Vecteurs dans l'espace</h3>
-                            <p class="mb-2">Un vecteur dans l'espace est caractérisé par ses trois coordonnées dans un repère orthonormé (O, i, j, k).</p>
-                            <p class="mb-2">Si A(x₁, y₁, z₁) et B(x₂, y₂, z₂) sont deux points de l'espace, alors :</p>
-                            <p class="math-formula mb-2">AB = (x₂ - x₁, y₂ - y₁, z₂ - z₁)</p>
-                            <p class="mb-2">Le produit scalaire de deux vecteurs u(x₁, y₁, z₁) et v(x₂, y₂, z₂) est :</p>
-                            <p class="math-formula">u·v = x₁x₂ + y₁y₂ + z₁z₂</p>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-lg mb-6">
-                            <div class="bg-gray-50 p-4 border-b">
-                                <h3 class="font-semibold">Exemple 1</h3>
-                                <p class="math-formula">Soient les points A(1, 2, 3), B(4, 0, 2) et C(2, 1, 5). Calculer le produit scalaire AB·AC.</p>
-                            </div>
-                            <div class="p-4">
-                                <div class="mb-4">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Calculez AB·AC :</label>
-                                    <div class="flex">
-                                        <input type="text" id="produit-scalaire" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse...">
-                                        <button onclick="checkProduitScalaire()" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
-                                    </div>
-                                    <p id="produit-scalaire-feedback" class="mt-1 text-sm"></p>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <button onclick="toggleSolution(9)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Voir la solution complète
-                                    </button>
-                                    <div id="solution9" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                        <p class="mb-2"><strong>Étape 1:</strong> Calculons les coordonnées des vecteurs AB et AC</p>
-                                        <p class="math-formula mb-2">AB = (4-1, 0-2, 2-3) = (3, -2, -1)</p>
-                                        <p class="math-formula mb-2">AC = (2-1, 1-2, 5-3) = (1, -1, 2)</p>
-                                        
-                                        <p class="mb-2"><strong>Étape 2:</strong> Calculons le produit scalaire AB·AC</p>
-                                        <p class="math-formula mb-2">AB·AC = 3×1 + (-2)×(-1) + (-1)×2</p>
-                                        <p class="math-formula mb-2">= 3 + 2 - 2 = 3</p>
-                                        
-                                        <p class="font-semibold">Le produit scalaire AB·AC = 3</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-lg">
-                            <div class="bg-gray-50 p-4 border-b">
-                                <h3 class="font-semibold">Exemple 2</h3>
-                                <p class="math-formula">Déterminer si les vecteurs u(2, 1, -3) et v(-4, -2, 6) sont colinéaires.</p>
-                            </div>
-                            <div class="p-4">
-                                <div class="mb-4">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Les vecteurs sont-ils colinéaires ?</label>
-                                    <div class="flex space-x-4">
-                                        <button onclick="checkColineaire('oui')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Oui</button>
-                                        <button onclick="checkColineaire('non')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Non</button>
-                                    </div>
-                                    <p id="colineaire-feedback" class="mt-1 text-sm"></p>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <button onclick="toggleSolution(10)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Voir la solution complète
-                                    </button>
-                                    <div id="solution10" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                        <p class="mb-2"><strong>Méthode:</strong> Deux vecteurs u(x₁, y₁, z₁) et v(x₂, y₂, z₂) sont colinéaires s'il existe un réel k tel que v = k×u, c'est-à-dire si x₂ = k×x₁, y₂ = k×y₁ et z₂ = k×z₁.</p>
-                                        
-                                        <p class="mb-2">Vérifions s'il existe un réel k tel que v = k×u :</p>
-                                        <p class="math-formula mb-2">-4 = k×2 ⟹ k = -2</p>
-                                        <p class="math-formula mb-2">-2 = k×1 ⟹ k = -2</p>
-                                        <p class="math-formula mb-2">6 = k×(-3) ⟹ k = -2</p>
-                                        
-                                        <p class="mb-2">On trouve la même valeur k = -2 pour chaque coordonnée, donc v = -2×u.</p>
-                                        
-                                        <p class="font-semibold">Les vecteurs u et v sont colinéaires.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold text-blue-800 mb-4">Exercices à faire</h2>
-                        
-                        <div class="space-y-6">
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <p class="font-medium mb-2">Exercice 1: Produit scalaire et orthogonalité</p>
-                                <p>Soient les vecteurs u(3, -1, 2), v(1, 2, 4) et w(0, 7, -2).</p>
-                                <ol class="list-decimal pl-5 space-y-2">
-                                    <li>Calculer u·v et u·w</li>
-                                    <li>Les vecteurs u et v sont-ils orthogonaux ?</li>
-                                    <li>Les vecteurs u et w sont-ils orthogonaux ?</li>
-                                </ol>
-                                <button onclick="toggleSolution(11)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    Voir les solutions
-                                </button>
-                                <div id="solution11" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                    <div class="mb-3">
-                                        <p class="font-medium">1. Calcul des produits scalaires</p>
-                                        <p>u·v = 3×1 + (-1)×2 + 2×4 = 3 - 2 + 8 = 9</p>
-                                        <p>u·w = 3×0 + (-1)×7 + 2×(-2) = 0 - 7 - 4 = -11</p>
-                                    </div>
-                                    
-                                    <div class="mb-3">
-                                        <p class="font-medium">2. Orthogonalité de u et v</p>
-                                        <p>Deux vecteurs sont orthogonaux si et seulement si leur produit scalaire est nul.</p>
-                                        <p>u·v = 9 ≠ 0, donc les vecteurs u et v ne sont pas orthogonaux.</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <p class="font-medium">3. Orthogonalité de u et w</p>
-                                        <p>u·w = -11 ≠ 0, donc les vecteurs u et w ne sont pas orthogonaux.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <p class="font-medium mb-2">Exercice 2: Équation d'un plan</p>
-                                <p>Soit un plan P passant par le point A(1, 2, -1) et de vecteur normal n(2, 3, 1).</p>
-                                <ol class="list-decimal pl-5 space-y-2">
-                                    <li>Déterminer une équation cartésienne du plan P.</li>
-                                    <li>Le point B(3, -1, 4) appartient-il au plan P ?</li>
-                                </ol>
-                                <button onclick="toggleSolution(12)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    Voir les solutions
-                                </button>
-                                <div id="solution12" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                    <div class="mb-3">
-                                        <p class="font-medium">1. Équation cartésienne du plan</p>
-                                        <p>L'équation cartésienne d'un plan de vecteur normal n(a, b, c) passant par un point A(x₀, y₀, z₀) est :</p>
-                                        <p>a(x - x₀) + b(y - y₀) + c(z - z₀) = 0</p>
-                                        <p>Avec n(2, 3, 1) et A(1, 2, -1) :</p>
-                                        <p>2(x - 1) + 3(y - 2) + 1(z - (-1)) = 0</p>
-                                        <p>2x - 2 + 3y - 6 + z + 1 = 0</p>
-                                        <p>2x + 3y + z - 7 = 0</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <p class="font-medium">2. Appartenance du point B au plan</p>
-                                        <p>Pour vérifier si B(3, -1, 4) appartient au plan, on remplace les coordonnées dans l'équation :</p>
-                                        <p>2×3 + 3×(-1) + 1×4 - 7 = 0</p>
-                                        <p>6 - 3 + 4 - 7 = 0</p>
-                                        <p>0 = 0</p>
-                                        <p>L'égalité est vérifiée, donc le point B appartient au plan P.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-content" id="probabilites">
-                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold text-blue-800 mb-4">Probabilités</h2>
-                        
-                        <div class="bg-blue-50 p-4 rounded-lg mb-6">
-                            <h3 class="font-semibold text-blue-800 mb-2">Formules importantes</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>P(A∪B) = P(A) + P(B) - P(A∩B)</li>
-                                <li>P(A∩B) = P(A) × P(B) si A et B sont indépendants</li>
-                                <li>P(A|B) = P(A∩B) / P(B) (probabilité conditionnelle)</li>
-                                <li>Formule des probabilités totales : P(A) = P(A|B) × P(B) + P(A|B̄) × P(B̄)</li>
-                                <li>Formule de Bayes : P(B|A) = [P(A|B) × P(B)] / P(A)</li>
-                            </ul>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-lg mb-6">
-                            <div class="bg-gray-50 p-4 border-b">
-                                <h3 class="font-semibold">Exemple 1</h3>
-                                <p>Une urne contient 5 boules rouges et 3 boules bleues. On tire successivement et sans remise 2 boules de l'urne. Quelle est la probabilité d'obtenir 2 boules de la même couleur ?</p>
-                            </div>
-                            <div class="p-4">
-                                <div class="mb-4">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Quelle est la probabilité ?</label>
-                                    <div class="flex">
-                                        <input type="text" id="proba1" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse (fraction ou décimal)...">
-                                        <button onclick="checkProba(1)" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
-                                    </div>
-                                    <p id="proba1-feedback" class="mt-1 text-sm"></p>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <button onclick="toggleSolution(13)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Voir la solution complète
-                                    </button>
-                                    <div id="solution13" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                        <p class="mb-2"><strong>Méthode:</strong> On calcule la probabilité d'obtenir 2 boules rouges ou 2 boules bleues.</p>
-                                        
-                                        <p class="mb-2">Nombre total de boules : 5 + 3 = 8</p>
-                                        
-                                        <p class="mb-2">Probabilité d'obtenir 2 boules rouges :</p>
-                                        <p class="math-formula mb-2">P(RR) = (5/8) × (4/7) = 20/56 = 5/14</p>
-                                        
-                                        <p class="mb-2">Probabilité d'obtenir 2 boules bleues :</p>
-                                        <p class="math-formula mb-2">P(BB) = (3/8) × (2/7) = 6/56 = 3/28</p>
-                                        
-                                        <p class="mb-2">Probabilité d'obtenir 2 boules de la même couleur :</p>
-                                        <p class="math-formula mb-2">P(RR ou BB) = P(RR) + P(BB) = 5/14 + 3/28 = 10/28 + 3/28 = 13/28</p>
-                                        
-                                        <p class="font-semibold">La probabilité est 13/28 ≈ 0,464</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-lg">
-                            <div class="bg-gray-50 p-4 border-b">
-                                <h3 class="font-semibold">Exemple 2</h3>
-                                <p>Dans une classe, 60% des élèves sont des filles. Parmi les filles, 80% ont réussi l'examen, tandis que parmi les garçons, 70% ont réussi. On choisit un élève au hasard qui a réussi l'examen. Quelle est la probabilité que ce soit une fille ?</p>
-                            </div>
-                            <div class="p-4">
-                                <div class="mb-4">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Quelle est la probabilité ?</label>
-                                    <div class="flex">
-                                        <input type="text" id="proba2" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse (décimal avec 2 chiffres après la virgule)...">
-                                        <button onclick="checkProba(2)" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
-                                    </div>
-                                    <p id="proba2-feedback" class="mt-1 text-sm"></p>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <button onclick="toggleSolution(14)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Voir la solution complète
-                                    </button>
-                                    <div id="solution14" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                        <p class="mb-2"><strong>Méthode:</strong> On utilise la formule de Bayes.</p>
-                                        
-                                        <p class="mb-2">Notons :</p>
-                                        <p class="mb-1">F : l'élève est une fille</p>
-                                        <p class="mb-1">G : l'élève est un garçon</p>
-                                        <p class="mb-2">R : l'élève a réussi l'examen</p>
-                                        
-                                        <p class="mb-2">Données :</p>
-                                        <p class="mb-1">P(F) = 0,6 et P(G) = 0,4</p>
-                                        <p class="mb-1">P(R|F) = 0,8</p>
-                                        <p class="mb-2">P(R|G) = 0,7</p>
-                                        
-                                        <p class="mb-2">On cherche P(F|R), la probabilité que l'élève soit une fille sachant qu'il a réussi.</p>
-                                        
-                                        <p class="mb-2">D'après la formule de Bayes :</p>
-                                        <p class="math-formula mb-2">P(F|R) = [P(R|F) × P(F)] / P(R)</p>
-                                        
-                                        <p class="mb-2">Calculons P(R) avec la formule des probabilités totales :</p>
-                                        <p class="math-formula mb-2">P(R) = P(R|F) × P(F) + P(R|G) × P(G)</p>
-                                        <p class="math-formula mb-2">P(R) = 0,8 × 0,6 + 0,7 × 0,4 = 0,48 + 0,28 = 0,76</p>
-                                        
-                                        <p class="mb-2">Donc :</p>
-                                        <p class="math-formula mb-2">P(F|R) = (0,8 × 0,6) / 0,76 = 0,48 / 0,76 = 0,632</p>
-                                        
-                                        <p class="font-semibold">La probabilité est environ 0,63 (ou 63%)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold text-blue-800 mb-4">Exercices à faire</h2>
-                        
-                        <div class="space-y-6">
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <p class="font-medium mb-2">Exercice 1: Probabilités conditionnelles</p>
-                                <p>Une entreprise fabrique des pièces dans trois ateliers A, B et C. L'atelier A produit 20% des pièces, l'atelier B en produit 30% et l'atelier C en produit 50%. Les taux de pièces défectueuses sont respectivement de 5% pour l'atelier A, 4% pour l'atelier B et 2% pour l'atelier C.</p>
-                                <ol class="list-decimal pl-5 space-y-2">
-                                    <li>Quelle est la probabilité qu'une pièce choisie au hasard soit défectueuse ?</li>
-                                    <li>Si une pièce est défectueuse, quelle est la probabilité qu'elle provienne de l'atelier C ?</li>
-                                </ol>
-                                <button onclick="toggleSolution(15)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    Voir les solutions
-                                </button>
-                                <div id="solution15" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                    <div class="mb-3">
-                                        <p class="font-medium">1. Probabilité qu'une pièce soit défectueuse</p>
-                                        <p>Notons D l'événement "la pièce est défectueuse"</p>
-                                        <p>D'après la formule des probabilités totales :</p>
-                                        <p>P(D) = P(D|A)×P(A) + P(D|B)×P(B) + P(D|C)×P(C)</p>
-                                        <p>P(D) = 0,05×0,2 + 0,04×0,3 + 0,02×0,5</p>
-                                        <p>P(D) = 0,01 + 0,012 + 0,01 = 0,032</p>
-                                        <p>La probabilité qu'une pièce soit défectueuse est de 0,032 (ou 3,2%)</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <p class="font-medium">2. Probabilité que la pièce défectueuse provienne de l'atelier C</p>
-                                        <p>On cherche P(C|D)</p>
-                                        <p>D'après la formule de Bayes :</p>
-                                        <p>P(C|D) = [P(D|C)×P(C)] / P(D)</p>
-                                        <p>P(C|D) = (0,02×0,5) / 0,032</p>
-                                        <p>P(C|D) = 0,01 / 0,032 = 0,3125</p>
-                                        <p>La probabilité que la pièce défectueuse provienne de l'atelier C est d'environ 0,31 (ou 31%)</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <p class="font-medium mb-2">Exercice 2: Variable aléatoire</p>
-                                <p>On lance un dé équilibré à 6 faces. On définit la variable aléatoire X qui associe à chaque résultat le carré de la différence entre le résultat et 3,5.</p>
-                                <ol class="list-decimal pl-5 space-y-2">
-                                    <li>Déterminer la loi de probabilité de X.</li>
-                                    <li>Calculer l'espérance mathématique E(X).</li>
-                                </ol>
-                                <button onclick="toggleSolution(16)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    Voir les solutions
-                                </button>
-                                <div id="solution16" class="solution bg-gray-50 p-4 rounded-lg mt-2">
-                                    <div class="mb-3">
-                                        <p class="font-medium">1. Loi de probabilité de X</p>
-                                        <p>X = (résultat - 3,5)²</p>
-                                        <p>Pour chaque résultat du dé, calculons la valeur de X :</p>
-                                        <p>Si résultat = 1 : X = (1 - 3,5)² = (-2,5)² = 6,25</p>
-                                        <p>Si résultat = 2 : X = (2 - 3,5)² = (-1,5)² = 2,25</p>
-                                        <p>Si résultat = 3 : X = (3 - 3,5)² = (-0,5)² = 0,25</p>
-                                        <p>Si résultat = 4 : X = (4 - 3,5)² = (0,5)² = 0,25</p>
-                                        <p>Si résultat = 5 : X = (5 - 3,5)² = (1,5)² = 2,25</p>
-                                        <p>Si résultat = 6 : X = (6 - 3,5)² = (2,5)² = 6,25</p>
-                                        <p>La loi de probabilité de X est donc :</p>
-                                        <p>P(X = 0,25) = 2/6 = 1/3</p>
-                                        <p>P(X = 2,25) = 2/6 = 1/3</p>
-                                        <p>P(X = 6,25) = 2/6 = 1/3</p>
-                                    </div>
-                                    
-                                    <div>
-                                        <p class="font-medium">2. Espérance mathématique E(X)</p>
-                                        <p>E(X) = Σ [x_i × P(X = x_i)]</p>
-                                        <p>E(X) = 0,25 × (1/3) + 2,25 × (1/3) + 6,25 × (1/3)</p>
-                                        <p>E(X) = (0,25 + 2,25 + 6,25) / 3</p>
-                                        <p>E(X) = 8,75 / 3 ≈ 2,92</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="bg-gray-800 text-white py-6">
-            <div class="container mx-auto px-4">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="mb-4 md:mb-0">
-                        <h3 class="text-lg font-semibold">MathExcel Cameroun</h3>
-                        <p class="text-sm text-gray-400">Soutien scolaire en mathématiques - Niveau Première D</p>
-                    </div>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
-                            </svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5z" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="mt-6 text-center text-sm text-gray-400">
-                    © 2023 MathExcel Cameroun. Tous droits réservés.
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <script>
-        // Tab switching
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const tabContents = document.querySelectorAll('.tab-content');
-        
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const tabId = button.getAttribute('data-tab');
-                
-                // Remove active class from all buttons and contents
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-                
-                // Add active class to clicked button and corresponding content
-                button.classList.add('active');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-        
-        // Toggle solutions
-        function toggleSolution(id) {
-            const solution = document.getElementById('solution' + id);
-            solution.classList.toggle('show');
-        }
-        
-        // Check discriminant answers
-        function checkDiscriminant(id) {
-            const input = document.getElementById('discriminant' + id);
-            const feedback = document.getElementById('discriminant' + id + '-feedback');
-            const answer = input.value.trim();
-            
-            if (id === 1) {
-                if (answer === '9' || answer === '9.0') {
-                    feedback.textContent = 'Correct ! Δ = b² - 4ac = (-5)² - 4 × 2 × 2 = 25 - 16 = 9';
-                    feedback.className = 'mt-1 text-sm text-green-600';
-                } else {
-                    feedback.textContent = 'Incorrect. Essayez encore.';
-                    feedback.className = 'mt-1 text-sm text-red-600';
-                }
-            } else if (id === 2) {
-                if (answer === '0' || answer === '0.0') {
-                    feedback.textContent = 'Correct ! Δ = b² - 4ac = 6² - 4 × 3 × 3 = 36 - 36 = 0';
-                    feedback.className = 'mt-1 text-sm text-green-600';
-                } else {
-                    feedback.textContent = 'Incorrect. Essayez encore.';
-                    feedback.className = 'mt-1 text-sm text-red-600';
-                }
-            }
-        }
-        
-        // Check limite answers
-        function checkLimite(id) {
-            const input = document.getElementById('limite' + id);
-            const feedback = document.getElementById('limite' + id + '-feedback');
-            const answer = input.value.trim();
-            
-            if (id === 1) {
-                if (answer === '3' || answer === '3.0') {
-                    feedback.textContent = 'Correct ! La limite est 3.';
-                    feedback.className = 'mt-1 text-sm text-green-600';
-                } else {
-                    feedback.textContent = 'Incorrect. Essayez encore.';
-                    feedback.className = 'mt-1 text-sm text-red-600';
-                }
-            }
-        }
-        
-        // Check continuité answers
-        function checkContinuite(answer) {
-            const feedback = document.getElementById('continuite-feedback');
-            
-            if (answer === 'oui') {
-                feedback.textContent = 'Correct ! La fonction est continue en x = 2 car lim(x→2) f(x) = f(2) = 4.';
-                feedback.className = 'mt-1 text-sm text-green-600';
-            } else {
-                feedback.textContent = 'Incorrect. La fonction est continue en x = 2 car lim(x→2) f(x) = f(2) = 4.';
-                feedback.className = 'mt-1 text-sm text-red-600';
-            }
-        }
-        
-        // Check produit scalaire answers
-        function checkProduitScalaire() {
-            const input = document.getElementById('produit-scalaire');
-            const feedback = document.getElementById('produit-scalaire-feedback');
-            const answer = input.value.trim();
-            
-            if (answer === '3' || answer === '3.0') {
-                feedback.textContent = 'Correct ! AB·AC = 3×1 + (-2)×(-1) + (-1)×2 = 3 + 2 - 2 = 3';
-                feedback.className = 'mt-1 text-sm text-green-600';
-            } else {
-                feedback.textContent = 'Incorrect. Essayez encore.';
-                feedback.className = 'mt-1 text-sm text-red-600';
-            }
-        }
-        
-        // Check colinéaire answers
-        function checkColineaire(answer) {
-            const feedback = document.getElementById('colineaire-feedback');
-            
-            if (answer === 'oui') {
-                feedback.textContent = 'Correct ! Les vecteurs sont colinéaires car v = -2×u.';
-                feedback.className = 'mt-1 text-sm text-green-600';
-            } else {
-                feedback.textContent = 'Incorrect. Les vecteurs sont colinéaires car v = -2×u.';
-                feedback.className = 'mt-1 text-sm text-red-600';
-            }
-        }
-        
-        // Check probabilité answers
-        function checkProba(id) {
-            const input = document.getElementById('proba' + id);
-            const feedback = document.getElementById('proba' + id + '-feedback');
-            const answer = input.value.trim().toLowerCase();
-            
-            if (id === 1) {
-                if (answer === '13/28' || answer === '0.464' || answer === '0.46' || answer === '0.47') {
-                    feedback.textContent = 'Correct ! La probabilité est 13/28 ≈ 0,464.';
-                    feedback.className = 'mt-1 text-sm text-green-600';
-                } else {
-                    feedback.textContent = 'Incorrect. Essayez encore.';
-                    feedback.className = 'mt-1 text-sm text-red-600';
-                }
-            } else if (id === 2) {
-                if (answer === '0.63' || answer === '0.632' || answer === '0.6316' || answer === '63%') {
-                    feedback.textContent = 'Correct ! La probabilité est environ 0,63 (ou 63%).';
-                    feedback.className = 'mt-1 text-sm text-green-600';
-                } else {
-                    feedback.textContent = 'Incorrect. Essayez encore.';
-                    feedback.className = 'mt-1 text-sm text-red-600';
-                }
-            }
-        }
-   
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cours de Trigonométrie - Première D</title>
+    <title>Programme de Mathématiques - Première D Cameroun</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -1007,325 +13,869 @@
             font-family: 'Poppins', sans-serif;
             background-color: #f0f9ff;
         }
-        .formula-box {
-            background-color: #e0f2fe;
-            border-left: 4px solid #0284c7;
+        .chapter-card {
+            transition: all 0.3s ease;
         }
-        .example-box {
-            background-color: #f0fdf4;
-            border-left: 4px solid #16a34a;
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        .theorem-box {
-            background-color: #fef3c7;
-            border-left: 4px solid #d97706;
-        }
-        .exercise-box {
-            background-color: #ede9fe;
-            border-left: 4px solid #7c3aed;
+        .module-box {
+            border-left: 4px solid;
         }
     </style>
 </head>
 <body>
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg shadow-lg p-6 mb-8">
-            <h1 class="text-3xl font-bold mb-2">Cours de Trigonométrie</h1>
-            <p class="text-xl">Niveau Première D - Programme Camerounais</p>
+    <div class="container mx-auto px-4 py-8 max-w-5xl">
+        <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-lg shadow-lg p-8 mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-2">Programme de Mathématiques</h1>
+                    <p class="text-xl md:text-2xl">Classe de Première D - Cameroun</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+            </div>
         </header>
 
         <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold text-blue-800 mb-4">Table des matières</h2>
-            <ul class="space-y-2">
-                <li class="flex items-center">
-                    <span class="mr-2 text-blue-600">➤</span>
-                    <a href="#cercle-trigo" class="text-blue-600 hover:underline">1. Le cercle trigonométrique</a>
-                </li>
-                <li class="flex items-center">
-                    <span class="mr-2 text-blue-600">➤</span>
-                    <a href="#angles-remarquables" class="text-blue-600 hover:underline">2. Les angles remarquables</a>
-                </li>
-                <li class="flex items-center">
-                    <span class="mr-2 text-blue-600">➤</span>
-                    <a href="#formules" class="text-blue-600 hover:underline">3. Formules trigonométriques</a>
-                </li>
-                <li class="flex items-center">
-                    <span class="mr-2 text-blue-600">➤</span>
-                    <a href="#equations" class="text-blue-600 hover:underline">4. Équations trigonométriques</a>
-                </li>
-                <li class="flex items-center">
-                    <span class="mr-2 text-blue-600">➤</span>
-                    <a href="#exercices" class="text-blue-600 hover:underline">5. Exercices corrigés</a>
-                </li>
-            </ul>
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">Présentation du Programme</h2>
+            <p class="mb-4">Le programme de mathématiques de la classe de Première D au Cameroun est conçu pour les élèves se destinant aux filières scientifiques avec une orientation vers les sciences de la vie et de la terre. Il vise à développer la rigueur, l'esprit d'analyse et les compétences nécessaires pour résoudre des problèmes mathématiques appliqués aux sciences naturelles.</p>
+            <p>Ce programme est structuré en quatre grands modules : Algèbre, Analyse, Géométrie, et Analyse Combinatoire & Probabilités. Chaque module comprend plusieurs chapitres qui seront étudiés tout au long de l'année scolaire.</p>
         </div>
 
-        <section id="cercle-trigo" class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold text-blue-800 mb-4">1. Le cercle trigonométrique</h2>
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">Table des matières</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-2">Module I: Algèbre</h3>
+                        <ul class="space-y-1">
+                            <li class="flex items-center">
+                                <span class="mr-2 text-blue-600">➤</span>
+                                <a href="#second-degre" class="text-blue-600 hover:underline">Équations du second degré</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-blue-600">➤</span>
+                                <a href="#suites" class="text-blue-600 hover:underline">Suites numériques</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-blue-600">➤</span>
+                                <a href="#arithmetique" class="text-blue-600 hover:underline">Arithmétique</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-blue-600">➤</span>
+                                <a href="#polynomes" class="text-blue-600 hover:underline">Polynômes</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-700 mb-2">Module II: Analyse</h3>
+                        <ul class="space-y-1">
+                            <li class="flex items-center">
+                                <span class="mr-2 text-green-600">➤</span>
+                                <a href="#fonctions" class="text-green-600 hover:underline">Généralités sur les fonctions</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-green-600">➤</span>
+                                <a href="#limites" class="text-green-600 hover:underline">Limites et continuité</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-green-600">➤</span>
+                                <a href="#derivation" class="text-green-600 hover:underline">Dérivation</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-green-600">➤</span>
+                                <a href="#etude-fonctions" class="text-green-600 hover:underline">Étude des fonctions</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="bg-purple-50 p-4 rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold text-purple-700 mb-2">Module III: Géométrie</h3>
+                        <ul class="space-y-1">
+                            <li class="flex items-center">
+                                <span class="mr-2 text-purple-600">➤</span>
+                                <a href="#trigonometrie" class="text-purple-600 hover:underline">Trigonométrie</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-purple-600">➤</span>
+                                <a href="#produit-scalaire" class="text-purple-600 hover:underline">Produit scalaire</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-purple-600">➤</span>
+                                <a href="#barycentre" class="text-purple-600 hover:underline">Barycentre</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-purple-600">➤</span>
+                                <a href="#transformations" class="text-purple-600 hover:underline">Transformations du plan</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-red-700 mb-2">Module IV: Analyse Combinatoire & Probabilités</h3>
+                        <ul class="space-y-1">
+                            <li class="flex items-center">
+                                <span class="mr-2 text-red-600">➤</span>
+                                <a href="#denombrement" class="text-red-600 hover:underline">Dénombrement</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-red-600">➤</span>
+                                <a href="#probabilites" class="text-red-600 hover:underline">Probabilités</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-red-600">➤</span>
+                                <a href="#variables-aleatoires" class="text-red-600 hover:underline">Variables aléatoires</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2 text-red-600">➤</span>
+                                <a href="#statistiques" class="text-red-600 hover:underline">Statistiques descriptives</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE I: ALGÈBRE -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-blue-800 mb-6 bg-blue-100 p-3 rounded-lg">MODULE I: ALGÈBRE</h2>
             
-            <p class="mb-4">Le cercle trigonométrique est un cercle de rayon 1 centré à l'origine du repère orthonormé (O, \(\vec{i}\), \(\vec{j}\)). Il permet de définir les fonctions trigonométriques.</p>
-            
-            <div class="flex justify-center my-6">
-                <svg width="300" height="300" class="border border-gray-300 rounded-lg bg-white">
-                    <!-- Axes -->
-                    <line x1="0" y1="150" x2="300" y2="150" stroke="black" stroke-width="1"></line>
-                    <line x1="150" y1="0" x2="150" y2="300" stroke="black" stroke-width="1"></line>
-                    
-                    <!-- Cercle -->
-                    <circle cx="150" cy="150" r="100" fill="none" stroke="blue" stroke-width="2"></circle>
-                    
-                    <!-- Points remarquables -->
-                    <circle cx="250" cy="150" r="4" fill="red"></circle>
-                    <text x="255" y="145" font-size="12">I(1,0)</text>
-                    
-                    <circle cx="150" cy="50" r="4" fill="red"></circle>
-                    <text x="155" y="45" font-size="12">J(0,1)</text>
-                    
-                    <circle cx="50" cy="150" r="4" fill="red"></circle>
-                    <text x="30" y="145" font-size="12">(-1,0)</text>
-                    
-                    <circle cx="150" cy="250" r="4" fill="red"></circle>
-                    <text x="155" y="265" font-size="12">(0,-1)</text>
-                    
-                    <!-- Angle -->
-                    <path d="M 150 150 L 250 150 A 100 100 0 0 0 200 80" fill="none" stroke="green" stroke-width="2"></path>
-                    <text x="210" y="120" font-size="16" fill="green">θ</text>
-                    
-                    <!-- Légendes -->
-                    <text x="280" y="150" font-size="16">x</text>
-                    <text x="150" y="20" font-size="16">y</text>
-                    <text x="160" y="160" font-size="16">O</text>
-                </svg>
+            <div id="second-degre" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-blue-700 mb-4">Chapitre 1: Équations du second degré</h3>
+                
+                <div class="module-box border-blue-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Résoudre des équations et inéquations du second degré</li>
+                        <li>Factoriser des expressions du second degré</li>
+                        <li>Appliquer les relations entre coefficients et racines</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-blue-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Forme canonique et discriminant</li>
+                        <li>Résolution des équations du second degré</li>
+                        <li>Somme et produit des racines</li>
+                        <li>Signe du trinôme</li>
+                        <li>Inéquations du second degré</li>
+                        <li>Équations et inéquations se ramenant au second degré</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-blue-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Formules essentielles</h4>
+                    <p>Pour une équation \(ax^2 + bx + c = 0\) avec \(a \neq 0\) :</p>
+                    <ul class="list-disc pl-6 space-y-1 mt-2">
+                        <li>Discriminant : \(\Delta = b^2 - 4ac\)</li>
+                        <li>Si \(\Delta > 0\), deux solutions : \(x_1 = \frac{-b - \sqrt{\Delta}}{2a}\) et \(x_2 = \frac{-b + \sqrt{\Delta}}{2a}\)</li>
+                        <li>Si \(\Delta = 0\), une solution double : \(x_0 = \frac{-b}{2a}\)</li>
+                        <li>Si \(\Delta < 0\), pas de solution réelle</li>
+                        <li>Somme des racines : \(x_1 + x_2 = \frac{-b}{a}\)</li>
+                        <li>Produit des racines : \(x_1 \times x_2 = \frac{c}{a}\)</li>
+                    </ul>
+                </div>
             </div>
             
-            <div class="formula-box p-4 rounded-md mb-6">
-                <h3 class="font-semibold text-lg mb-2">Définitions</h3>
-                <p>Pour un angle \(\theta\) dans le cercle trigonométrique :</p>
-                <ul class="list-disc pl-6 space-y-2 mt-2">
-                    <li>Le cosinus de \(\theta\) est l'abscisse du point M : \(\cos(\theta) = x_M\)</li>
-                    <li>Le sinus de \(\theta\) est l'ordonnée du point M : \(\sin(\theta) = y_M\)</li>
-                    <li>La tangente de \(\theta\) est le rapport : \(\tan(\theta) = \frac{\sin(\theta)}{\cos(\theta)}\) (définie si \(\cos(\theta) \neq 0\))</li>
-                </ul>
+            <div id="suites" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-blue-700 mb-4">Chapitre 2: Suites numériques</h3>
+                
+                <div class="module-box border-blue-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Comprendre et manipuler les suites numériques</li>
+                        <li>Reconnaître et utiliser les suites arithmétiques et géométriques</li>
+                        <li>Résoudre des problèmes concrets à l'aide des suites</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-blue-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Définition et notation des suites</li>
+                        <li>Suites arithmétiques : définition, terme général, somme des termes</li>
+                        <li>Suites géométriques : définition, terme général, somme des termes</li>
+                        <li>Applications des suites à des problèmes concrets</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-blue-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Formules essentielles</h4>
+                    <p class="mb-2"><strong>Suite arithmétique</strong> de raison \(r\) et de premier terme \(u_1\) :</p>
+                    <ul class="list-disc pl-6 space-y-1 mb-3">
+                        <li>Terme général : \(u_n = u_1 + (n-1)r\)</li>
+                        <li>Somme des \(n\) premiers termes : \(S_n = \frac{n}{2}(u_1 + u_n) = \frac{n}{2}(2u_1 + (n-1)r)\)</li>
+                    </ul>
+                    
+                    <p class="mb-2"><strong>Suite géométrique</strong> de raison \(q\) et de premier terme \(u_1\) :</p>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Terme général : \(u_n = u_1 \times q^{n-1}\)</li>
+                        <li>Somme des \(n\) premiers termes (si \(q \neq 1\)) : \(S_n = u_1 \frac{1-q^n}{1-q}\)</li>
+                        <li>Somme des termes d'une suite géométrique infinie (si \(|q| < 1\)) : \(S_{\infty} = \frac{u_1}{1-q}\)</li>
+                    </ul>
+                </div>
             </div>
             
-            <div class="theorem-box p-4 rounded-md mb-6">
-                <h3 class="font-semibold text-lg mb-2">Propriétés fondamentales</h3>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li>Relation fondamentale : \(\sin^2(\theta) + \cos^2(\theta) = 1\)</li>
-                    <li>Périodicité : 
-                        <ul class="list-disc pl-6 mt-1">
-                            <li>\(\sin(\theta + 2\pi) = \sin(\theta)\)</li>
-                            <li>\(\cos(\theta + 2\pi) = \cos(\theta)\)</li>
-                            <li>\(\tan(\theta + \pi) = \tan(\theta)\)</li>
-                        </ul>
-                    </li>
-                    <li>Parité :
-                        <ul class="list-disc pl-6 mt-1">
-                            <li>\(\sin(-\theta) = -\sin(\theta)\) (fonction impaire)</li>
-                            <li>\(\cos(-\theta) = \cos(\theta)\) (fonction paire)</li>
-                            <li>\(\tan(-\theta) = -\tan(\theta)\) (fonction impaire)</li>
-                        </ul>
-                    </li>
-                </ul>
+            <div id="arithmetique" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-blue-700 mb-4">Chapitre 3: Arithmétique</h3>
+                
+                <div class="module-box border-blue-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Maîtriser les notions de divisibilité et de nombres premiers</li>
+                        <li>Calculer le PGCD et le PPCM de deux nombres</li>
+                        <li>Résoudre des équations diophantiennes</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-blue-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Divisibilité dans \(\mathbb{Z}\)</li>
+                        <li>Nombres premiers</li>
+                        <li>Décomposition en facteurs premiers</li>
+                        <li>PGCD et PPCM</li>
+                        <li>Algorithme d'Euclide</li>
+                        <li>Équations diophantiennes</li>
+                        <li>Congruences</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-blue-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Théorèmes importants</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Théorème de Bézout : Si \(a\) et \(b\) sont deux entiers non nuls, il existe des entiers \(u\) et \(v\) tels que \(au + bv = PGCD(a,b)\)</li>
+                        <li>Théorème de Gauss : Si \(a\) divise \(bc\) et si \(a\) et \(b\) sont premiers entre eux, alors \(a\) divise \(c\)</li>
+                        <li>Relation entre PGCD et PPCM : \(PGCD(a,b) \times PPCM(a,b) = |a \times b|\)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="polynomes" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-blue-700 mb-4">Chapitre 4: Polynômes</h3>
+                
+                <div class="module-box border-blue-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Manipuler les polynômes et leurs opérations</li>
+                        <li>Factoriser des polynômes</li>
+                        <li>Déterminer les racines d'un polynôme</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-blue-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Définition et opérations sur les polynômes</li>
+                        <li>Division euclidienne des polynômes</li>
+                        <li>Théorème du reste et théorème de factorisation</li>
+                        <li>Racines d'un polynôme</li>
+                        <li>Factorisation des polynômes</li>
+                        <li>Identités remarquables</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-blue-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Théorèmes et formules</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Théorème du reste : Le reste de la division d'un polynôme \(P(x)\) par \(x-a\) est égal à \(P(a)\)</li>
+                        <li>Théorème de factorisation : \(a\) est racine de \(P\) si et seulement si \(P(x)\) est divisible par \(x-a\)</li>
+                        <li>Identités remarquables :
+                            <ul class="list-disc pl-6 mt-1">
+                                <li>\((a+b)^2 = a^2 + 2ab + b^2\)</li>
+                                <li>\((a-b)^2 = a^2 - 2ab + b^2\)</li>
+                                <li>\((a+b)(a-b) = a^2 - b^2\)</li>
+                                <li>\((a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3\)</li>
+                                <li>\((a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3\)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
 
-        <section id="angles-remarquables" class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold text-blue-800 mb-4">2. Les angles remarquables</h2>
+        <!-- MODULE II: ANALYSE -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-green-800 mb-6 bg-green-100 p-3 rounded-lg">MODULE II: ANALYSE</h2>
+            
+            <div id="fonctions" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-green-700 mb-4">Chapitre 5: Généralités sur les fonctions</h3>
+                
+                <div class="module-box border-green-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Comprendre les notions de fonction, domaine de définition et image</li>
+                        <li>Étudier les propriétés des fonctions (parité, périodicité)</li>
+                        <li>Manipuler les opérations sur les fonctions</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-green-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Définition d'une fonction</li>
+                        <li>Domaine de définition et ensemble image</li>
+                        <li>Représentation graphique</li>
+                        <li>Parité et périodicité</li>
+                        <li>Opérations sur les fonctions (somme, produit, quotient, composée)</li>
+                        <li>Fonction réciproque</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-green-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Définitions importantes</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li><strong>Fonction paire</strong> : \(f(-x) = f(x)\) pour tout \(x\) du domaine de définition</li>
+                        <li><strong>Fonction impaire</strong> : \(f(-x) = -f(x)\) pour tout \(x\) du domaine de définition</li>
+                        <li><strong>Fonction périodique</strong> : Il existe \(T > 0\) tel que \(f(x+T) = f(x)\) pour tout \(x\) du domaine de définition</li>
+                        <li><strong>Fonction composée</strong> : \((f \circ g)(x) = f(g(x))\)</li>
+                        <li><strong>Fonction réciproque</strong> : Si \(f\) est bijective, alors \(f^{-1}\) est telle que \(f^{-1}(f(x)) = x\) et \(f(f^{-1}(y)) = y\)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="limites" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-green-700 mb-4">Chapitre 6: Limites et continuité</h3>
+                
+                <div class="module-box border-green-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Comprendre la notion de limite d'une fonction</li>
+                        <li>Calculer des limites en utilisant les théorèmes appropriés</li>
+                        <li>Étudier la continuité d'une fonction</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-green-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Notion de limite</li>
+                        <li>Limites des fonctions usuelles</li>
+                        <li>Opérations sur les limites</li>
+                        <li>Formes indéterminées</li>
+                        <li>Continuité d'une fonction</li>
+                        <li>Théorèmes des valeurs intermédiaires</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-green-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Limites usuelles</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>\(\lim_{x \to +\infty} \frac{1}{x} = 0\)</li>
+                        <li>\(\lim_{x \to +\infty} \frac{x^n}{x^m} = 0\) si \(n < m\)</li>
+                        <li>\(\lim_{x \to +\infty} \frac{x^n}{x^m} = +\infty\) si \(n > m\)</li>
+                        <li>\(\lim_{x \to 0} \frac{\sin x}{x} = 1\)</li>
+                        <li>\(\lim_{x \to +\infty} (1 + \frac{1}{x})^x = e\)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="derivation" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-green-700 mb-4">Chapitre 7: Dérivation</h3>
+                
+                <div class="module-box border-green-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Comprendre la notion de dérivée et son interprétation géométrique</li>
+                        <li>Calculer des dérivées en utilisant les formules et règles</li>
+                        <li>Appliquer la dérivation à l'étude des variations des fonctions</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-green-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Définition de la dérivée</li>
+                        <li>Interprétation géométrique</li>
+                        <li>Dérivées des fonctions usuelles</li>
+                        <li>Règles de dérivation (somme, produit, quotient, composée)</li>
+                        <li>Dérivées successives</li>
+                        <li>Applications de la dérivation</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-green-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Formules de dérivation</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>\((u + v)' = u' + v'\)</li>
+                        <li>\((u \times v)' = u' \times v + u \times v'\)</li>
+                        <li>\((\frac{u}{v})' = \frac{u' \times v - u \times v'}{v^2}\)</li>
+                        <li>\((u \circ v)' = (u' \circ v) \times v'\)</li>
+                        <li>\((x^n)' = n \times x^{n-1}\)</li>
+                        <li>\((\sin x)' = \cos x\)</li>
+                        <li>\((\cos x)' = -\sin x\)</li>
+                        <li>\((\tan x)' = 1 + \tan^2 x = \frac{1}{\cos^2 x}\)</li>
+                        <li>\((e^x)' = e^x\)</li>
+                        <li>\((\ln x)' = \frac{1}{x}\)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="etude-fonctions" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-green-700 mb-4">Chapitre 8: Étude des fonctions</h3>
+                
+                <div class="module-box border-green-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Étudier complètement une fonction (domaine, limites, variations, extrema)</li>
+                        <li>Tracer la courbe représentative d'une fonction</li>
+                        <li>Résoudre des problèmes d'optimisation</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-green-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Étude du domaine de définition</li>
+                        <li>Étude des limites aux bornes du domaine</li>
+                        <li>Étude des variations (tableau de variation)</li>
+                        <li>Recherche des extrema</li>
+                        <li>Étude de la concavité et des points d'inflexion</li>
+                        <li>Asymptotes</li>
+                        <li>Tracé de la courbe représentative</li>
+                        <li>Applications à des problèmes concrets</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-green-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Méthode d'étude d'une fonction</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Déterminer le domaine de définition \(D_f\)</li>
+                        <li>Étudier la parité ou l'imparité éventuelle</li>
+                        <li>Calculer les limites aux bornes du domaine</li>
+                        <li>Rechercher les asymptotes éventuelles</li>
+                        <li>Calculer la dérivée \(f'(x)\)</li>
+                        <li>Étudier le signe de \(f'(x)\) et en déduire les variations de \(f\)</li>
+                        <li>Déterminer les extrema éventuels</li>
+                        <li>Calculer quelques points particuliers</li>
+                        <li>Tracer la courbe représentative</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE III: GÉOMÉTRIE -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-purple-800 mb-6 bg-purple-100 p-3 rounded-lg">MODULE III: GÉOMÉTRIE</h2>
+            
+            <div id="trigonometrie" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-purple-700 mb-4">Chapitre 9: Trigonométrie</h3>
+                
+                <div class="module-box border-purple-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Maîtriser les fonctions trigonométriques et leurs propriétés</li>
+                        <li>Résoudre des équations trigonométriques</li>
+                        <li>Appliquer les formules trigonométriques</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-purple-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Cercle trigonométrique</li>
+                        <li>Fonctions trigonométriques (sinus, cosinus, tangente)</li>
+                        <li>Formules d'addition et de duplication</li>
+                        <li>Transformations de produits en sommes et vice-versa</li>
+                        <li>Équations trigonométriques</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-purple-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Formules importantes</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li><strong>Formules d'addition</strong> :
+                            <ul class="list-disc pl-6 mt-1">
+                                <li>\(\sin(a+b) = \sin(a)\cos(b) + \cos(a)\sin(b)\)</li>
+                                <li>\(\cos(a+b) = \cos(a)\cos(b) - \sin(a)\sin(b)\)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Formules de duplication</strong> :
+                            <ul class="list-disc pl-6 mt-1">
+                                <li>\(\sin(2a) = 2\sin(a)\cos(a)\)</li>
+                                <li>\(\cos(2a) = \cos^2(a) - \sin^2(a) = 2\cos^2(a) - 1 = 1 - 2\sin^2(a)\)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Linéarisation</strong> :
+                            <ul class="list-disc pl-6 mt-1">
+                                <li>\(\sin(a)\sin(b) = \frac{1}{2}[\cos(a-b) - \cos(a+b)]\)</li>
+                                <li>\(\cos(a)\cos(b) = \frac{1}{2}[\cos(a-b) + \cos(a+b)]\)</li>
+                                <li>\(\sin(a)\cos(b) = \frac{1}{2}[\sin(a+b) + \sin(a-b)]\)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="produit-scalaire" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-purple-700 mb-4">Chapitre 10: Produit scalaire</h3>
+                
+                <div class="module-box border-purple-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Comprendre et utiliser le produit scalaire dans le plan</li>
+                        <li>Appliquer le produit scalaire à la résolution de problèmes géométriques</li>
+                        <li>Établir des relations métriques dans les figures géométriques</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-purple-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Définition du produit scalaire</li>
+                        <li>Propriétés du produit scalaire</li>
+                        <li>Expression analytique du produit scalaire</li>
+                        <li>Applications géométriques (orthogonalité, projections)</li>
+                        <li>Théorème d'Al-Kashi (loi des cosinus)</li>
+                        <li>Équation de droites et de cercles</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-purple-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Formules et propriétés</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li><strong>Définition</strong> : \(\vec{u} \cdot \vec{v} = ||\vec{u}|| \times ||\vec{v}|| \times \cos(\vec{u},\vec{v})\)</li>
+                        <li><strong>Expression analytique</strong> : Si \(\vec{u}(x_1, y_1)\) et \(\vec{v}(x_2, y_2)\), alors \(\vec{u} \cdot \vec{v} = x_1x_2 + y_1y_2\)</li>
+                        <li><strong>Propriétés</strong> :
+                            <ul class="list-disc pl-6 mt-1">
+                                <li>Commutativité : \(\vec{u} \cdot \vec{v} = \vec{v} \cdot \vec{u}\)</li>
+                                <li>Distributivité : \(\vec{u} \cdot (\vec{v} + \vec{w}) = \vec{u} \cdot \vec{v} + \vec{u} \cdot \vec{w}\)</li>
+                                <li>Bilinéarité : \((k\vec{u}) \cdot \vec{v} = k(\vec{u} \cdot \vec{v})\)</li>
+                                <li>Norme : \(||\vec{u}||^2 = \vec{u} \cdot \vec{u}\)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Théorème d'Al-Kashi</strong> : Dans un triangle ABC, \(AB^2 = AC^2 + BC^2 - 2 \times AC \times BC \times \cos(\widehat{ACB})\)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="barycentre" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-purple-700 mb-4">Chapitre 11: Barycentre</h3>
+                
+                <div class="module-box border-purple-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Comprendre la notion de barycentre de points pondérés</li>
+                        <li>Utiliser les propriétés du barycentre pour résoudre des problèmes</li>
+                        <li>Appliquer le barycentre à l'étude des figures géométriques</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-purple-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Définition du barycentre</li>
+                        <li>Propriétés du barycentre</li>
+                        <li>Coordonnées du barycentre</li>
+                        <li>Barycentres partiels</li>
+                        <li>Applications géométriques</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-purple-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Propriétés importantes</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Le barycentre G de points pondérés \((A_i, \alpha_i)\) vérifie : \(\sum_{i=1}^{n} \alpha_i \overrightarrow{GA_i} = \vec{0}\)</li>
+                        <li>Si \(\sum_{i=1}^{n} \alpha_i \neq 0\), alors les coordonnées du barycentre sont : \(G(\frac{\sum_{i=1}^{n} \alpha_i x_i}{\sum_{i=1}^{n} \alpha_i}, \frac{\sum_{i=1}^{n} \alpha_i y_i}{\sum_{i=1}^{n} \alpha_i})\)</li>
+                        <li>Associativité : Le barycentre de \((A, \alpha)\) et \((B, \beta)\) est le point G tel que \(\overrightarrow{GA} = \frac{\beta}{\alpha + \beta}\overrightarrow{AB}\)</li>
+                        <li>Isobaryce : Le barycentre de n points affectés du même coefficient est le centre de gravité de ces points</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="transformations" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-purple-700 mb-4">Chapitre 12: Transformations du plan</h3>
+                
+                <div class="module-box border-purple-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Comprendre et utiliser les transformations géométriques du plan</li>
+                        <li>Étudier les propriétés des transformations</li>
+                        <li>Appliquer les transformations à la résolution de problèmes</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-purple-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Translations</li>
+                        <li>Homothéties</li>
+                        <li>Rotations</li>
+                        <li>Symétries axiales et centrales</li>
+                        <li>Composées de transformations</li>
+                        <li>Applications à la géométrie</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-purple-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Propriétés des transformations</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li><strong>Translation</strong> de vecteur \(\vec{u}\) : conserve les distances, les angles, le parallélisme</li>
+                        <li><strong>Homothétie</strong> de centre O et de rapport k : multiplie les distances par |k|, conserve les angles et le parallélisme</li>
+                        <li><strong>Rotation</strong> de centre O et d'angle \(\theta\) : conserve les distances et les angles</li>
+                        <li><strong>Symétrie axiale</strong> par rapport à une droite d : conserve les distances et les angles, inverse l'orientation</li>
+                        <li><strong>Symétrie centrale</strong> par rapport à un point O : conserve les distances, les angles et l'orientation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE IV: ANALYSE COMBINATOIRE & PROBABILITÉS -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-red-800 mb-6 bg-red-100 p-3 rounded-lg">MODULE IV: ANALYSE COMBINATOIRE & PROBABILITÉS</h2>
+            
+            <div id="denombrement" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-red-700 mb-4">Chapitre 13: Dénombrement</h3>
+                
+                <div class="module-box border-red-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Comprendre et appliquer les principes fondamentaux du dénombrement</li>
+                        <li>Utiliser les différentes techniques de dénombrement</li>
+                        <li>Résoudre des problèmes de dénombrement dans divers contextes</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-red-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Principe multiplicatif et principe additif</li>
+                        <li>Arrangements avec et sans répétition</li>
+                        <li>Permutations avec et sans répétition</li>
+                        <li>Combinaisons sans répétition</li>
+                        <li>Coefficients binomiaux et leurs propriétés</li>
+                        <li>Formule du binôme de Newton</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-red-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Formules essentielles</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li><strong>Arrangements</strong> de \(p\) éléments parmi \(n\) : \(A_n^p = \frac{n!}{(n-p)!}\)</li>
+                        <li><strong>Permutations</strong> de \(n\) éléments : \(P_n = n!\)</li>
+                        <li><strong>Permutations avec répétition</strong> : Si parmi \(n\) éléments, \(n_1\) sont identiques, \(n_2\) sont identiques, etc., alors \(P_n^{n_1,n_2,...,n_k} = \frac{n!}{n_1! \times n_2! \times ... \times n_k!}\)</li>
+                        <li><strong>Combinaisons</strong> de \(p\) éléments parmi \(n\) : \(C_n^p = \binom{n}{p} = \frac{n!}{p!(n-p)!}\)</li>
+                        <li><strong>Propriétés des coefficients binomiaux</strong> : 
+                            <ul class="list-disc pl-6 mt-1">
+                                <li>\(C_n^p = C_n^{n-p}\)</li>
+                                <li>\(C_n^p + C_n^{p-1} = C_{n+1}^p\) (formule de Pascal)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Binôme de Newton</strong> : \((a+b)^n = \sum_{k=0}^{n} C_n^k a^{n-k} b^k\)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="probabilites" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-red-700 mb-4">Chapitre 14: Probabilités</h3>
+                
+                <div class="module-box border-red-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Comprendre les concepts fondamentaux des probabilités</li>
+                        <li>Calculer des probabilités dans différentes situations</li>
+                        <li>Appliquer les probabilités à la résolution de problèmes concrets</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-red-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Expérience aléatoire, univers, événements</li>
+                        <li>Définition et propriétés des probabilités</li>
+                        <li>Probabilité conditionnelle</li>
+                        <li>Indépendance d'événements</li>
+                        <li>Formule des probabilités totales</li>
+                        <li>Formule de Bayes</li>
+                        <li>Épreuves répétées indépendantes (schéma de Bernoulli)</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-red-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Formules importantes</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li><strong>Probabilité d'un événement</strong> : \(P(A) = \frac{\text{nombre de cas favorables}}{\text{nombre de cas possibles}}\) (si les cas sont équiprobables)</li>
+                        <li><strong>Propriétés</strong> :
+                            <ul class="list-disc pl-6 mt-1">
+                                <li>\(P(\Omega) = 1\) (probabilité de l'univers)</li>
+                                <li>\(P(\emptyset) = 0\) (probabilité de l'événement impossible)</li>
+                                <li>\(P(\overline{A}) = 1 - P(A)\) (probabilité de l'événement contraire)</li>
+                                <li>\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\) (probabilité de la réunion)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Probabilité conditionnelle</strong> : \(P(A|B) = \frac{P(A \cap B)}{P(B)}\) si \(P(B) \neq 0\)</li>
+                        <li><strong>Indépendance</strong> : \(A\) et \(B\) sont indépendants si \(P(A \cap B) = P(A) \times P(B)\)</li>
+                        <li><strong>Formule des probabilités totales</strong> : Si \((B_i)_{i=1}^{n}\) est une partition de \(\Omega\), alors \(P(A) = \sum_{i=1}^{n} P(A|B_i) \times P(B_i)\)</li>
+                        <li><strong>Formule de Bayes</strong> : \(P(B_i|A) = \frac{P(A|B_i) \times P(B_i)}{\sum_{j=1}^{n} P(A|B_j) \times P(B_j)}\)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="variables-aleatoires" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-red-700 mb-4">Chapitre 15: Variables aléatoires</h3>
+                
+                <div class="module-box border-red-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Comprendre le concept de variable aléatoire</li>
+                        <li>Étudier les lois de probabilité discrètes usuelles</li>
+                        <li>Calculer l'espérance et la variance d'une variable aléatoire</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-red-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Définition d'une variable aléatoire</li>
+                        <li>Loi de probabilité d'une variable aléatoire discrète</li>
+                        <li>Espérance mathématique</li>
+                        <li>Variance et écart-type</li>
+                        <li>Loi binomiale</li>
+                        <li>Loi uniforme discrète</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-red-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Formules et propriétés</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li><strong>Espérance</strong> d'une variable aléatoire discrète : \(E(X) = \sum_{i} x_i \times P(X = x_i)\)</li>
+                        <li><strong>Variance</strong> : \(V(X) = E(X^2) - E(X)^2 = \sum_{i} x_i^2 \times P(X = x_i) - E(X)^2\)</li>
+                        <li><strong>Écart-type</strong> : \(\sigma(X) = \sqrt{V(X)}\)</li>
+                        <li><strong>Loi binomiale</strong> \(B(n,p)\) :
+                            <ul class="list-disc pl-6 mt-1">
+                                <li>Probabilité : \(P(X = k) = C_n^k \times p^k \times (1-p)^{n-k}\)</li>
+                                <li>Espérance : \(E(X) = n \times p\)</li>
+                                <li>Variance : \(V(X) = n \times p \times (1-p)\)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Loi uniforme</strong> sur \(\{1, 2, ..., n\}\) :
+                            <ul class="list-disc pl-6 mt-1">
+                                <li>Probabilité : \(P(X = k) = \frac{1}{n}\) pour tout \(k \in \{1, 2, ..., n\}\)</li>
+                                <li>Espérance : \(E(X) = \frac{n+1}{2}\)</li>
+                                <li>Variance : \(V(X) = \frac{n^2-1}{12}\)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="statistiques" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
+                <h3 class="text-xl font-bold text-red-700 mb-4">Chapitre 16: Statistiques descriptives</h3>
+                
+                <div class="module-box border-red-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Objectifs</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Organiser et représenter des données statistiques</li>
+                        <li>Calculer et interpréter les paramètres de position et de dispersion</li>
+                        <li>Analyser la corrélation entre deux variables statistiques</li>
+                    </ul>
+                </div>
+                
+                <div class="module-box border-red-500 pl-4 mb-4">
+                    <h4 class="font-semibold mb-2">Contenu</h4>
+                    <ol class="list-decimal pl-6 space-y-1">
+                        <li>Séries statistiques à une variable</li>
+                        <li>Représentations graphiques (diagrammes, histogrammes)</li>
+                        <li>Paramètres de position (moyenne, médiane, mode)</li>
+                        <li>Paramètres de dispersion (étendue, variance, écart-type)</li>
+                        <li>Séries statistiques à deux variables</li>
+                        <li>Ajustement linéaire et méthode des moindres carrés</li>
+                        <li>Coefficient de corrélation linéaire</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-red-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">Formules importantes</h4>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li><strong>Moyenne</strong> : \(\overline{x} = \frac{1}{n} \sum_{i=1}^{n} x_i\) ou \(\overline{x} = \frac{\sum_{i=1}^{p} n_i x_i}{\sum_{i=1}^{p} n_i}\) (cas des données groupées)</li>
+                        <li><strong>Variance</strong> : \(V = \frac{1}{n} \sum_{i=1}^{n} (x_i - \overline{x})^2\)</li>
+                        <li><strong>Écart-type</strong> : \(\sigma = \sqrt{V}\)</li>
+                        <li><strong>Covariance</strong> de deux variables \(X\) et \(Y\) : \(cov(X,Y) = \frac{1}{n} \sum_{i=1}^{n} (x_i - \overline{x})(y_i - \overline{y})\)</li>
+                        <li><strong>Coefficient de corrélation linéaire</strong> : \(r = \frac{cov(X,Y)}{\sigma_X \times \sigma_Y}\)</li>
+                        <li><strong>Droite de régression</strong> de \(Y\) en \(X\) : \(y = ax + b\) avec \(a = \frac{cov(X,Y)}{V(X)}\) et \(b = \overline{y} - a\overline{x}\)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">Répartition horaire indicative</h2>
             
             <div class="overflow-x-auto">
-                <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+                <table class="min-w-full bg-white border border-gray-300">
                     <thead>
-                        <tr class="bg-blue-100">
-                            <th class="py-2 px-4 border-b">Angle \(\theta\)</th>
-                            <th class="py-2 px-4 border-b">0</th>
-                            <th class="py-2 px-4 border-b">\(\frac{\pi}{6}\) ou \(30°\)</th>
-                            <th class="py-2 px-4 border-b">\(\frac{\pi}{4}\) ou \(45°\)</th>
-                            <th class="py-2 px-4 border-b">\(\frac{\pi}{3}\) ou \(60°\)</th>
-                            <th class="py-2 px-4 border-b">\(\frac{\pi}{2}\) ou \(90°\)</th>
-                            <th class="py-2 px-4 border-b">\(\pi\) ou \(180°\)</th>
+                        <tr class="bg-gray-100">
+                            <th class="py-2 px-4 border-b">Module</th>
+                            <th class="py-2 px-4 border-b">Nombre d'heures</th>
+                            <th class="py-2 px-4 border-b">Pourcentage</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="py-2 px-4 border-b font-semibold">\(\sin(\theta)\)</td>
-                            <td class="py-2 px-4 border-b">0</td>
-                            <td class="py-2 px-4 border-b">\(\frac{1}{2}\)</td>
-                            <td class="py-2 px-4 border-b">\(\frac{\sqrt{2}}{2}\)</td>
-                            <td class="py-2 px-4 border-b">\(\frac{\sqrt{3}}{2}\)</td>
-                            <td class="py-2 px-4 border-b">1</td>
-                            <td class="py-2 px-4 border-b">0</td>
+                            <td class="py-2 px-4 border-b">Module I: Algèbre</td>
+                            <td class="py-2 px-4 border-b text-center">45</td>
+                            <td class="py-2 px-4 border-b text-center">30%</td>
                         </tr>
                         <tr>
-                            <td class="py-2 px-4 border-b font-semibold">\(\cos(\theta)\)</td>
-                            <td class="py-2 px-4 border-b">1</td>
-                            <td class="py-2 px-4 border-b">\(\frac{\sqrt{3}}{2}\)</td>
-                            <td class="py-2 px-4 border-b">\(\frac{\sqrt{2}}{2}\)</td>
-                            <td class="py-2 px-4 border-b">\(\frac{1}{2}\)</td>
-                            <td class="py-2 px-4 border-b">0</td>
-                            <td class="py-2 px-4 border-b">-1</td>
+                            <td class="py-2 px-4 border-b">Module II: Analyse</td>
+                            <td class="py-2 px-4 border-b text-center">45</td>
+                            <td class="py-2 px-4 border-b text-center">30%</td>
                         </tr>
                         <tr>
-                            <td class="py-2 px-4 border-b font-semibold">\(\tan(\theta)\)</td>
-                            <td class="py-2 px-4 border-b">0</td>
-                            <td class="py-2 px-4 border-b">\(\frac{1}{\sqrt{3}}\)</td>
-                            <td class="py-2 px-4 border-b">1</td>
-                            <td class="py-2 px-4 border-b">\(\sqrt{3}\)</td>
-                            <td class="py-2 px-4 border-b">Non défini</td>
-                            <td class="py-2 px-4 border-b">0</td>
+                            <td class="py-2 px-4 border-b">Module III: Géométrie</td>
+                            <td class="py-2 px-4 border-b text-center">30</td>
+                            <td class="py-2 px-4 border-b text-center">20%</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b">Module IV: Analyse Combinatoire & Probabilités</td>
+                            <td class="py-2 px-4 border-b text-center">30</td>
+                            <td class="py-2 px-4 border-b text-center">20%</td>
+                        </tr>
+                        <tr class="bg-gray-100 font-semibold">
+                            <td class="py-2 px-4 border-b">Total</td>
+                            <td class="py-2 px-4 border-b text-center">150</td>
+                            <td class="py-2 px-4 border-b text-center">100%</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </section>
-
-        <section id="formules" class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold text-blue-800 mb-4">3. Formules trigonométriques</h2>
-            
-            <div class="formula-box p-4 rounded-md mb-6">
-                <h3 class="font-semibold text-lg mb-2">Formules d'addition</h3>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li>\(\sin(a + b) = \sin(a)\cos(b) + \cos(a)\sin(b)\)</li>
-                    <li>\(\sin(a - b) = \sin(a)\cos(b) - \cos(a)\sin(b)\)</li>
-                    <li>\(\cos(a + b) = \cos(a)\cos(b) - \sin(a)\sin(b)\)</li>
-                    <li>\(\cos(a - b) = \cos(a)\cos(b) + \sin(a)\sin(b)\)</li>
-                    <li>\(\tan(a + b) = \frac{\tan(a) + \tan(b)}{1 - \tan(a)\tan(b)}\)</li>
-                    <li>\(\tan(a - b) = \frac{\tan(a) - \tan(b)}{1 + \tan(a)\tan(b)}\)</li>
-                </ul>
-            </div>
-            
-            <div class="formula-box p-4 rounded-md mb-6">
-                <h3 class="font-semibold text-lg mb-2">Formules de duplication</h3>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li>\(\sin(2a) = 2\sin(a)\cos(a)\)</li>
-                    <li>\(\cos(2a) = \cos^2(a) - \sin^2(a) = 2\cos^2(a) - 1 = 1 - 2\sin^2(a)\)</li>
-                    <li>\(\tan(2a) = \frac{2\tan(a)}{1 - \tan^2(a)}\)</li>
-                </ul>
-            </div>
-            
-            <div class="formula-box p-4 rounded-md mb-6">
-                <h3 class="font-semibold text-lg mb-2">Formules de linéarisation</h3>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li>\(\sin(a)\sin(b) = \frac{1}{2}[\cos(a-b) - \cos(a+b)]\)</li>
-                    <li>\(\sin(a)\cos(b) = \frac{1}{2}[\sin(a+b) + \sin(a-b)]\)</li>
-                    <li>\(\cos(a)\cos(b) = \frac{1}{2}[\cos(a+b) + \cos(a-b)]\)</li>
-                </ul>
-            </div>
-            
-            <div class="formula-box p-4 rounded-md">
-                <h3 class="font-semibold text-lg mb-2">Formules de factorisation</h3>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li>\(\sin(a) + \sin(b) = 2\sin(\frac{a+b}{2})\cos(\frac{a-b}{2})\)</li>
-                    <li>\(\sin(a) - \sin(b) = 2\sin(\frac{a-b}{2})\cos(\frac{a+b}{2})\)</li>
-                    <li>\(\cos(a) + \cos(b) = 2\cos(\frac{a+b}{2})\cos(\frac{a-b}{2})\)</li>
-                    <li>\(\cos(a) - \cos(b) = -2\sin(\frac{a+b}{2})\sin(\frac{a-b}{2})\)</li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="equations" class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold text-blue-800 mb-4">4. Équations trigonométriques</h2>
-            
-            <div class="example-box p-4 rounded-md mb-6">
-                <h3 class="font-semibold text-lg mb-2">Équations de base</h3>
-                
-                <p class="mb-2"><strong>1. Équation \(\sin(x) = a\)</strong></p>
-                <ul class="list-disc pl-6 mb-4">
-                    <li>Si \(|a| > 1\), pas de solution</li>
-                    <li>Si \(|a| \leq 1\), alors \(x = \arcsin(a) + 2k\pi\) ou \(x = \pi - \arcsin(a) + 2k\pi\), avec \(k \in \mathbb{Z}\)</li>
-                </ul>
-                
-                <p class="mb-2"><strong>2. Équation \(\cos(x) = a\)</strong></p>
-                <ul class="list-disc pl-6 mb-4">
-                    <li>Si \(|a| > 1\), pas de solution</li>
-                    <li>Si \(|a| \leq 1\), alors \(x = \arccos(a) + 2k\pi\) ou \(x = -\arccos(a) + 2k\pi\), avec \(k \in \mathbb{Z}\)</li>
-                </ul>
-                
-                <p class="mb-2"><strong>3. Équation \(\tan(x) = a\)</strong></p>
-                <ul class="list-disc pl-6">
-                    <li>Pour tout \(a \in \mathbb{R}\), \(x = \arctan(a) + k\pi\), avec \(k \in \mathbb{Z}\)</li>
-                </ul>
-            </div>
-            
-            <div class="example-box p-4 rounded-md">
-                <h3 class="font-semibold text-lg mb-2">Exemple résolu : \(\sin(2x) = \frac{1}{2}\) sur \([0, 2\pi]\)</h3>
-                
-                <div class="bg-gray-50 p-4 rounded-md">
-                    <p class="mb-2"><strong>Solution :</strong></p>
-                    <p class="mb-2">On cherche les valeurs de \(x \in [0, 2\pi]\) telles que \(\sin(2x) = \frac{1}{2}\)</p>
-                    <p class="mb-2">On sait que \(\sin(\theta) = \frac{1}{2}\) pour \(\theta = \frac{\pi}{6} + 2k\pi\) ou \(\theta = \frac{5\pi}{6} + 2k\pi\), avec \(k \in \mathbb{Z}\)</p>
-                    <p class="mb-2">Donc \(2x = \frac{\pi}{6} + 2k\pi\) ou \(2x = \frac{5\pi}{6} + 2k\pi\)</p>
-                    <p class="mb-2">Ce qui donne \(x = \frac{\pi}{12} + k\pi\) ou \(x = \frac{5\pi}{12} + k\pi\)</p>
-                    <p class="mb-2">Pour \(x \in [0, 2\pi]\), on obtient les solutions :</p>
-                    <p>\(x = \frac{\pi}{12}, \frac{5\pi}{12}, \frac{\pi}{12} + \pi = \frac{13\pi}{12}, \frac{5\pi}{12} + \pi = \frac{17\pi}{12}\)</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="exercices" class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold text-blue-800 mb-4">5. Exercices corrigés</h2>
-            
-            <div class="exercise-box p-4 rounded-md mb-6">
-                <h3 class="font-semibold text-lg mb-2">Exercice 1 : Simplification d'expressions</h3>
-                <p class="mb-2">Simplifier l'expression : \(E = \sin^2(x) - \sin^2(y) - \cos^2(x) + \cos^2(y)\)</p>
-                
-                <div class="mt-4 bg-gray-50 p-4 rounded-md">
-                    <p class="font-semibold">Solution :</p>
-                    <p class="mb-2">\(E = \sin^2(x) - \sin^2(y) - \cos^2(x) + \cos^2(y)\)</p>
-                    <p class="mb-2">On sait que \(\sin^2(t) + \cos^2(t) = 1\) pour tout réel \(t\)</p>
-                    <p class="mb-2">Donc \(\sin^2(x) - \cos^2(x) = \sin^2(x) - (1 - \sin^2(x)) = 2\sin^2(x) - 1\)</p>
-                    <p class="mb-2">Et \(-\sin^2(y) + \cos^2(y) = -\sin^2(y) + (1 - \sin^2(y)) = 1 - 2\sin^2(y)\)</p>
-                    <p class="mb-2">\(E = (2\sin^2(x) - 1) + (1 - 2\sin^2(y)) = 2\sin^2(x) - 2\sin^2(y)\)</p>
-                    <p class="mb-2">\(E = 2(\sin^2(x) - \sin^2(y))\)</p>
-                    <p>\(E = 2((\sin(x) - \sin(y))(\sin(x) + \sin(y)))\)</p>
-                </div>
-            </div>
-            
-            <div class="exercise-box p-4 rounded-md mb-6">
-                <h3 class="font-semibold text-lg mb-2">Exercice 2 : Résolution d'équation</h3>
-                <p class="mb-2">Résoudre dans \([0, 2\pi]\) l'équation : \(2\cos^2(x) - \cos(x) - 1 = 0\)</p>
-                
-                <div class="mt-4 bg-gray-50 p-4 rounded-md">
-                    <p class="font-semibold">Solution :</p>
-                    <p class="mb-2">Posons \(u = \cos(x)\). L'équation devient :</p>
-                    <p class="mb-2">\(2u^2 - u - 1 = 0\)</p>
-                    <p class="mb-2">Calculons le discriminant : \(\Delta = 1 + 4 \times 2 \times 1 = 9\)</p>
-                    <p class="mb-2">\(\Delta > 0\), donc l'équation admet deux solutions :</p>
-                    <p class="mb-2">\(u_1 = \frac{1 + 3}{4} = 1\) et \(u_2 = \frac{1 - 3}{4} = -\frac{1}{2}\)</p>
-                    <p class="mb-2">Donc \(\cos(x) = 1\) ou \(\cos(x) = -\frac{1}{2}\)</p>
-                    <p class="mb-2">Si \(\cos(x) = 1\), alors \(x = 0\) ou \(x = 2\pi\) dans \([0, 2\pi]\)</p>
-                    <p class="mb-2">Si \(\cos(x) = -\frac{1}{2}\), alors \(x = \frac{2\pi}{3}\) ou \(x = \frac{4\pi}{3}\) dans \([0, 2\pi]\)</p>
-                    <p>Les solutions dans \([0, 2\pi]\) sont donc : \(x = 0, \frac{2\pi}{3}, \frac{4\pi}{3}, 2\pi\)</p>
-                </div>
-            </div>
-            
-            <div class="exercise-box p-4 rounded-md">
-                <h3 class="font-semibold text-lg mb-2">Exercice 3 : Linéarisation</h3>
-                <p class="mb-2">Transformer en somme l'expression : \(E = \cos(3x)\cos(5x)\)</p>
-                
-                <div class="mt-4 bg-gray-50 p-4 rounded-md">
-                    <p class="font-semibold">Solution :</p>
-                    <p class="mb-2">On utilise la formule de linéarisation : \(\cos(a)\cos(b) = \frac{1}{2}[\cos(a+b) + \cos(a-b)]\)</p>
-                    <p class="mb-2">Avec \(a = 3x\) et \(b = 5x\), on obtient :</p>
-                    <p class="mb-2">\(E = \cos(3x)\cos(5x) = \frac{1}{2}[\cos(3x+5x) + \cos(3x-5x)]\)</p>
-                    <p class="mb-2">\(E = \frac{1}{2}[\cos(8x) + \cos(-2x)]\)</p>
-                    <p class="mb-2">Comme \(\cos(-\theta) = \cos(\theta)\), on a :</p>
-                    <p>\(E = \frac{1}{2}[\cos(8x) + \cos(2x)]\)</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-            <h2 class="text-xl font-bold text-blue-800 mb-2">Conseils pour réussir en trigonométrie</h2>
-            <ul class="list-disc pl-6 space-y-2">
-                <li>Mémorisez les valeurs des angles remarquables</li>
-                <li>Maîtrisez les formules fondamentales</li>
-                <li>Pratiquez régulièrement avec des exercices variés</li>
-                <li>Dessinez le cercle trigonométrique pour visualiser les problèmes</li>
-                <li>Vérifiez vos solutions en remplaçant dans l'équation initiale</li>
-            </ul>
         </div>
 
-        <footer class="text-center text-gray-600 mt-8">
-            <p>© 2023 Cours de Mathématiques - Programme Camerounais Première D</p>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-bold text-blue-800 mb-4">Conseils pour réussir en mathématiques</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="font-semibold text-blue-700 mb-2">Méthodes de travail</h3>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Travailler régulièrement, ne pas attendre la veille des examens</li>
+                        <li>Comprendre les concepts plutôt que de mémoriser</li>
+                        <li>Faire beaucoup d'exercices variés</li>
+                        <li>Revoir systématiquement les erreurs commises</li>
+                        <li>Constituer des fiches de formules et de méthodes</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-blue-700 mb-2">Préparation aux examens</h3>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>S'entraîner sur des sujets d'examens des années précédentes</li>
+                        <li>Travailler dans les conditions d'examen (temps limité, sans aide)</li>
+                        <li>Vérifier ses réponses et la cohérence des résultats</li>
+                        <li>Soigner la présentation et la rédaction</li>
+                        <li>Maîtriser l'utilisation de la calculatrice</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-gray-600 mt-8 pb-8">
+            <p>© 2023 Programme de Mathématiques - Première D - Cameroun</p>
+            <p class="text-sm mt-2">Ce document présente le programme officiel de mathématiques pour la classe de Première D au Cameroun.</p>
         </footer>
     </div>
 
@@ -1339,7 +889,6 @@
                 });
             });
         });
-   <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961b573636aee3b0',t:'MTc1MjkzOTg3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961b2bdba2946938',t:'MTc1MjkzODA5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961b924825fde3b5',t:'MTc1Mjk0MjI5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
