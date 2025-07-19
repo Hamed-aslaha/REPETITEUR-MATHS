@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Répétiteur de Mathématiques - Première D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f9ff;
+        }
+        
+        .math-formula {
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .solution {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        
+        .solution.show {
+            max-height: 1000px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-6">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="flex items-center mb-4 md:mb-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                        <h1 class="text-2xl md:text-3xl font-bold">MathExcel Cameroun</h1>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="hidden md:inline text-sm">Programme:</span>
+                        <span class="bg-white text-blue-800 font-semibold px-3 py-1 rounded-full text-sm">Première D</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <!-- Tabs -->
+            <div class="mb-6 bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="flex flex-wrap text-sm font-medium text-center border-b">
+                    <button class="tab-button flex-grow py-4 px-2 md:px-6 focus:outline-none active" data-tab="algebre">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        Algèbre
+                    </button>
+                    <button class="tab-button flex-grow py-4 px-2 md:px-6 focus:outline-none" data-tab="analyse">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                        </svg>
+                        Analyse
+                    </button>
+                    <button class="tab-button flex-grow py-4 px-2 md:px-6 focus:outline-none" data-tab="geometrie">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
+                        </svg>
+                        Géométrie
+                    </button>
+                    <button class="tab-button flex-grow py-4 px-2 md:px-6 focus:outline-none" data-tab="probabilites">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                        </svg>
+                        Probabilités
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="tab-content active" id="algebre">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-blue-800 mb-4">Équations du Second Degré</h2>
+                        <p class="mb-4">Résoudre une équation du second degré de la forme ax² + bx + c = 0 en utilisant le discriminant.</p>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                            <h3 class="font-semibold text-blue-800 mb-2">Formule du discriminant</h3>
+                            <p class="math-formula text-lg mb-2">Δ = b² - 4ac</p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>Si Δ > 0, l'équation admet deux solutions réelles distinctes</li>
+                                <li>Si Δ = 0, l'équation admet une solution réelle double</li>
+                                <li>Si Δ < 0, l'équation n'admet pas de solution réelle</li>
+                            </ul>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg mb-6">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h3 class="font-semibold">Exemple 1</h3>
+                                <p class="math-formula">Résoudre l'équation : 2x² - 5x + 2 = 0</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Calculez le discriminant :</label>
+                                    <div class="flex">
+                                        <input type="text" id="discriminant1" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse...">
+                                        <button onclick="checkDiscriminant(1)" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
+                                    </div>
+                                    <p id="discriminant1-feedback" class="mt-1 text-sm"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <button onclick="toggleSolution(1)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Voir la solution complète
+                                    </button>
+                                    <div id="solution1" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                        <p class="mb-2"><strong>Étape 1:</strong> Identifions les coefficients</p>
+                                        <p class="math-formula mb-2">a = 2, b = -5, c = 2</p>
+                                        
+                                        <p class="mb-2"><strong>Étape 2:</strong> Calculons le discriminant</p>
+                                        <p class="math-formula mb-2">Δ = b² - 4ac = (-5)² - 4 × 2 × 2 = 25 - 16 = 9</p>
+                                        
+                                        <p class="mb-2"><strong>Étape 3:</strong> Comme Δ > 0, l'équation admet deux solutions réelles distinctes</p>
+                                        <p class="math-formula mb-2">x₁ = (-b - √Δ) / 2a = (5 - 3) / 4 = 2/4 = 0,5</p>
+                                        <p class="math-formula mb-2">x₂ = (-b + √Δ) / 2a = (5 + 3) / 4 = 8/4 = 2</p>
+                                        
+                                        <p class="font-semibold">Les solutions sont donc x₁ = 0,5 et x₂ = 2</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h3 class="font-semibold">Exemple 2</h3>
+                                <p class="math-formula">Résoudre l'équation : 3x² + 6x + 3 = 0</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Calculez le discriminant :</label>
+                                    <div class="flex">
+                                        <input type="text" id="discriminant2" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse...">
+                                        <button onclick="checkDiscriminant(2)" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
+                                    </div>
+                                    <p id="discriminant2-feedback" class="mt-1 text-sm"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <button onclick="toggleSolution(2)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Voir la solution complète
+                                    </button>
+                                    <div id="solution2" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                        <p class="mb-2"><strong>Étape 1:</strong> Identifions les coefficients</p>
+                                        <p class="math-formula mb-2">a = 3, b = 6, c = 3</p>
+                                        
+                                        <p class="mb-2"><strong>Étape 2:</strong> Calculons le discriminant</p>
+                                        <p class="math-formula mb-2">Δ = b² - 4ac = 6² - 4 × 3 × 3 = 36 - 36 = 0</p>
+                                        
+                                        <p class="mb-2"><strong>Étape 3:</strong> Comme Δ = 0, l'équation admet une solution réelle double</p>
+                                        <p class="math-formula mb-2">x = -b / 2a = -6 / (2 × 3) = -6/6 = -1</p>
+                                        
+                                        <p class="font-semibold">La solution est donc x = -1 (solution double)</p>
+                                        
+                                        <p class="mt-2 text-sm text-gray-600">On peut aussi factoriser : 3x² + 6x + 3 = 3(x² + 2x + 1) = 3(x + 1)²</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-blue-800 mb-4">Exercices à faire</h2>
+                        
+                        <div class="space-y-6">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <p class="font-medium mb-2">Exercice 1: Résoudre les équations suivantes</p>
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li>x² - 4x + 4 = 0</li>
+                                    <li>2x² + 5x - 3 = 0</li>
+                                    <li>-x² + 2x - 1 = 0</li>
+                                </ol>
+                                <button onclick="toggleSolution(3)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Voir les solutions
+                                </button>
+                                <div id="solution3" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                    <div class="mb-3">
+                                        <p class="font-medium">1. x² - 4x + 4 = 0</p>
+                                        <p>a = 1, b = -4, c = 4</p>
+                                        <p>Δ = b² - 4ac = (-4)² - 4 × 1 × 4 = 16 - 16 = 0</p>
+                                        <p>Δ = 0, donc une solution double : x = -b/(2a) = 4/2 = 2</p>
+                                        <p class="font-semibold">Solution : x = 2 (double)</p>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <p class="font-medium">2. 2x² + 5x - 3 = 0</p>
+                                        <p>a = 2, b = 5, c = -3</p>
+                                        <p>Δ = b² - 4ac = 5² - 4 × 2 × (-3) = 25 + 24 = 49</p>
+                                        <p>Δ > 0, donc deux solutions réelles :</p>
+                                        <p>x₁ = (-b - √Δ)/(2a) = (-5 - 7)/(2×2) = -12/4 = -3</p>
+                                        <p>x₂ = (-b + √Δ)/(2a) = (-5 + 7)/(2×2) = 2/4 = 0,5</p>
+                                        <p class="font-semibold">Solutions : x₁ = -3 et x₂ = 0,5</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="font-medium">3. -x² + 2x - 1 = 0</p>
+                                        <p>a = -1, b = 2, c = -1</p>
+                                        <p>Δ = b² - 4ac = 2² - 4 × (-1) × (-1) = 4 - 4 = 0</p>
+                                        <p>Δ = 0, donc une solution double : x = -b/(2a) = -2/(-2) = 1</p>
+                                        <p class="font-semibold">Solution : x = 1 (double)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <p class="font-medium mb-2">Exercice 2: Factoriser les expressions suivantes</p>
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li>x² - 9</li>
+                                    <li>4x² - 12x + 9</li>
+                                    <li>x² + 6x + 9</li>
+                                </ol>
+                                <button onclick="toggleSolution(4)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Voir les solutions
+                                </button>
+                                <div id="solution4" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                    <div class="mb-3">
+                                        <p class="font-medium">1. x² - 9</p>
+                                        <p>C'est une différence de carrés : a² - b² = (a+b)(a-b)</p>
+                                        <p>x² - 9 = x² - 3² = (x+3)(x-3)</p>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <p class="font-medium">2. 4x² - 12x + 9</p>
+                                        <p>On peut factoriser par 1 : 4x² - 12x + 9 = 4(x² - 3x) + 9</p>
+                                        <p>Mais on peut aussi reconnaître un carré parfait :</p>
+                                        <p>4x² - 12x + 9 = (2x)² - 2(2x)(3) + 3²</p>
+                                        <p>= (2x - 3)²</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="font-medium">3. x² + 6x + 9</p>
+                                        <p>On reconnaît un carré parfait : x² + 6x + 9 = x² + 2(x)(3) + 3²</p>
+                                        <p>= (x + 3)²</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="analyse">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-blue-800 mb-4">Limites et Continuité</h2>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                            <h3 class="font-semibold text-blue-800 mb-2">Règles de calcul des limites</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>lim(x→a) [f(x) + g(x)] = lim(x→a) f(x) + lim(x→a) g(x)</li>
+                                <li>lim(x→a) [f(x) × g(x)] = lim(x→a) f(x) × lim(x→a) g(x)</li>
+                                <li>lim(x→a) [f(x) / g(x)] = lim(x→a) f(x) / lim(x→a) g(x), si lim(x→a) g(x) ≠ 0</li>
+                                <li>lim(x→+∞) (1/x) = 0</li>
+                                <li>lim(x→+∞) (x^n) = +∞ pour n > 0</li>
+                            </ul>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg mb-6">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h3 class="font-semibold">Exemple 1</h3>
+                                <p class="math-formula">Calculer la limite de f(x) = (3x² - 2x + 1) / (x² + 4) quand x tend vers +∞</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Quelle est la limite ?</label>
+                                    <div class="flex">
+                                        <input type="text" id="limite1" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse...">
+                                        <button onclick="checkLimite(1)" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
+                                    </div>
+                                    <p id="limite1-feedback" class="mt-1 text-sm"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <button onclick="toggleSolution(5)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Voir la solution complète
+                                    </button>
+                                    <div id="solution5" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                        <p class="mb-2"><strong>Méthode:</strong> Pour calculer la limite d'une fraction rationnelle quand x tend vers l'infini, on divise le numérateur et le dénominateur par la plus grande puissance de x.</p>
+                                        
+                                        <p class="math-formula mb-2">f(x) = (3x² - 2x + 1) / (x² + 4)</p>
+                                        
+                                        <p class="mb-2">Divisons par x² (la plus grande puissance) :</p>
+                                        <p class="math-formula mb-2">f(x) = (3 - 2/x + 1/x²) / (1 + 4/x²)</p>
+                                        
+                                        <p class="mb-2">Quand x tend vers +∞ :</p>
+                                        <p class="math-formula mb-2">lim(x→+∞) (2/x) = 0</p>
+                                        <p class="math-formula mb-2">lim(x→+∞) (1/x²) = 0</p>
+                                        <p class="math-formula mb-2">lim(x→+∞) (4/x²) = 0</p>
+                                        
+                                        <p class="mb-2">Donc :</p>
+                                        <p class="math-formula mb-2">lim(x→+∞) f(x) = (3 - 0 + 0) / (1 + 0) = 3/1 = 3</p>
+                                        
+                                        <p class="font-semibold">La limite est 3</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h3 class="font-semibold">Exemple 2</h3>
+                                <p class="math-formula">Étudier la continuité de la fonction f définie par :</p>
+                                <p class="math-formula">f(x) = { (x² - 4) / (x - 2) si x ≠ 2</p>
+                                <p class="math-formula">        { 4 si x = 2</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">La fonction est-elle continue en x = 2 ?</label>
+                                    <div class="flex space-x-4">
+                                        <button onclick="checkContinuite('oui')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Oui</button>
+                                        <button onclick="checkContinuite('non')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Non</button>
+                                    </div>
+                                    <p id="continuite-feedback" class="mt-1 text-sm"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <button onclick="toggleSolution(6)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Voir la solution complète
+                                    </button>
+                                    <div id="solution6" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                        <p class="mb-2"><strong>Méthode:</strong> Pour étudier la continuité en x = 2, nous devons vérifier si la limite de f(x) quand x tend vers 2 est égale à f(2).</p>
+                                        
+                                        <p class="mb-2">Calculons la limite de f(x) quand x tend vers 2 :</p>
+                                        <p class="math-formula mb-2">lim(x→2) f(x) = lim(x→2) (x² - 4) / (x - 2)</p>
+                                        <p class="math-formula mb-2">= lim(x→2) ((x - 2)(x + 2)) / (x - 2)</p>
+                                        <p class="math-formula mb-2">= lim(x→2) (x + 2) = 2 + 2 = 4</p>
+                                        
+                                        <p class="mb-2">Or, f(2) = 4 d'après la définition de la fonction.</p>
+                                        
+                                        <p class="mb-2">Donc, lim(x→2) f(x) = f(2) = 4</p>
+                                        
+                                        <p class="font-semibold">La fonction est continue en x = 2.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-blue-800 mb-4">Exercices à faire</h2>
+                        
+                        <div class="space-y-6">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <p class="font-medium mb-2">Exercice 1: Calculer les limites suivantes</p>
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li>lim(x→+∞) (2x³ + x) / (x³ - 5x² + 1)</li>
+                                    <li>lim(x→0) (sin(x)) / x</li>
+                                    <li>lim(x→1) (x² - 1) / (x - 1)</li>
+                                </ol>
+                                <button onclick="toggleSolution(7)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Voir les solutions
+                                </button>
+                                <div id="solution7" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                    <div class="mb-3">
+                                        <p class="font-medium">1. lim(x→+∞) (2x³ + x) / (x³ - 5x² + 1)</p>
+                                        <p>Divisons par x³ (plus haute puissance) :</p>
+                                        <p>(2x³ + x) / (x³ - 5x² + 1) = (2 + 1/x²) / (1 - 5/x + 1/x³)</p>
+                                        <p>Quand x→+∞, 1/x², 5/x et 1/x³ tendent vers 0</p>
+                                        <p>Donc lim(x→+∞) (2x³ + x) / (x³ - 5x² + 1) = 2/1 = 2</p>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <p class="font-medium">2. lim(x→0) (sin(x)) / x</p>
+                                        <p>C'est une limite fondamentale : lim(x→0) (sin(x)) / x = 1</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="font-medium">3. lim(x→1) (x² - 1) / (x - 1)</p>
+                                        <p>Factorisons le numérateur :</p>
+                                        <p>(x² - 1) / (x - 1) = ((x - 1)(x + 1)) / (x - 1) = x + 1</p>
+                                        <p>Donc lim(x→1) (x² - 1) / (x - 1) = 1 + 1 = 2</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <p class="font-medium mb-2">Exercice 2: Étudier la continuité des fonctions suivantes</p>
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li>f(x) = { (x² - 1) / (x - 1) si x ≠ 1</li>
+                                    <li style="margin-left: 20px;">{ 3 si x = 1</li>
+                                    <li>g(x) = { x² si x ≤ 0</li>
+                                    <li style="margin-left: 20px;">{ 2x + 1 si x > 0</li>
+                                </ol>
+                                <button onclick="toggleSolution(8)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Voir les solutions
+                                </button>
+                                <div id="solution8" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                    <div class="mb-3">
+                                        <p class="font-medium">1. Fonction f</p>
+                                        <p>Pour x ≠ 1 : f(x) = (x² - 1) / (x - 1) = (x - 1)(x + 1) / (x - 1) = x + 1</p>
+                                        <p>Donc lim(x→1) f(x) = 1 + 1 = 2</p>
+                                        <p>Or f(1) = 3</p>
+                                        <p>Comme lim(x→1) f(x) ≠ f(1), la fonction f n'est pas continue en x = 1</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="font-medium">2. Fonction g</p>
+                                        <p>Calculons les limites à gauche et à droite en x = 0 :</p>
+                                        <p>lim(x→0⁻) g(x) = lim(x→0⁻) x² = 0</p>
+                                        <p>lim(x→0⁺) g(x) = lim(x→0⁺) (2x + 1) = 1</p>
+                                        <p>Comme lim(x→0⁻) g(x) ≠ lim(x→0⁺) g(x), la fonction g n'est pas continue en x = 0</p>
+                                        <p>La fonction g est continue sur ]-∞, 0[ et sur ]0, +∞[</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="geometrie">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-blue-800 mb-4">Géométrie dans l'espace</h2>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                            <h3 class="font-semibold text-blue-800 mb-2">Vecteurs dans l'espace</h3>
+                            <p class="mb-2">Un vecteur dans l'espace est caractérisé par ses trois coordonnées dans un repère orthonormé (O, i, j, k).</p>
+                            <p class="mb-2">Si A(x₁, y₁, z₁) et B(x₂, y₂, z₂) sont deux points de l'espace, alors :</p>
+                            <p class="math-formula mb-2">AB = (x₂ - x₁, y₂ - y₁, z₂ - z₁)</p>
+                            <p class="mb-2">Le produit scalaire de deux vecteurs u(x₁, y₁, z₁) et v(x₂, y₂, z₂) est :</p>
+                            <p class="math-formula">u·v = x₁x₂ + y₁y₂ + z₁z₂</p>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg mb-6">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h3 class="font-semibold">Exemple 1</h3>
+                                <p class="math-formula">Soient les points A(1, 2, 3), B(4, 0, 2) et C(2, 1, 5). Calculer le produit scalaire AB·AC.</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Calculez AB·AC :</label>
+                                    <div class="flex">
+                                        <input type="text" id="produit-scalaire" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse...">
+                                        <button onclick="checkProduitScalaire()" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
+                                    </div>
+                                    <p id="produit-scalaire-feedback" class="mt-1 text-sm"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <button onclick="toggleSolution(9)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Voir la solution complète
+                                    </button>
+                                    <div id="solution9" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                        <p class="mb-2"><strong>Étape 1:</strong> Calculons les coordonnées des vecteurs AB et AC</p>
+                                        <p class="math-formula mb-2">AB = (4-1, 0-2, 2-3) = (3, -2, -1)</p>
+                                        <p class="math-formula mb-2">AC = (2-1, 1-2, 5-3) = (1, -1, 2)</p>
+                                        
+                                        <p class="mb-2"><strong>Étape 2:</strong> Calculons le produit scalaire AB·AC</p>
+                                        <p class="math-formula mb-2">AB·AC = 3×1 + (-2)×(-1) + (-1)×2</p>
+                                        <p class="math-formula mb-2">= 3 + 2 - 2 = 3</p>
+                                        
+                                        <p class="font-semibold">Le produit scalaire AB·AC = 3</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h3 class="font-semibold">Exemple 2</h3>
+                                <p class="math-formula">Déterminer si les vecteurs u(2, 1, -3) et v(-4, -2, 6) sont colinéaires.</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Les vecteurs sont-ils colinéaires ?</label>
+                                    <div class="flex space-x-4">
+                                        <button onclick="checkColineaire('oui')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Oui</button>
+                                        <button onclick="checkColineaire('non')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Non</button>
+                                    </div>
+                                    <p id="colineaire-feedback" class="mt-1 text-sm"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <button onclick="toggleSolution(10)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Voir la solution complète
+                                    </button>
+                                    <div id="solution10" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                        <p class="mb-2"><strong>Méthode:</strong> Deux vecteurs u(x₁, y₁, z₁) et v(x₂, y₂, z₂) sont colinéaires s'il existe un réel k tel que v = k×u, c'est-à-dire si x₂ = k×x₁, y₂ = k×y₁ et z₂ = k×z₁.</p>
+                                        
+                                        <p class="mb-2">Vérifions s'il existe un réel k tel que v = k×u :</p>
+                                        <p class="math-formula mb-2">-4 = k×2 ⟹ k = -2</p>
+                                        <p class="math-formula mb-2">-2 = k×1 ⟹ k = -2</p>
+                                        <p class="math-formula mb-2">6 = k×(-3) ⟹ k = -2</p>
+                                        
+                                        <p class="mb-2">On trouve la même valeur k = -2 pour chaque coordonnée, donc v = -2×u.</p>
+                                        
+                                        <p class="font-semibold">Les vecteurs u et v sont colinéaires.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-blue-800 mb-4">Exercices à faire</h2>
+                        
+                        <div class="space-y-6">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <p class="font-medium mb-2">Exercice 1: Produit scalaire et orthogonalité</p>
+                                <p>Soient les vecteurs u(3, -1, 2), v(1, 2, 4) et w(0, 7, -2).</p>
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li>Calculer u·v et u·w</li>
+                                    <li>Les vecteurs u et v sont-ils orthogonaux ?</li>
+                                    <li>Les vecteurs u et w sont-ils orthogonaux ?</li>
+                                </ol>
+                                <button onclick="toggleSolution(11)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Voir les solutions
+                                </button>
+                                <div id="solution11" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                    <div class="mb-3">
+                                        <p class="font-medium">1. Calcul des produits scalaires</p>
+                                        <p>u·v = 3×1 + (-1)×2 + 2×4 = 3 - 2 + 8 = 9</p>
+                                        <p>u·w = 3×0 + (-1)×7 + 2×(-2) = 0 - 7 - 4 = -11</p>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <p class="font-medium">2. Orthogonalité de u et v</p>
+                                        <p>Deux vecteurs sont orthogonaux si et seulement si leur produit scalaire est nul.</p>
+                                        <p>u·v = 9 ≠ 0, donc les vecteurs u et v ne sont pas orthogonaux.</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="font-medium">3. Orthogonalité de u et w</p>
+                                        <p>u·w = -11 ≠ 0, donc les vecteurs u et w ne sont pas orthogonaux.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <p class="font-medium mb-2">Exercice 2: Équation d'un plan</p>
+                                <p>Soit un plan P passant par le point A(1, 2, -1) et de vecteur normal n(2, 3, 1).</p>
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li>Déterminer une équation cartésienne du plan P.</li>
+                                    <li>Le point B(3, -1, 4) appartient-il au plan P ?</li>
+                                </ol>
+                                <button onclick="toggleSolution(12)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Voir les solutions
+                                </button>
+                                <div id="solution12" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                    <div class="mb-3">
+                                        <p class="font-medium">1. Équation cartésienne du plan</p>
+                                        <p>L'équation cartésienne d'un plan de vecteur normal n(a, b, c) passant par un point A(x₀, y₀, z₀) est :</p>
+                                        <p>a(x - x₀) + b(y - y₀) + c(z - z₀) = 0</p>
+                                        <p>Avec n(2, 3, 1) et A(1, 2, -1) :</p>
+                                        <p>2(x - 1) + 3(y - 2) + 1(z - (-1)) = 0</p>
+                                        <p>2x - 2 + 3y - 6 + z + 1 = 0</p>
+                                        <p>2x + 3y + z - 7 = 0</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="font-medium">2. Appartenance du point B au plan</p>
+                                        <p>Pour vérifier si B(3, -1, 4) appartient au plan, on remplace les coordonnées dans l'équation :</p>
+                                        <p>2×3 + 3×(-1) + 1×4 - 7 = 0</p>
+                                        <p>6 - 3 + 4 - 7 = 0</p>
+                                        <p>0 = 0</p>
+                                        <p>L'égalité est vérifiée, donc le point B appartient au plan P.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="probabilites">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-blue-800 mb-4">Probabilités</h2>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                            <h3 class="font-semibold text-blue-800 mb-2">Formules importantes</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>P(A∪B) = P(A) + P(B) - P(A∩B)</li>
+                                <li>P(A∩B) = P(A) × P(B) si A et B sont indépendants</li>
+                                <li>P(A|B) = P(A∩B) / P(B) (probabilité conditionnelle)</li>
+                                <li>Formule des probabilités totales : P(A) = P(A|B) × P(B) + P(A|B̄) × P(B̄)</li>
+                                <li>Formule de Bayes : P(B|A) = [P(A|B) × P(B)] / P(A)</li>
+                            </ul>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg mb-6">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h3 class="font-semibold">Exemple 1</h3>
+                                <p>Une urne contient 5 boules rouges et 3 boules bleues. On tire successivement et sans remise 2 boules de l'urne. Quelle est la probabilité d'obtenir 2 boules de la même couleur ?</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Quelle est la probabilité ?</label>
+                                    <div class="flex">
+                                        <input type="text" id="proba1" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse (fraction ou décimal)...">
+                                        <button onclick="checkProba(1)" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
+                                    </div>
+                                    <p id="proba1-feedback" class="mt-1 text-sm"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <button onclick="toggleSolution(13)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Voir la solution complète
+                                    </button>
+                                    <div id="solution13" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                        <p class="mb-2"><strong>Méthode:</strong> On calcule la probabilité d'obtenir 2 boules rouges ou 2 boules bleues.</p>
+                                        
+                                        <p class="mb-2">Nombre total de boules : 5 + 3 = 8</p>
+                                        
+                                        <p class="mb-2">Probabilité d'obtenir 2 boules rouges :</p>
+                                        <p class="math-formula mb-2">P(RR) = (5/8) × (4/7) = 20/56 = 5/14</p>
+                                        
+                                        <p class="mb-2">Probabilité d'obtenir 2 boules bleues :</p>
+                                        <p class="math-formula mb-2">P(BB) = (3/8) × (2/7) = 6/56 = 3/28</p>
+                                        
+                                        <p class="mb-2">Probabilité d'obtenir 2 boules de la même couleur :</p>
+                                        <p class="math-formula mb-2">P(RR ou BB) = P(RR) + P(BB) = 5/14 + 3/28 = 10/28 + 3/28 = 13/28</p>
+                                        
+                                        <p class="font-semibold">La probabilité est 13/28 ≈ 0,464</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h3 class="font-semibold">Exemple 2</h3>
+                                <p>Dans une classe, 60% des élèves sont des filles. Parmi les filles, 80% ont réussi l'examen, tandis que parmi les garçons, 70% ont réussi. On choisit un élève au hasard qui a réussi l'examen. Quelle est la probabilité que ce soit une fille ?</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Quelle est la probabilité ?</label>
+                                    <div class="flex">
+                                        <input type="text" id="proba2" class="border rounded-l px-3 py-2 w-full" placeholder="Votre réponse (décimal avec 2 chiffres après la virgule)...">
+                                        <button onclick="checkProba(2)" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Vérifier</button>
+                                    </div>
+                                    <p id="proba2-feedback" class="mt-1 text-sm"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <button onclick="toggleSolution(14)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Voir la solution complète
+                                    </button>
+                                    <div id="solution14" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                        <p class="mb-2"><strong>Méthode:</strong> On utilise la formule de Bayes.</p>
+                                        
+                                        <p class="mb-2">Notons :</p>
+                                        <p class="mb-1">F : l'élève est une fille</p>
+                                        <p class="mb-1">G : l'élève est un garçon</p>
+                                        <p class="mb-2">R : l'élève a réussi l'examen</p>
+                                        
+                                        <p class="mb-2">Données :</p>
+                                        <p class="mb-1">P(F) = 0,6 et P(G) = 0,4</p>
+                                        <p class="mb-1">P(R|F) = 0,8</p>
+                                        <p class="mb-2">P(R|G) = 0,7</p>
+                                        
+                                        <p class="mb-2">On cherche P(F|R), la probabilité que l'élève soit une fille sachant qu'il a réussi.</p>
+                                        
+                                        <p class="mb-2">D'après la formule de Bayes :</p>
+                                        <p class="math-formula mb-2">P(F|R) = [P(R|F) × P(F)] / P(R)</p>
+                                        
+                                        <p class="mb-2">Calculons P(R) avec la formule des probabilités totales :</p>
+                                        <p class="math-formula mb-2">P(R) = P(R|F) × P(F) + P(R|G) × P(G)</p>
+                                        <p class="math-formula mb-2">P(R) = 0,8 × 0,6 + 0,7 × 0,4 = 0,48 + 0,28 = 0,76</p>
+                                        
+                                        <p class="mb-2">Donc :</p>
+                                        <p class="math-formula mb-2">P(F|R) = (0,8 × 0,6) / 0,76 = 0,48 / 0,76 = 0,632</p>
+                                        
+                                        <p class="font-semibold">La probabilité est environ 0,63 (ou 63%)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-blue-800 mb-4">Exercices à faire</h2>
+                        
+                        <div class="space-y-6">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <p class="font-medium mb-2">Exercice 1: Probabilités conditionnelles</p>
+                                <p>Une entreprise fabrique des pièces dans trois ateliers A, B et C. L'atelier A produit 20% des pièces, l'atelier B en produit 30% et l'atelier C en produit 50%. Les taux de pièces défectueuses sont respectivement de 5% pour l'atelier A, 4% pour l'atelier B et 2% pour l'atelier C.</p>
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li>Quelle est la probabilité qu'une pièce choisie au hasard soit défectueuse ?</li>
+                                    <li>Si une pièce est défectueuse, quelle est la probabilité qu'elle provienne de l'atelier C ?</li>
+                                </ol>
+                                <button onclick="toggleSolution(15)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Voir les solutions
+                                </button>
+                                <div id="solution15" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                    <div class="mb-3">
+                                        <p class="font-medium">1. Probabilité qu'une pièce soit défectueuse</p>
+                                        <p>Notons D l'événement "la pièce est défectueuse"</p>
+                                        <p>D'après la formule des probabilités totales :</p>
+                                        <p>P(D) = P(D|A)×P(A) + P(D|B)×P(B) + P(D|C)×P(C)</p>
+                                        <p>P(D) = 0,05×0,2 + 0,04×0,3 + 0,02×0,5</p>
+                                        <p>P(D) = 0,01 + 0,012 + 0,01 = 0,032</p>
+                                        <p>La probabilité qu'une pièce soit défectueuse est de 0,032 (ou 3,2%)</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="font-medium">2. Probabilité que la pièce défectueuse provienne de l'atelier C</p>
+                                        <p>On cherche P(C|D)</p>
+                                        <p>D'après la formule de Bayes :</p>
+                                        <p>P(C|D) = [P(D|C)×P(C)] / P(D)</p>
+                                        <p>P(C|D) = (0,02×0,5) / 0,032</p>
+                                        <p>P(C|D) = 0,01 / 0,032 = 0,3125</p>
+                                        <p>La probabilité que la pièce défectueuse provienne de l'atelier C est d'environ 0,31 (ou 31%)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <p class="font-medium mb-2">Exercice 2: Variable aléatoire</p>
+                                <p>On lance un dé équilibré à 6 faces. On définit la variable aléatoire X qui associe à chaque résultat le carré de la différence entre le résultat et 3,5.</p>
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li>Déterminer la loi de probabilité de X.</li>
+                                    <li>Calculer l'espérance mathématique E(X).</li>
+                                </ol>
+                                <button onclick="toggleSolution(16)" class="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Voir les solutions
+                                </button>
+                                <div id="solution16" class="solution bg-gray-50 p-4 rounded-lg mt-2">
+                                    <div class="mb-3">
+                                        <p class="font-medium">1. Loi de probabilité de X</p>
+                                        <p>X = (résultat - 3,5)²</p>
+                                        <p>Pour chaque résultat du dé, calculons la valeur de X :</p>
+                                        <p>Si résultat = 1 : X = (1 - 3,5)² = (-2,5)² = 6,25</p>
+                                        <p>Si résultat = 2 : X = (2 - 3,5)² = (-1,5)² = 2,25</p>
+                                        <p>Si résultat = 3 : X = (3 - 3,5)² = (-0,5)² = 0,25</p>
+                                        <p>Si résultat = 4 : X = (4 - 3,5)² = (0,5)² = 0,25</p>
+                                        <p>Si résultat = 5 : X = (5 - 3,5)² = (1,5)² = 2,25</p>
+                                        <p>Si résultat = 6 : X = (6 - 3,5)² = (2,5)² = 6,25</p>
+                                        <p>La loi de probabilité de X est donc :</p>
+                                        <p>P(X = 0,25) = 2/6 = 1/3</p>
+                                        <p>P(X = 2,25) = 2/6 = 1/3</p>
+                                        <p>P(X = 6,25) = 2/6 = 1/3</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="font-medium">2. Espérance mathématique E(X)</p>
+                                        <p>E(X) = Σ [x_i × P(X = x_i)]</p>
+                                        <p>E(X) = 0,25 × (1/3) + 2,25 × (1/3) + 6,25 × (1/3)</p>
+                                        <p>E(X) = (0,25 + 2,25 + 6,25) / 3</p>
+                                        <p>E(X) = 8,75 / 3 ≈ 2,92</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-6">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-lg font-semibold">MathExcel Cameroun</h3>
+                        <p class="text-sm text-gray-400">Soutien scolaire en mathématiques - Niveau Première D</p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-6 text-center text-sm text-gray-400">
+                    © 2023 MathExcel Cameroun. Tous droits réservés.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Tab switching
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Toggle solutions
+        function toggleSolution(id) {
+            const solution = document.getElementById('solution' + id);
+            solution.classList.toggle('show');
+        }
+        
+        // Check discriminant answers
+        function checkDiscriminant(id) {
+            const input = document.getElementById('discriminant' + id);
+            const feedback = document.getElementById('discriminant' + id + '-feedback');
+            const answer = input.value.trim();
+            
+            if (id === 1) {
+                if (answer === '9' || answer === '9.0') {
+                    feedback.textContent = 'Correct ! Δ = b² - 4ac = (-5)² - 4 × 2 × 2 = 25 - 16 = 9';
+                    feedback.className = 'mt-1 text-sm text-green-600';
+                } else {
+                    feedback.textContent = 'Incorrect. Essayez encore.';
+                    feedback.className = 'mt-1 text-sm text-red-600';
+                }
+            } else if (id === 2) {
+                if (answer === '0' || answer === '0.0') {
+                    feedback.textContent = 'Correct ! Δ = b² - 4ac = 6² - 4 × 3 × 3 = 36 - 36 = 0';
+                    feedback.className = 'mt-1 text-sm text-green-600';
+                } else {
+                    feedback.textContent = 'Incorrect. Essayez encore.';
+                    feedback.className = 'mt-1 text-sm text-red-600';
+                }
+            }
+        }
+        
+        // Check limite answers
+        function checkLimite(id) {
+            const input = document.getElementById('limite' + id);
+            const feedback = document.getElementById('limite' + id + '-feedback');
+            const answer = input.value.trim();
+            
+            if (id === 1) {
+                if (answer === '3' || answer === '3.0') {
+                    feedback.textContent = 'Correct ! La limite est 3.';
+                    feedback.className = 'mt-1 text-sm text-green-600';
+                } else {
+                    feedback.textContent = 'Incorrect. Essayez encore.';
+                    feedback.className = 'mt-1 text-sm text-red-600';
+                }
+            }
+        }
+        
+        // Check continuité answers
+        function checkContinuite(answer) {
+            const feedback = document.getElementById('continuite-feedback');
+            
+            if (answer === 'oui') {
+                feedback.textContent = 'Correct ! La fonction est continue en x = 2 car lim(x→2) f(x) = f(2) = 4.';
+                feedback.className = 'mt-1 text-sm text-green-600';
+            } else {
+                feedback.textContent = 'Incorrect. La fonction est continue en x = 2 car lim(x→2) f(x) = f(2) = 4.';
+                feedback.className = 'mt-1 text-sm text-red-600';
+            }
+        }
+        
+        // Check produit scalaire answers
+        function checkProduitScalaire() {
+            const input = document.getElementById('produit-scalaire');
+            const feedback = document.getElementById('produit-scalaire-feedback');
+            const answer = input.value.trim();
+            
+            if (answer === '3' || answer === '3.0') {
+                feedback.textContent = 'Correct ! AB·AC = 3×1 + (-2)×(-1) + (-1)×2 = 3 + 2 - 2 = 3';
+                feedback.className = 'mt-1 text-sm text-green-600';
+            } else {
+                feedback.textContent = 'Incorrect. Essayez encore.';
+                feedback.className = 'mt-1 text-sm text-red-600';
+            }
+        }
+        
+        // Check colinéaire answers
+        function checkColineaire(answer) {
+            const feedback = document.getElementById('colineaire-feedback');
+            
+            if (answer === 'oui') {
+                feedback.textContent = 'Correct ! Les vecteurs sont colinéaires car v = -2×u.';
+                feedback.className = 'mt-1 text-sm text-green-600';
+            } else {
+                feedback.textContent = 'Incorrect. Les vecteurs sont colinéaires car v = -2×u.';
+                feedback.className = 'mt-1 text-sm text-red-600';
+            }
+        }
+        
+        // Check probabilité answers
+        function checkProba(id) {
+            const input = document.getElementById('proba' + id);
+            const feedback = document.getElementById('proba' + id + '-feedback');
+            const answer = input.value.trim().toLowerCase();
+            
+            if (id === 1) {
+                if (answer === '13/28' || answer === '0.464' || answer === '0.46' || answer === '0.47') {
+                    feedback.textContent = 'Correct ! La probabilité est 13/28 ≈ 0,464.';
+                    feedback.className = 'mt-1 text-sm text-green-600';
+                } else {
+                    feedback.textContent = 'Incorrect. Essayez encore.';
+                    feedback.className = 'mt-1 text-sm text-red-600';
+                }
+            } else if (id === 2) {
+                if (answer === '0.63' || answer === '0.632' || answer === '0.6316' || answer === '63%') {
+                    feedback.textContent = 'Correct ! La probabilité est environ 0,63 (ou 63%).';
+                    feedback.className = 'mt-1 text-sm text-green-600';
+                } else {
+                    feedback.textContent = 'Incorrect. Essayez encore.';
+                    feedback.className = 'mt-1 text-sm text-red-600';
+                }
+            }
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961b2bdba2946938',t:'MTc1MjkzODA5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
