@@ -994,6 +994,352 @@
                 }
             }
         }
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours de Trigonométrie - Première D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f9ff;
+        }
+        .formula-box {
+            background-color: #e0f2fe;
+            border-left: 4px solid #0284c7;
+        }
+        .example-box {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+        }
+        .theorem-box {
+            background-color: #fef3c7;
+            border-left: 4px solid #d97706;
+        }
+        .exercise-box {
+            background-color: #ede9fe;
+            border-left: 4px solid #7c3aed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg shadow-lg p-6 mb-8">
+            <h1 class="text-3xl font-bold mb-2">Cours de Trigonométrie</h1>
+            <p class="text-xl">Niveau Première D - Programme Camerounais</p>
+        </header>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">Table des matières</h2>
+            <ul class="space-y-2">
+                <li class="flex items-center">
+                    <span class="mr-2 text-blue-600">➤</span>
+                    <a href="#cercle-trigo" class="text-blue-600 hover:underline">1. Le cercle trigonométrique</a>
+                </li>
+                <li class="flex items-center">
+                    <span class="mr-2 text-blue-600">➤</span>
+                    <a href="#angles-remarquables" class="text-blue-600 hover:underline">2. Les angles remarquables</a>
+                </li>
+                <li class="flex items-center">
+                    <span class="mr-2 text-blue-600">➤</span>
+                    <a href="#formules" class="text-blue-600 hover:underline">3. Formules trigonométriques</a>
+                </li>
+                <li class="flex items-center">
+                    <span class="mr-2 text-blue-600">➤</span>
+                    <a href="#equations" class="text-blue-600 hover:underline">4. Équations trigonométriques</a>
+                </li>
+                <li class="flex items-center">
+                    <span class="mr-2 text-blue-600">➤</span>
+                    <a href="#exercices" class="text-blue-600 hover:underline">5. Exercices corrigés</a>
+                </li>
+            </ul>
+        </div>
+
+        <section id="cercle-trigo" class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">1. Le cercle trigonométrique</h2>
+            
+            <p class="mb-4">Le cercle trigonométrique est un cercle de rayon 1 centré à l'origine du repère orthonormé (O, \(\vec{i}\), \(\vec{j}\)). Il permet de définir les fonctions trigonométriques.</p>
+            
+            <div class="flex justify-center my-6">
+                <svg width="300" height="300" class="border border-gray-300 rounded-lg bg-white">
+                    <!-- Axes -->
+                    <line x1="0" y1="150" x2="300" y2="150" stroke="black" stroke-width="1"></line>
+                    <line x1="150" y1="0" x2="150" y2="300" stroke="black" stroke-width="1"></line>
+                    
+                    <!-- Cercle -->
+                    <circle cx="150" cy="150" r="100" fill="none" stroke="blue" stroke-width="2"></circle>
+                    
+                    <!-- Points remarquables -->
+                    <circle cx="250" cy="150" r="4" fill="red"></circle>
+                    <text x="255" y="145" font-size="12">I(1,0)</text>
+                    
+                    <circle cx="150" cy="50" r="4" fill="red"></circle>
+                    <text x="155" y="45" font-size="12">J(0,1)</text>
+                    
+                    <circle cx="50" cy="150" r="4" fill="red"></circle>
+                    <text x="30" y="145" font-size="12">(-1,0)</text>
+                    
+                    <circle cx="150" cy="250" r="4" fill="red"></circle>
+                    <text x="155" y="265" font-size="12">(0,-1)</text>
+                    
+                    <!-- Angle -->
+                    <path d="M 150 150 L 250 150 A 100 100 0 0 0 200 80" fill="none" stroke="green" stroke-width="2"></path>
+                    <text x="210" y="120" font-size="16" fill="green">θ</text>
+                    
+                    <!-- Légendes -->
+                    <text x="280" y="150" font-size="16">x</text>
+                    <text x="150" y="20" font-size="16">y</text>
+                    <text x="160" y="160" font-size="16">O</text>
+                </svg>
+            </div>
+            
+            <div class="formula-box p-4 rounded-md mb-6">
+                <h3 class="font-semibold text-lg mb-2">Définitions</h3>
+                <p>Pour un angle \(\theta\) dans le cercle trigonométrique :</p>
+                <ul class="list-disc pl-6 space-y-2 mt-2">
+                    <li>Le cosinus de \(\theta\) est l'abscisse du point M : \(\cos(\theta) = x_M\)</li>
+                    <li>Le sinus de \(\theta\) est l'ordonnée du point M : \(\sin(\theta) = y_M\)</li>
+                    <li>La tangente de \(\theta\) est le rapport : \(\tan(\theta) = \frac{\sin(\theta)}{\cos(\theta)}\) (définie si \(\cos(\theta) \neq 0\))</li>
+                </ul>
+            </div>
+            
+            <div class="theorem-box p-4 rounded-md mb-6">
+                <h3 class="font-semibold text-lg mb-2">Propriétés fondamentales</h3>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Relation fondamentale : \(\sin^2(\theta) + \cos^2(\theta) = 1\)</li>
+                    <li>Périodicité : 
+                        <ul class="list-disc pl-6 mt-1">
+                            <li>\(\sin(\theta + 2\pi) = \sin(\theta)\)</li>
+                            <li>\(\cos(\theta + 2\pi) = \cos(\theta)\)</li>
+                            <li>\(\tan(\theta + \pi) = \tan(\theta)\)</li>
+                        </ul>
+                    </li>
+                    <li>Parité :
+                        <ul class="list-disc pl-6 mt-1">
+                            <li>\(\sin(-\theta) = -\sin(\theta)\) (fonction impaire)</li>
+                            <li>\(\cos(-\theta) = \cos(\theta)\) (fonction paire)</li>
+                            <li>\(\tan(-\theta) = -\tan(\theta)\) (fonction impaire)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="angles-remarquables" class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">2. Les angles remarquables</h2>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+                    <thead>
+                        <tr class="bg-blue-100">
+                            <th class="py-2 px-4 border-b">Angle \(\theta\)</th>
+                            <th class="py-2 px-4 border-b">0</th>
+                            <th class="py-2 px-4 border-b">\(\frac{\pi}{6}\) ou \(30°\)</th>
+                            <th class="py-2 px-4 border-b">\(\frac{\pi}{4}\) ou \(45°\)</th>
+                            <th class="py-2 px-4 border-b">\(\frac{\pi}{3}\) ou \(60°\)</th>
+                            <th class="py-2 px-4 border-b">\(\frac{\pi}{2}\) ou \(90°\)</th>
+                            <th class="py-2 px-4 border-b">\(\pi\) ou \(180°\)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border-b font-semibold">\(\sin(\theta)\)</td>
+                            <td class="py-2 px-4 border-b">0</td>
+                            <td class="py-2 px-4 border-b">\(\frac{1}{2}\)</td>
+                            <td class="py-2 px-4 border-b">\(\frac{\sqrt{2}}{2}\)</td>
+                            <td class="py-2 px-4 border-b">\(\frac{\sqrt{3}}{2}\)</td>
+                            <td class="py-2 px-4 border-b">1</td>
+                            <td class="py-2 px-4 border-b">0</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b font-semibold">\(\cos(\theta)\)</td>
+                            <td class="py-2 px-4 border-b">1</td>
+                            <td class="py-2 px-4 border-b">\(\frac{\sqrt{3}}{2}\)</td>
+                            <td class="py-2 px-4 border-b">\(\frac{\sqrt{2}}{2}\)</td>
+                            <td class="py-2 px-4 border-b">\(\frac{1}{2}\)</td>
+                            <td class="py-2 px-4 border-b">0</td>
+                            <td class="py-2 px-4 border-b">-1</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b font-semibold">\(\tan(\theta)\)</td>
+                            <td class="py-2 px-4 border-b">0</td>
+                            <td class="py-2 px-4 border-b">\(\frac{1}{\sqrt{3}}\)</td>
+                            <td class="py-2 px-4 border-b">1</td>
+                            <td class="py-2 px-4 border-b">\(\sqrt{3}\)</td>
+                            <td class="py-2 px-4 border-b">Non défini</td>
+                            <td class="py-2 px-4 border-b">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="formules" class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">3. Formules trigonométriques</h2>
+            
+            <div class="formula-box p-4 rounded-md mb-6">
+                <h3 class="font-semibold text-lg mb-2">Formules d'addition</h3>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>\(\sin(a + b) = \sin(a)\cos(b) + \cos(a)\sin(b)\)</li>
+                    <li>\(\sin(a - b) = \sin(a)\cos(b) - \cos(a)\sin(b)\)</li>
+                    <li>\(\cos(a + b) = \cos(a)\cos(b) - \sin(a)\sin(b)\)</li>
+                    <li>\(\cos(a - b) = \cos(a)\cos(b) + \sin(a)\sin(b)\)</li>
+                    <li>\(\tan(a + b) = \frac{\tan(a) + \tan(b)}{1 - \tan(a)\tan(b)}\)</li>
+                    <li>\(\tan(a - b) = \frac{\tan(a) - \tan(b)}{1 + \tan(a)\tan(b)}\)</li>
+                </ul>
+            </div>
+            
+            <div class="formula-box p-4 rounded-md mb-6">
+                <h3 class="font-semibold text-lg mb-2">Formules de duplication</h3>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>\(\sin(2a) = 2\sin(a)\cos(a)\)</li>
+                    <li>\(\cos(2a) = \cos^2(a) - \sin^2(a) = 2\cos^2(a) - 1 = 1 - 2\sin^2(a)\)</li>
+                    <li>\(\tan(2a) = \frac{2\tan(a)}{1 - \tan^2(a)}\)</li>
+                </ul>
+            </div>
+            
+            <div class="formula-box p-4 rounded-md mb-6">
+                <h3 class="font-semibold text-lg mb-2">Formules de linéarisation</h3>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>\(\sin(a)\sin(b) = \frac{1}{2}[\cos(a-b) - \cos(a+b)]\)</li>
+                    <li>\(\sin(a)\cos(b) = \frac{1}{2}[\sin(a+b) + \sin(a-b)]\)</li>
+                    <li>\(\cos(a)\cos(b) = \frac{1}{2}[\cos(a+b) + \cos(a-b)]\)</li>
+                </ul>
+            </div>
+            
+            <div class="formula-box p-4 rounded-md">
+                <h3 class="font-semibold text-lg mb-2">Formules de factorisation</h3>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>\(\sin(a) + \sin(b) = 2\sin(\frac{a+b}{2})\cos(\frac{a-b}{2})\)</li>
+                    <li>\(\sin(a) - \sin(b) = 2\sin(\frac{a-b}{2})\cos(\frac{a+b}{2})\)</li>
+                    <li>\(\cos(a) + \cos(b) = 2\cos(\frac{a+b}{2})\cos(\frac{a-b}{2})\)</li>
+                    <li>\(\cos(a) - \cos(b) = -2\sin(\frac{a+b}{2})\sin(\frac{a-b}{2})\)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="equations" class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">4. Équations trigonométriques</h2>
+            
+            <div class="example-box p-4 rounded-md mb-6">
+                <h3 class="font-semibold text-lg mb-2">Équations de base</h3>
+                
+                <p class="mb-2"><strong>1. Équation \(\sin(x) = a\)</strong></p>
+                <ul class="list-disc pl-6 mb-4">
+                    <li>Si \(|a| > 1\), pas de solution</li>
+                    <li>Si \(|a| \leq 1\), alors \(x = \arcsin(a) + 2k\pi\) ou \(x = \pi - \arcsin(a) + 2k\pi\), avec \(k \in \mathbb{Z}\)</li>
+                </ul>
+                
+                <p class="mb-2"><strong>2. Équation \(\cos(x) = a\)</strong></p>
+                <ul class="list-disc pl-6 mb-4">
+                    <li>Si \(|a| > 1\), pas de solution</li>
+                    <li>Si \(|a| \leq 1\), alors \(x = \arccos(a) + 2k\pi\) ou \(x = -\arccos(a) + 2k\pi\), avec \(k \in \mathbb{Z}\)</li>
+                </ul>
+                
+                <p class="mb-2"><strong>3. Équation \(\tan(x) = a\)</strong></p>
+                <ul class="list-disc pl-6">
+                    <li>Pour tout \(a \in \mathbb{R}\), \(x = \arctan(a) + k\pi\), avec \(k \in \mathbb{Z}\)</li>
+                </ul>
+            </div>
+            
+            <div class="example-box p-4 rounded-md">
+                <h3 class="font-semibold text-lg mb-2">Exemple résolu : \(\sin(2x) = \frac{1}{2}\) sur \([0, 2\pi]\)</h3>
+                
+                <div class="bg-gray-50 p-4 rounded-md">
+                    <p class="mb-2"><strong>Solution :</strong></p>
+                    <p class="mb-2">On cherche les valeurs de \(x \in [0, 2\pi]\) telles que \(\sin(2x) = \frac{1}{2}\)</p>
+                    <p class="mb-2">On sait que \(\sin(\theta) = \frac{1}{2}\) pour \(\theta = \frac{\pi}{6} + 2k\pi\) ou \(\theta = \frac{5\pi}{6} + 2k\pi\), avec \(k \in \mathbb{Z}\)</p>
+                    <p class="mb-2">Donc \(2x = \frac{\pi}{6} + 2k\pi\) ou \(2x = \frac{5\pi}{6} + 2k\pi\)</p>
+                    <p class="mb-2">Ce qui donne \(x = \frac{\pi}{12} + k\pi\) ou \(x = \frac{5\pi}{12} + k\pi\)</p>
+                    <p class="mb-2">Pour \(x \in [0, 2\pi]\), on obtient les solutions :</p>
+                    <p>\(x = \frac{\pi}{12}, \frac{5\pi}{12}, \frac{\pi}{12} + \pi = \frac{13\pi}{12}, \frac{5\pi}{12} + \pi = \frac{17\pi}{12}\)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="exercices" class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">5. Exercices corrigés</h2>
+            
+            <div class="exercise-box p-4 rounded-md mb-6">
+                <h3 class="font-semibold text-lg mb-2">Exercice 1 : Simplification d'expressions</h3>
+                <p class="mb-2">Simplifier l'expression : \(E = \sin^2(x) - \sin^2(y) - \cos^2(x) + \cos^2(y)\)</p>
+                
+                <div class="mt-4 bg-gray-50 p-4 rounded-md">
+                    <p class="font-semibold">Solution :</p>
+                    <p class="mb-2">\(E = \sin^2(x) - \sin^2(y) - \cos^2(x) + \cos^2(y)\)</p>
+                    <p class="mb-2">On sait que \(\sin^2(t) + \cos^2(t) = 1\) pour tout réel \(t\)</p>
+                    <p class="mb-2">Donc \(\sin^2(x) - \cos^2(x) = \sin^2(x) - (1 - \sin^2(x)) = 2\sin^2(x) - 1\)</p>
+                    <p class="mb-2">Et \(-\sin^2(y) + \cos^2(y) = -\sin^2(y) + (1 - \sin^2(y)) = 1 - 2\sin^2(y)\)</p>
+                    <p class="mb-2">\(E = (2\sin^2(x) - 1) + (1 - 2\sin^2(y)) = 2\sin^2(x) - 2\sin^2(y)\)</p>
+                    <p class="mb-2">\(E = 2(\sin^2(x) - \sin^2(y))\)</p>
+                    <p>\(E = 2((\sin(x) - \sin(y))(\sin(x) + \sin(y)))\)</p>
+                </div>
+            </div>
+            
+            <div class="exercise-box p-4 rounded-md mb-6">
+                <h3 class="font-semibold text-lg mb-2">Exercice 2 : Résolution d'équation</h3>
+                <p class="mb-2">Résoudre dans \([0, 2\pi]\) l'équation : \(2\cos^2(x) - \cos(x) - 1 = 0\)</p>
+                
+                <div class="mt-4 bg-gray-50 p-4 rounded-md">
+                    <p class="font-semibold">Solution :</p>
+                    <p class="mb-2">Posons \(u = \cos(x)\). L'équation devient :</p>
+                    <p class="mb-2">\(2u^2 - u - 1 = 0\)</p>
+                    <p class="mb-2">Calculons le discriminant : \(\Delta = 1 + 4 \times 2 \times 1 = 9\)</p>
+                    <p class="mb-2">\(\Delta > 0\), donc l'équation admet deux solutions :</p>
+                    <p class="mb-2">\(u_1 = \frac{1 + 3}{4} = 1\) et \(u_2 = \frac{1 - 3}{4} = -\frac{1}{2}\)</p>
+                    <p class="mb-2">Donc \(\cos(x) = 1\) ou \(\cos(x) = -\frac{1}{2}\)</p>
+                    <p class="mb-2">Si \(\cos(x) = 1\), alors \(x = 0\) ou \(x = 2\pi\) dans \([0, 2\pi]\)</p>
+                    <p class="mb-2">Si \(\cos(x) = -\frac{1}{2}\), alors \(x = \frac{2\pi}{3}\) ou \(x = \frac{4\pi}{3}\) dans \([0, 2\pi]\)</p>
+                    <p>Les solutions dans \([0, 2\pi]\) sont donc : \(x = 0, \frac{2\pi}{3}, \frac{4\pi}{3}, 2\pi\)</p>
+                </div>
+            </div>
+            
+            <div class="exercise-box p-4 rounded-md">
+                <h3 class="font-semibold text-lg mb-2">Exercice 3 : Linéarisation</h3>
+                <p class="mb-2">Transformer en somme l'expression : \(E = \cos(3x)\cos(5x)\)</p>
+                
+                <div class="mt-4 bg-gray-50 p-4 rounded-md">
+                    <p class="font-semibold">Solution :</p>
+                    <p class="mb-2">On utilise la formule de linéarisation : \(\cos(a)\cos(b) = \frac{1}{2}[\cos(a+b) + \cos(a-b)]\)</p>
+                    <p class="mb-2">Avec \(a = 3x\) et \(b = 5x\), on obtient :</p>
+                    <p class="mb-2">\(E = \cos(3x)\cos(5x) = \frac{1}{2}[\cos(3x+5x) + \cos(3x-5x)]\)</p>
+                    <p class="mb-2">\(E = \frac{1}{2}[\cos(8x) + \cos(-2x)]\)</p>
+                    <p class="mb-2">Comme \(\cos(-\theta) = \cos(\theta)\), on a :</p>
+                    <p>\(E = \frac{1}{2}[\cos(8x) + \cos(2x)]\)</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-bold text-blue-800 mb-2">Conseils pour réussir en trigonométrie</h2>
+            <ul class="list-disc pl-6 space-y-2">
+                <li>Mémorisez les valeurs des angles remarquables</li>
+                <li>Maîtrisez les formules fondamentales</li>
+                <li>Pratiquez régulièrement avec des exercices variés</li>
+                <li>Dessinez le cercle trigonométrique pour visualiser les problèmes</li>
+                <li>Vérifiez vos solutions en remplaçant dans l'équation initiale</li>
+            </ul>
+        </div>
+
+        <footer class="text-center text-gray-600 mt-8">
+            <p>© 2023 Cours de Mathématiques - Programme Camerounais Première D</p>
+        </footer>
+    </div>
+
+    <script>
+        // Script pour le défilement fluide vers les sections
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
     </script>
+
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961b2bdba2946938',t:'MTc1MjkzODA5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
