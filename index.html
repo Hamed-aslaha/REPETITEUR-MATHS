@@ -3,892 +3,482 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programme de Mathématiques - Première D Cameroun</title>
+    <title>Répétiteur de Mathématiques - Première D</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f0f9ff;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
         }
+        
         .chapter-card {
             transition: all 0.3s ease;
         }
+        
         .chapter-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        .module-box {
-            border-left: 4px solid;
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        
+        .chapter-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .chapter-content.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        .btn-nav {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-nav:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
-<body>
-    <div class="container mx-auto px-4 py-8 max-w-5xl">
-        <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-lg shadow-lg p-8 mb-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div>
-                    <h1 class="text-3xl md:text-4xl font-bold mb-2">Programme de Mathématiques</h1>
-                    <p class="text-xl md:text-2xl">Classe de Première D - Cameroun</p>
-                </div>
-                <div class="mt-4 md:mt-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="mb-8">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-lg p-6 text-white">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold mb-2">Répétiteur de Mathématiques</h1>
+                        <p class="text-blue-100">Programme complet - Niveau Première D</p>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <div class="bg-white/20 rounded-lg p-3">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                </svg>
+                                <span class="text-lg font-medium">Progression globale: <span id="global-progress">0%</span></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
 
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold text-blue-800 mb-4">Présentation du Programme</h2>
-            <p class="mb-4">Le programme de mathématiques de la classe de Première D au Cameroun est conçu pour les élèves se destinant aux filières scientifiques avec une orientation vers les sciences de la vie et de la terre. Il vise à développer la rigueur, l'esprit d'analyse et les compétences nécessaires pour résoudre des problèmes mathématiques appliqués aux sciences naturelles.</p>
-            <p>Ce programme est structuré en quatre grands modules : Algèbre, Analyse, Géométrie, et Analyse Combinatoire & Probabilités. Chaque module comprend plusieurs chapitres qui seront étudiés tout au long de l'année scolaire.</p>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold text-blue-800 mb-4">Table des matières</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
-                        <h3 class="text-xl font-semibold text-blue-700 mb-2">Module I: Algèbre</h3>
-                        <ul class="space-y-1">
-                            <li class="flex items-center">
-                                <span class="mr-2 text-blue-600">➤</span>
-                                <a href="#second-degre" class="text-blue-600 hover:underline">Équations du second degré</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-blue-600">➤</span>
-                                <a href="#suites" class="text-blue-600 hover:underline">Suites numériques</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-blue-600">➤</span>
-                                <a href="#arithmetique" class="text-blue-600 hover:underline">Arithmétique</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-blue-600">➤</span>
-                                <a href="#polynomes" class="text-blue-600 hover:underline">Polynômes</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="bg-green-50 p-4 rounded-lg">
-                        <h3 class="text-xl font-semibold text-green-700 mb-2">Module II: Analyse</h3>
-                        <ul class="space-y-1">
-                            <li class="flex items-center">
-                                <span class="mr-2 text-green-600">➤</span>
-                                <a href="#fonctions" class="text-green-600 hover:underline">Généralités sur les fonctions</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-green-600">➤</span>
-                                <a href="#limites" class="text-green-600 hover:underline">Limites et continuité</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-green-600">➤</span>
-                                <a href="#derivation" class="text-green-600 hover:underline">Dérivation</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-green-600">➤</span>
-                                <a href="#etude-fonctions" class="text-green-600 hover:underline">Étude des fonctions</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div>
-                    <div class="bg-purple-50 p-4 rounded-lg mb-4">
-                        <h3 class="text-xl font-semibold text-purple-700 mb-2">Module III: Géométrie</h3>
-                        <ul class="space-y-1">
-                            <li class="flex items-center">
-                                <span class="mr-2 text-purple-600">➤</span>
-                                <a href="#trigonometrie" class="text-purple-600 hover:underline">Trigonométrie</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-purple-600">➤</span>
-                                <a href="#produit-scalaire" class="text-purple-600 hover:underline">Produit scalaire</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-purple-600">➤</span>
-                                <a href="#barycentre" class="text-purple-600 hover:underline">Barycentre</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-purple-600">➤</span>
-                                <a href="#transformations" class="text-purple-600 hover:underline">Transformations du plan</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="bg-red-50 p-4 rounded-lg">
-                        <h3 class="text-xl font-semibold text-red-700 mb-2">Module IV: Analyse Combinatoire & Probabilités</h3>
-                        <ul class="space-y-1">
-                            <li class="flex items-center">
-                                <span class="mr-2 text-red-600">➤</span>
-                                <a href="#denombrement" class="text-red-600 hover:underline">Dénombrement</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-red-600">➤</span>
-                                <a href="#probabilites" class="text-red-600 hover:underline">Probabilités</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-red-600">➤</span>
-                                <a href="#variables-aleatoires" class="text-red-600 hover:underline">Variables aléatoires</a>
-                            </li>
-                            <li class="flex items-center">
-                                <span class="mr-2 text-red-600">➤</span>
-                                <a href="#statistiques" class="text-red-600 hover:underline">Statistiques descriptives</a>
-                            </li>
-                        </ul>
+        <!-- Main Content -->
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar - Chapter List -->
+            <div class="lg:w-1/3">
+                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-800 border-b pb-2">Programme des chapitres</h2>
+                    <div class="space-y-3" id="chapter-list">
+                        <!-- Chapters will be generated here -->
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- MODULE I: ALGÈBRE -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold text-blue-800 mb-6 bg-blue-100 p-3 rounded-lg">MODULE I: ALGÈBRE</h2>
-            
-            <div id="second-degre" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-blue-700 mb-4">Chapitre 1: Équations du second degré</h3>
-                
-                <div class="module-box border-blue-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Résoudre des équations et inéquations du second degré</li>
-                        <li>Factoriser des expressions du second degré</li>
-                        <li>Appliquer les relations entre coefficients et racines</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-blue-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Forme canonique et discriminant</li>
-                        <li>Résolution des équations du second degré</li>
-                        <li>Somme et produit des racines</li>
-                        <li>Signe du trinôme</li>
-                        <li>Inéquations du second degré</li>
-                        <li>Équations et inéquations se ramenant au second degré</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-blue-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Formules essentielles</h4>
-                    <p>Pour une équation \(ax^2 + bx + c = 0\) avec \(a \neq 0\) :</p>
-                    <ul class="list-disc pl-6 space-y-1 mt-2">
-                        <li>Discriminant : \(\Delta = b^2 - 4ac\)</li>
-                        <li>Si \(\Delta > 0\), deux solutions : \(x_1 = \frac{-b - \sqrt{\Delta}}{2a}\) et \(x_2 = \frac{-b + \sqrt{\Delta}}{2a}\)</li>
-                        <li>Si \(\Delta = 0\), une solution double : \(x_0 = \frac{-b}{2a}\)</li>
-                        <li>Si \(\Delta < 0\), pas de solution réelle</li>
-                        <li>Somme des racines : \(x_1 + x_2 = \frac{-b}{a}\)</li>
-                        <li>Produit des racines : \(x_1 \times x_2 = \frac{c}{a}\)</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="suites" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-blue-700 mb-4">Chapitre 2: Suites numériques</h3>
-                
-                <div class="module-box border-blue-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Comprendre et manipuler les suites numériques</li>
-                        <li>Reconnaître et utiliser les suites arithmétiques et géométriques</li>
-                        <li>Résoudre des problèmes concrets à l'aide des suites</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-blue-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Définition et notation des suites</li>
-                        <li>Suites arithmétiques : définition, terme général, somme des termes</li>
-                        <li>Suites géométriques : définition, terme général, somme des termes</li>
-                        <li>Applications des suites à des problèmes concrets</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-blue-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Formules essentielles</h4>
-                    <p class="mb-2"><strong>Suite arithmétique</strong> de raison \(r\) et de premier terme \(u_1\) :</p>
-                    <ul class="list-disc pl-6 space-y-1 mb-3">
-                        <li>Terme général : \(u_n = u_1 + (n-1)r\)</li>
-                        <li>Somme des \(n\) premiers termes : \(S_n = \frac{n}{2}(u_1 + u_n) = \frac{n}{2}(2u_1 + (n-1)r)\)</li>
-                    </ul>
+            <!-- Chapter Content -->
+            <div class="lg:w-2/3">
+                <div class="bg-white rounded-xl shadow-md p-6" id="chapter-container">
+                    <div class="text-center py-16" id="welcome-screen">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-blue-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Bienvenue dans votre répétiteur de mathématiques</h2>
+                        <p class="text-gray-600 mb-6">Sélectionnez un chapitre dans la liste pour commencer à étudier.</p>
+                        <div class="flex justify-center">
+                            <button id="start-first-chapter" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all">
+                                Commencer par le premier chapitre
+                            </button>
+                        </div>
+                    </div>
                     
-                    <p class="mb-2"><strong>Suite géométrique</strong> de raison \(q\) et de premier terme \(u_1\) :</p>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Terme général : \(u_n = u_1 \times q^{n-1}\)</li>
-                        <li>Somme des \(n\) premiers termes (si \(q \neq 1\)) : \(S_n = u_1 \frac{1-q^n}{1-q}\)</li>
-                        <li>Somme des termes d'une suite géométrique infinie (si \(|q| < 1\)) : \(S_{\infty} = \frac{u_1}{1-q}\)</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="arithmetique" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-blue-700 mb-4">Chapitre 3: Arithmétique</h3>
-                
-                <div class="module-box border-blue-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Maîtriser les notions de divisibilité et de nombres premiers</li>
-                        <li>Calculer le PGCD et le PPCM de deux nombres</li>
-                        <li>Résoudre des équations diophantiennes</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-blue-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Divisibilité dans \(\mathbb{Z}\)</li>
-                        <li>Nombres premiers</li>
-                        <li>Décomposition en facteurs premiers</li>
-                        <li>PGCD et PPCM</li>
-                        <li>Algorithme d'Euclide</li>
-                        <li>Équations diophantiennes</li>
-                        <li>Congruences</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-blue-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Théorèmes importants</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Théorème de Bézout : Si \(a\) et \(b\) sont deux entiers non nuls, il existe des entiers \(u\) et \(v\) tels que \(au + bv = PGCD(a,b)\)</li>
-                        <li>Théorème de Gauss : Si \(a\) divise \(bc\) et si \(a\) et \(b\) sont premiers entre eux, alors \(a\) divise \(c\)</li>
-                        <li>Relation entre PGCD et PPCM : \(PGCD(a,b) \times PPCM(a,b) = |a \times b|\)</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="polynomes" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-blue-700 mb-4">Chapitre 4: Polynômes</h3>
-                
-                <div class="module-box border-blue-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Manipuler les polynômes et leurs opérations</li>
-                        <li>Factoriser des polynômes</li>
-                        <li>Déterminer les racines d'un polynôme</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-blue-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Définition et opérations sur les polynômes</li>
-                        <li>Division euclidienne des polynômes</li>
-                        <li>Théorème du reste et théorème de factorisation</li>
-                        <li>Racines d'un polynôme</li>
-                        <li>Factorisation des polynômes</li>
-                        <li>Identités remarquables</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-blue-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Théorèmes et formules</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Théorème du reste : Le reste de la division d'un polynôme \(P(x)\) par \(x-a\) est égal à \(P(a)\)</li>
-                        <li>Théorème de factorisation : \(a\) est racine de \(P\) si et seulement si \(P(x)\) est divisible par \(x-a\)</li>
-                        <li>Identités remarquables :
-                            <ul class="list-disc pl-6 mt-1">
-                                <li>\((a+b)^2 = a^2 + 2ab + b^2\)</li>
-                                <li>\((a-b)^2 = a^2 - 2ab + b^2\)</li>
-                                <li>\((a+b)(a-b) = a^2 - b^2\)</li>
-                                <li>\((a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3\)</li>
-                                <li>\((a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3\)</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- MODULE II: ANALYSE -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold text-green-800 mb-6 bg-green-100 p-3 rounded-lg">MODULE II: ANALYSE</h2>
-            
-            <div id="fonctions" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-green-700 mb-4">Chapitre 5: Généralités sur les fonctions</h3>
-                
-                <div class="module-box border-green-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Comprendre les notions de fonction, domaine de définition et image</li>
-                        <li>Étudier les propriétés des fonctions (parité, périodicité)</li>
-                        <li>Manipuler les opérations sur les fonctions</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-green-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Définition d'une fonction</li>
-                        <li>Domaine de définition et ensemble image</li>
-                        <li>Représentation graphique</li>
-                        <li>Parité et périodicité</li>
-                        <li>Opérations sur les fonctions (somme, produit, quotient, composée)</li>
-                        <li>Fonction réciproque</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-green-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Définitions importantes</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li><strong>Fonction paire</strong> : \(f(-x) = f(x)\) pour tout \(x\) du domaine de définition</li>
-                        <li><strong>Fonction impaire</strong> : \(f(-x) = -f(x)\) pour tout \(x\) du domaine de définition</li>
-                        <li><strong>Fonction périodique</strong> : Il existe \(T > 0\) tel que \(f(x+T) = f(x)\) pour tout \(x\) du domaine de définition</li>
-                        <li><strong>Fonction composée</strong> : \((f \circ g)(x) = f(g(x))\)</li>
-                        <li><strong>Fonction réciproque</strong> : Si \(f\) est bijective, alors \(f^{-1}\) est telle que \(f^{-1}(f(x)) = x\) et \(f(f^{-1}(y)) = y\)</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="limites" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-green-700 mb-4">Chapitre 6: Limites et continuité</h3>
-                
-                <div class="module-box border-green-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Comprendre la notion de limite d'une fonction</li>
-                        <li>Calculer des limites en utilisant les théorèmes appropriés</li>
-                        <li>Étudier la continuité d'une fonction</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-green-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Notion de limite</li>
-                        <li>Limites des fonctions usuelles</li>
-                        <li>Opérations sur les limites</li>
-                        <li>Formes indéterminées</li>
-                        <li>Continuité d'une fonction</li>
-                        <li>Théorèmes des valeurs intermédiaires</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-green-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Limites usuelles</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>\(\lim_{x \to +\infty} \frac{1}{x} = 0\)</li>
-                        <li>\(\lim_{x \to +\infty} \frac{x^n}{x^m} = 0\) si \(n < m\)</li>
-                        <li>\(\lim_{x \to +\infty} \frac{x^n}{x^m} = +\infty\) si \(n > m\)</li>
-                        <li>\(\lim_{x \to 0} \frac{\sin x}{x} = 1\)</li>
-                        <li>\(\lim_{x \to +\infty} (1 + \frac{1}{x})^x = e\)</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="derivation" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-green-700 mb-4">Chapitre 7: Dérivation</h3>
-                
-                <div class="module-box border-green-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Comprendre la notion de dérivée et son interprétation géométrique</li>
-                        <li>Calculer des dérivées en utilisant les formules et règles</li>
-                        <li>Appliquer la dérivation à l'étude des variations des fonctions</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-green-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Définition de la dérivée</li>
-                        <li>Interprétation géométrique</li>
-                        <li>Dérivées des fonctions usuelles</li>
-                        <li>Règles de dérivation (somme, produit, quotient, composée)</li>
-                        <li>Dérivées successives</li>
-                        <li>Applications de la dérivation</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-green-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Formules de dérivation</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>\((u + v)' = u' + v'\)</li>
-                        <li>\((u \times v)' = u' \times v + u \times v'\)</li>
-                        <li>\((\frac{u}{v})' = \frac{u' \times v - u \times v'}{v^2}\)</li>
-                        <li>\((u \circ v)' = (u' \circ v) \times v'\)</li>
-                        <li>\((x^n)' = n \times x^{n-1}\)</li>
-                        <li>\((\sin x)' = \cos x\)</li>
-                        <li>\((\cos x)' = -\sin x\)</li>
-                        <li>\((\tan x)' = 1 + \tan^2 x = \frac{1}{\cos^2 x}\)</li>
-                        <li>\((e^x)' = e^x\)</li>
-                        <li>\((\ln x)' = \frac{1}{x}\)</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="etude-fonctions" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-green-700 mb-4">Chapitre 8: Étude des fonctions</h3>
-                
-                <div class="module-box border-green-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Étudier complètement une fonction (domaine, limites, variations, extrema)</li>
-                        <li>Tracer la courbe représentative d'une fonction</li>
-                        <li>Résoudre des problèmes d'optimisation</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-green-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Étude du domaine de définition</li>
-                        <li>Étude des limites aux bornes du domaine</li>
-                        <li>Étude des variations (tableau de variation)</li>
-                        <li>Recherche des extrema</li>
-                        <li>Étude de la concavité et des points d'inflexion</li>
-                        <li>Asymptotes</li>
-                        <li>Tracé de la courbe représentative</li>
-                        <li>Applications à des problèmes concrets</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-green-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Méthode d'étude d'une fonction</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Déterminer le domaine de définition \(D_f\)</li>
-                        <li>Étudier la parité ou l'imparité éventuelle</li>
-                        <li>Calculer les limites aux bornes du domaine</li>
-                        <li>Rechercher les asymptotes éventuelles</li>
-                        <li>Calculer la dérivée \(f'(x)\)</li>
-                        <li>Étudier le signe de \(f'(x)\) et en déduire les variations de \(f\)</li>
-                        <li>Déterminer les extrema éventuels</li>
-                        <li>Calculer quelques points particuliers</li>
-                        <li>Tracer la courbe représentative</li>
-                    </ol>
-                </div>
-            </div>
-        </section>
-
-        <!-- MODULE III: GÉOMÉTRIE -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold text-purple-800 mb-6 bg-purple-100 p-3 rounded-lg">MODULE III: GÉOMÉTRIE</h2>
-            
-            <div id="trigonometrie" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-purple-700 mb-4">Chapitre 9: Trigonométrie</h3>
-                
-                <div class="module-box border-purple-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Maîtriser les fonctions trigonométriques et leurs propriétés</li>
-                        <li>Résoudre des équations trigonométriques</li>
-                        <li>Appliquer les formules trigonométriques</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-purple-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Cercle trigonométrique</li>
-                        <li>Fonctions trigonométriques (sinus, cosinus, tangente)</li>
-                        <li>Formules d'addition et de duplication</li>
-                        <li>Transformations de produits en sommes et vice-versa</li>
-                        <li>Équations trigonométriques</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-purple-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Formules importantes</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li><strong>Formules d'addition</strong> :
-                            <ul class="list-disc pl-6 mt-1">
-                                <li>\(\sin(a+b) = \sin(a)\cos(b) + \cos(a)\sin(b)\)</li>
-                                <li>\(\cos(a+b) = \cos(a)\cos(b) - \sin(a)\sin(b)\)</li>
-                            </ul>
-                        </li>
-                        <li><strong>Formules de duplication</strong> :
-                            <ul class="list-disc pl-6 mt-1">
-                                <li>\(\sin(2a) = 2\sin(a)\cos(a)\)</li>
-                                <li>\(\cos(2a) = \cos^2(a) - \sin^2(a) = 2\cos^2(a) - 1 = 1 - 2\sin^2(a)\)</li>
-                            </ul>
-                        </li>
-                        <li><strong>Linéarisation</strong> :
-                            <ul class="list-disc pl-6 mt-1">
-                                <li>\(\sin(a)\sin(b) = \frac{1}{2}[\cos(a-b) - \cos(a+b)]\)</li>
-                                <li>\(\cos(a)\cos(b) = \frac{1}{2}[\cos(a-b) + \cos(a+b)]\)</li>
-                                <li>\(\sin(a)\cos(b) = \frac{1}{2}[\sin(a+b) + \sin(a-b)]\)</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="produit-scalaire" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-purple-700 mb-4">Chapitre 10: Produit scalaire</h3>
-                
-                <div class="module-box border-purple-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Comprendre et utiliser le produit scalaire dans le plan</li>
-                        <li>Appliquer le produit scalaire à la résolution de problèmes géométriques</li>
-                        <li>Établir des relations métriques dans les figures géométriques</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-purple-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Définition du produit scalaire</li>
-                        <li>Propriétés du produit scalaire</li>
-                        <li>Expression analytique du produit scalaire</li>
-                        <li>Applications géométriques (orthogonalité, projections)</li>
-                        <li>Théorème d'Al-Kashi (loi des cosinus)</li>
-                        <li>Équation de droites et de cercles</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-purple-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Formules et propriétés</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li><strong>Définition</strong> : \(\vec{u} \cdot \vec{v} = ||\vec{u}|| \times ||\vec{v}|| \times \cos(\vec{u},\vec{v})\)</li>
-                        <li><strong>Expression analytique</strong> : Si \(\vec{u}(x_1, y_1)\) et \(\vec{v}(x_2, y_2)\), alors \(\vec{u} \cdot \vec{v} = x_1x_2 + y_1y_2\)</li>
-                        <li><strong>Propriétés</strong> :
-                            <ul class="list-disc pl-6 mt-1">
-                                <li>Commutativité : \(\vec{u} \cdot \vec{v} = \vec{v} \cdot \vec{u}\)</li>
-                                <li>Distributivité : \(\vec{u} \cdot (\vec{v} + \vec{w}) = \vec{u} \cdot \vec{v} + \vec{u} \cdot \vec{w}\)</li>
-                                <li>Bilinéarité : \((k\vec{u}) \cdot \vec{v} = k(\vec{u} \cdot \vec{v})\)</li>
-                                <li>Norme : \(||\vec{u}||^2 = \vec{u} \cdot \vec{u}\)</li>
-                            </ul>
-                        </li>
-                        <li><strong>Théorème d'Al-Kashi</strong> : Dans un triangle ABC, \(AB^2 = AC^2 + BC^2 - 2 \times AC \times BC \times \cos(\widehat{ACB})\)</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="barycentre" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-purple-700 mb-4">Chapitre 11: Barycentre</h3>
-                
-                <div class="module-box border-purple-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Comprendre la notion de barycentre de points pondérés</li>
-                        <li>Utiliser les propriétés du barycentre pour résoudre des problèmes</li>
-                        <li>Appliquer le barycentre à l'étude des figures géométriques</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-purple-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Définition du barycentre</li>
-                        <li>Propriétés du barycentre</li>
-                        <li>Coordonnées du barycentre</li>
-                        <li>Barycentres partiels</li>
-                        <li>Applications géométriques</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-purple-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Propriétés importantes</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Le barycentre G de points pondérés \((A_i, \alpha_i)\) vérifie : \(\sum_{i=1}^{n} \alpha_i \overrightarrow{GA_i} = \vec{0}\)</li>
-                        <li>Si \(\sum_{i=1}^{n} \alpha_i \neq 0\), alors les coordonnées du barycentre sont : \(G(\frac{\sum_{i=1}^{n} \alpha_i x_i}{\sum_{i=1}^{n} \alpha_i}, \frac{\sum_{i=1}^{n} \alpha_i y_i}{\sum_{i=1}^{n} \alpha_i})\)</li>
-                        <li>Associativité : Le barycentre de \((A, \alpha)\) et \((B, \beta)\) est le point G tel que \(\overrightarrow{GA} = \frac{\beta}{\alpha + \beta}\overrightarrow{AB}\)</li>
-                        <li>Isobaryce : Le barycentre de n points affectés du même coefficient est le centre de gravité de ces points</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="transformations" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-purple-700 mb-4">Chapitre 12: Transformations du plan</h3>
-                
-                <div class="module-box border-purple-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Comprendre et utiliser les transformations géométriques du plan</li>
-                        <li>Étudier les propriétés des transformations</li>
-                        <li>Appliquer les transformations à la résolution de problèmes</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-purple-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Translations</li>
-                        <li>Homothéties</li>
-                        <li>Rotations</li>
-                        <li>Symétries axiales et centrales</li>
-                        <li>Composées de transformations</li>
-                        <li>Applications à la géométrie</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-purple-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Propriétés des transformations</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li><strong>Translation</strong> de vecteur \(\vec{u}\) : conserve les distances, les angles, le parallélisme</li>
-                        <li><strong>Homothétie</strong> de centre O et de rapport k : multiplie les distances par |k|, conserve les angles et le parallélisme</li>
-                        <li><strong>Rotation</strong> de centre O et d'angle \(\theta\) : conserve les distances et les angles</li>
-                        <li><strong>Symétrie axiale</strong> par rapport à une droite d : conserve les distances et les angles, inverse l'orientation</li>
-                        <li><strong>Symétrie centrale</strong> par rapport à un point O : conserve les distances, les angles et l'orientation</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- MODULE IV: ANALYSE COMBINATOIRE & PROBABILITÉS -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold text-red-800 mb-6 bg-red-100 p-3 rounded-lg">MODULE IV: ANALYSE COMBINATOIRE & PROBABILITÉS</h2>
-            
-            <div id="denombrement" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-red-700 mb-4">Chapitre 13: Dénombrement</h3>
-                
-                <div class="module-box border-red-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Comprendre et appliquer les principes fondamentaux du dénombrement</li>
-                        <li>Utiliser les différentes techniques de dénombrement</li>
-                        <li>Résoudre des problèmes de dénombrement dans divers contextes</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-red-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Principe multiplicatif et principe additif</li>
-                        <li>Arrangements avec et sans répétition</li>
-                        <li>Permutations avec et sans répétition</li>
-                        <li>Combinaisons sans répétition</li>
-                        <li>Coefficients binomiaux et leurs propriétés</li>
-                        <li>Formule du binôme de Newton</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-red-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Formules essentielles</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li><strong>Arrangements</strong> de \(p\) éléments parmi \(n\) : \(A_n^p = \frac{n!}{(n-p)!}\)</li>
-                        <li><strong>Permutations</strong> de \(n\) éléments : \(P_n = n!\)</li>
-                        <li><strong>Permutations avec répétition</strong> : Si parmi \(n\) éléments, \(n_1\) sont identiques, \(n_2\) sont identiques, etc., alors \(P_n^{n_1,n_2,...,n_k} = \frac{n!}{n_1! \times n_2! \times ... \times n_k!}\)</li>
-                        <li><strong>Combinaisons</strong> de \(p\) éléments parmi \(n\) : \(C_n^p = \binom{n}{p} = \frac{n!}{p!(n-p)!}\)</li>
-                        <li><strong>Propriétés des coefficients binomiaux</strong> : 
-                            <ul class="list-disc pl-6 mt-1">
-                                <li>\(C_n^p = C_n^{n-p}\)</li>
-                                <li>\(C_n^p + C_n^{p-1} = C_{n+1}^p\) (formule de Pascal)</li>
-                            </ul>
-                        </li>
-                        <li><strong>Binôme de Newton</strong> : \((a+b)^n = \sum_{k=0}^{n} C_n^k a^{n-k} b^k\)</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="probabilites" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-red-700 mb-4">Chapitre 14: Probabilités</h3>
-                
-                <div class="module-box border-red-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Comprendre les concepts fondamentaux des probabilités</li>
-                        <li>Calculer des probabilités dans différentes situations</li>
-                        <li>Appliquer les probabilités à la résolution de problèmes concrets</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-red-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Expérience aléatoire, univers, événements</li>
-                        <li>Définition et propriétés des probabilités</li>
-                        <li>Probabilité conditionnelle</li>
-                        <li>Indépendance d'événements</li>
-                        <li>Formule des probabilités totales</li>
-                        <li>Formule de Bayes</li>
-                        <li>Épreuves répétées indépendantes (schéma de Bernoulli)</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-red-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Formules importantes</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li><strong>Probabilité d'un événement</strong> : \(P(A) = \frac{\text{nombre de cas favorables}}{\text{nombre de cas possibles}}\) (si les cas sont équiprobables)</li>
-                        <li><strong>Propriétés</strong> :
-                            <ul class="list-disc pl-6 mt-1">
-                                <li>\(P(\Omega) = 1\) (probabilité de l'univers)</li>
-                                <li>\(P(\emptyset) = 0\) (probabilité de l'événement impossible)</li>
-                                <li>\(P(\overline{A}) = 1 - P(A)\) (probabilité de l'événement contraire)</li>
-                                <li>\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\) (probabilité de la réunion)</li>
-                            </ul>
-                        </li>
-                        <li><strong>Probabilité conditionnelle</strong> : \(P(A|B) = \frac{P(A \cap B)}{P(B)}\) si \(P(B) \neq 0\)</li>
-                        <li><strong>Indépendance</strong> : \(A\) et \(B\) sont indépendants si \(P(A \cap B) = P(A) \times P(B)\)</li>
-                        <li><strong>Formule des probabilités totales</strong> : Si \((B_i)_{i=1}^{n}\) est une partition de \(\Omega\), alors \(P(A) = \sum_{i=1}^{n} P(A|B_i) \times P(B_i)\)</li>
-                        <li><strong>Formule de Bayes</strong> : \(P(B_i|A) = \frac{P(A|B_i) \times P(B_i)}{\sum_{j=1}^{n} P(A|B_j) \times P(B_j)}\)</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="variables-aleatoires" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-red-700 mb-4">Chapitre 15: Variables aléatoires</h3>
-                
-                <div class="module-box border-red-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Comprendre le concept de variable aléatoire</li>
-                        <li>Étudier les lois de probabilité discrètes usuelles</li>
-                        <li>Calculer l'espérance et la variance d'une variable aléatoire</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-red-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Définition d'une variable aléatoire</li>
-                        <li>Loi de probabilité d'une variable aléatoire discrète</li>
-                        <li>Espérance mathématique</li>
-                        <li>Variance et écart-type</li>
-                        <li>Loi binomiale</li>
-                        <li>Loi uniforme discrète</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-red-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Formules et propriétés</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li><strong>Espérance</strong> d'une variable aléatoire discrète : \(E(X) = \sum_{i} x_i \times P(X = x_i)\)</li>
-                        <li><strong>Variance</strong> : \(V(X) = E(X^2) - E(X)^2 = \sum_{i} x_i^2 \times P(X = x_i) - E(X)^2\)</li>
-                        <li><strong>Écart-type</strong> : \(\sigma(X) = \sqrt{V(X)}\)</li>
-                        <li><strong>Loi binomiale</strong> \(B(n,p)\) :
-                            <ul class="list-disc pl-6 mt-1">
-                                <li>Probabilité : \(P(X = k) = C_n^k \times p^k \times (1-p)^{n-k}\)</li>
-                                <li>Espérance : \(E(X) = n \times p\)</li>
-                                <li>Variance : \(V(X) = n \times p \times (1-p)\)</li>
-                            </ul>
-                        </li>
-                        <li><strong>Loi uniforme</strong> sur \(\{1, 2, ..., n\}\) :
-                            <ul class="list-disc pl-6 mt-1">
-                                <li>Probabilité : \(P(X = k) = \frac{1}{n}\) pour tout \(k \in \{1, 2, ..., n\}\)</li>
-                                <li>Espérance : \(E(X) = \frac{n+1}{2}\)</li>
-                                <li>Variance : \(V(X) = \frac{n^2-1}{12}\)</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div id="statistiques" class="chapter-card bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-xl font-bold text-red-700 mb-4">Chapitre 16: Statistiques descriptives</h3>
-                
-                <div class="module-box border-red-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Objectifs</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Organiser et représenter des données statistiques</li>
-                        <li>Calculer et interpréter les paramètres de position et de dispersion</li>
-                        <li>Analyser la corrélation entre deux variables statistiques</li>
-                    </ul>
-                </div>
-                
-                <div class="module-box border-red-500 pl-4 mb-4">
-                    <h4 class="font-semibold mb-2">Contenu</h4>
-                    <ol class="list-decimal pl-6 space-y-1">
-                        <li>Séries statistiques à une variable</li>
-                        <li>Représentations graphiques (diagrammes, histogrammes)</li>
-                        <li>Paramètres de position (moyenne, médiane, mode)</li>
-                        <li>Paramètres de dispersion (étendue, variance, écart-type)</li>
-                        <li>Séries statistiques à deux variables</li>
-                        <li>Ajustement linéaire et méthode des moindres carrés</li>
-                        <li>Coefficient de corrélation linéaire</li>
-                    </ol>
-                </div>
-                
-                <div class="bg-red-50 p-4 rounded-md">
-                    <h4 class="font-semibold mb-2">Formules importantes</h4>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li><strong>Moyenne</strong> : \(\overline{x} = \frac{1}{n} \sum_{i=1}^{n} x_i\) ou \(\overline{x} = \frac{\sum_{i=1}^{p} n_i x_i}{\sum_{i=1}^{p} n_i}\) (cas des données groupées)</li>
-                        <li><strong>Variance</strong> : \(V = \frac{1}{n} \sum_{i=1}^{n} (x_i - \overline{x})^2\)</li>
-                        <li><strong>Écart-type</strong> : \(\sigma = \sqrt{V}\)</li>
-                        <li><strong>Covariance</strong> de deux variables \(X\) et \(Y\) : \(cov(X,Y) = \frac{1}{n} \sum_{i=1}^{n} (x_i - \overline{x})(y_i - \overline{y})\)</li>
-                        <li><strong>Coefficient de corrélation linéaire</strong> : \(r = \frac{cov(X,Y)}{\sigma_X \times \sigma_Y}\)</li>
-                        <li><strong>Droite de régression</strong> de \(Y\) en \(X\) : \(y = ax + b\) avec \(a = \frac{cov(X,Y)}{V(X)}\) et \(b = \overline{y} - a\overline{x}\)</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold text-blue-800 mb-4">Répartition horaire indicative</h2>
-            
-            <div class="overflow-x-auto">
-                <table class="min-w-full bg-white border border-gray-300">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="py-2 px-4 border-b">Module</th>
-                            <th class="py-2 px-4 border-b">Nombre d'heures</th>
-                            <th class="py-2 px-4 border-b">Pourcentage</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="py-2 px-4 border-b">Module I: Algèbre</td>
-                            <td class="py-2 px-4 border-b text-center">45</td>
-                            <td class="py-2 px-4 border-b text-center">30%</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 px-4 border-b">Module II: Analyse</td>
-                            <td class="py-2 px-4 border-b text-center">45</td>
-                            <td class="py-2 px-4 border-b text-center">30%</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 px-4 border-b">Module III: Géométrie</td>
-                            <td class="py-2 px-4 border-b text-center">30</td>
-                            <td class="py-2 px-4 border-b text-center">20%</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 px-4 border-b">Module IV: Analyse Combinatoire & Probabilités</td>
-                            <td class="py-2 px-4 border-b text-center">30</td>
-                            <td class="py-2 px-4 border-b text-center">20%</td>
-                        </tr>
-                        <tr class="bg-gray-100 font-semibold">
-                            <td class="py-2 px-4 border-b">Total</td>
-                            <td class="py-2 px-4 border-b text-center">150</td>
-                            <td class="py-2 px-4 border-b text-center">100%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-            <h2 class="text-xl font-bold text-blue-800 mb-4">Conseils pour réussir en mathématiques</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <h3 class="font-semibold text-blue-700 mb-2">Méthodes de travail</h3>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>Travailler régulièrement, ne pas attendre la veille des examens</li>
-                        <li>Comprendre les concepts plutôt que de mémoriser</li>
-                        <li>Faire beaucoup d'exercices variés</li>
-                        <li>Revoir systématiquement les erreurs commises</li>
-                        <li>Constituer des fiches de formules et de méthodes</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-blue-700 mb-2">Préparation aux examens</h3>
-                    <ul class="list-disc pl-6 space-y-1">
-                        <li>S'entraîner sur des sujets d'examens des années précédentes</li>
-                        <li>Travailler dans les conditions d'examen (temps limité, sans aide)</li>
-                        <li>Vérifier ses réponses et la cohérence des résultats</li>
-                        <li>Soigner la présentation et la rédaction</li>
-                        <li>Maîtriser l'utilisation de la calculatrice</li>
-                    </ul>
+                    <!-- Chapter content will be displayed here -->
                 </div>
             </div>
         </div>
-
-        <footer class="text-center text-gray-600 mt-8 pb-8">
-            <p>© 2023 Programme de Mathématiques - Première D - Cameroun</p>
-            <p class="text-sm mt-2">Ce document présente le programme officiel de mathématiques pour la classe de Première D au Cameroun.</p>
-        </footer>
     </div>
 
     <script>
-        // Script pour le défilement fluide vers les sections
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // Define chapters data
+        const chapters = [
+            {
+                id: 1,
+                title: "Algèbre",
+                sections: [
+                    {
+                        title: "Équations et inéquations du second degré",
+                        content: `
+                            <h3 class="text-xl font-semibold mb-3">Équations et inéquations du second degré</h3>
+                            <p class="mb-4">Ce chapitre traite de la résolution des équations et inéquations du second degré, ainsi que de leurs applications.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                                <h4 class="font-medium mb-2">Points clés :</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Forme canonique et discriminant</li>
+                                    <li>Résolution d'équations du second degré</li>
+                                    <li>Somme et produit des racines</li>
+                                    <li>Factorisation du trinôme</li>
+                                    <li>Résolution d'inéquations du second degré</li>
+                                    <li>Applications et problèmes concrets</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Fonctions polynômes",
+                        content: `
+                            <h3 class="text-xl font-semibold mb-3">Fonctions polynômes</h3>
+                            <p class="mb-4">Étude des fonctions polynômes, leurs propriétés et leurs représentations graphiques.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                                <h4 class="font-medium mb-2">Points clés :</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Définition et propriétés des polynômes</li>
+                                    <li>Opérations sur les polynômes</li>
+                                    <li>Racines et factorisation</li>
+                                    <li>Étude des variations</li>
+                                    <li>Représentation graphique</li>
+                                </ul>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Analyse",
+                sections: [
+                    {
+                        title: "Limites et continuité",
+                        content: `
+                            <h3 class="text-xl font-semibold mb-3">Limites et continuité</h3>
+                            <p class="mb-4">Introduction aux concepts de limites et de continuité des fonctions.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                                <h4 class="font-medium mb-2">Points clés :</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Notion intuitive de limite</li>
+                                    <li>Calcul de limites simples</li>
+                                    <li>Limites et asymptotes</li>
+                                    <li>Continuité d'une fonction</li>
+                                    <li>Théorème des valeurs intermédiaires</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Dérivation",
+                        content: `
+                            <h3 class="text-xl font-semibold mb-3">Dérivation</h3>
+                            <p class="mb-4">Étude de la dérivation des fonctions et ses applications.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                                <h4 class="font-medium mb-2">Points clés :</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Nombre dérivé et tangente</li>
+                                    <li>Fonction dérivée</li>
+                                    <li>Règles de dérivation</li>
+                                    <li>Étude des variations d'une fonction</li>
+                                    <li>Extremums et optimisation</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Fonctions exponentielles et logarithmiques",
+                        content: `
+                            <h3 class="text-xl font-semibold mb-3">Fonctions exponentielles et logarithmiques</h3>
+                            <p class="mb-4">Introduction aux fonctions exponentielles et logarithmiques et leurs propriétés.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                                <h4 class="font-medium mb-2">Points clés :</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Fonction exponentielle : définition et propriétés</li>
+                                    <li>Fonction logarithme népérien : définition et propriétés</li>
+                                    <li>Équations et inéquations exponentielles et logarithmiques</li>
+                                    <li>Applications à la croissance et à la décroissance</li>
+                                </ul>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Géométrie",
+                sections: [
+                    {
+                        title: "Géométrie dans l'espace",
+                        content: `
+                            <h3 class="text-xl font-semibold mb-3">Géométrie dans l'espace</h3>
+                            <p class="mb-4">Étude des objets géométriques dans l'espace à trois dimensions.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                                <h4 class="font-medium mb-2">Points clés :</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Droites et plans dans l'espace</li>
+                                    <li>Positions relatives</li>
+                                    <li>Orthogonalité et parallélisme</li>
+                                    <li>Solides usuels : cube, pyramide, sphère, etc.</li>
+                                    <li>Calculs de volumes et d'aires</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Produit scalaire",
+                        content: `
+                            <h3 class="text-xl font-semibold mb-3">Produit scalaire</h3>
+                            <p class="mb-4">Introduction au produit scalaire et ses applications en géométrie.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                                <h4 class="font-medium mb-2">Points clés :</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Définition et propriétés du produit scalaire</li>
+                                    <li>Expression analytique</li>
+                                    <li>Applications à la géométrie</li>
+                                    <li>Orthogonalité</li>
+                                    <li>Équations de droites et de cercles</li>
+                                </ul>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Probabilités et Statistiques",
+                sections: [
+                    {
+                        title: "Probabilités",
+                        content: `
+                            <h3 class="text-xl font-semibold mb-3">Probabilités</h3>
+                            <p class="mb-4">Introduction au calcul des probabilités et à ses applications.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                                <h4 class="font-medium mb-2">Points clés :</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Espace probabilisé</li>
+                                    <li>Probabilité conditionnelle</li>
+                                    <li>Indépendance d'événements</li>
+                                    <li>Variables aléatoires discrètes</li>
+                                    <li>Loi binomiale</li>
+                                    <li>Espérance et variance</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Statistiques",
+                        content: `
+                            <h3 class="text-xl font-semibold mb-3">Statistiques</h3>
+                            <p class="mb-4">Étude des méthodes statistiques pour l'analyse de données.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                                <h4 class="font-medium mb-2">Points clés :</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Séries statistiques à une variable</li>
+                                    <li>Indicateurs de position : moyenne, médiane, mode</li>
+                                    <li>Indicateurs de dispersion : écart-type, variance</li>
+                                    <li>Représentations graphiques</li>
+                                    <li>Introduction aux séries statistiques à deux variables</li>
+                                </ul>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "Arithmétique",
+                sections: [
+                    {
+                        title: "Divisibilité et congruences",
+                        content: `
+                            <h3 class="text-xl font-semibold mb-3">Divisibilité et congruences</h3>
+                            <p class="mb-4">Étude des propriétés de divisibilité des entiers et des congruences.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                                <h4 class="font-medium mb-2">Points clés :</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Division euclidienne</li>
+                                    <li>PGCD et PPCM</li>
+                                    <li>Nombres premiers</li>
+                                    <li>Théorème de Bézout</li>
+                                    <li>Congruences et arithmétique modulaire</li>
+                                </ul>
+                            </div>
+                        `
+                    }
+                ]
+            }
+        ];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            renderChapterList();
+            
+            // Event listener for starting with the first chapter
+            document.getElementById('start-first-chapter').addEventListener('click', function() {
+                openChapter(1, 0);
             });
         });
+
+        // Render the chapter list in the sidebar
+        function renderChapterList() {
+            const chapterListElement = document.getElementById('chapter-list');
+            
+            chapters.forEach(chapter => {
+                const chapterElement = document.createElement('div');
+                chapterElement.className = 'chapter-card bg-gray-50 hover:bg-gray-100 rounded-lg p-3 cursor-pointer';
+                
+                let sectionsHTML = '';
+                chapter.sections.forEach((section, sectionIndex) => {
+                    sectionsHTML += `
+                        <div class="ml-4 mt-2">
+                            <div class="flex items-center">
+                                <div class="h-2 w-2 rounded-full bg-blue-400 mr-2"></div>
+                                <span class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer section-link" 
+                                      data-chapter="${chapter.id}" 
+                                      data-section="${sectionIndex}">
+                                    ${section.title}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                chapterElement.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-medium text-gray-800">${chapter.title}</h3>
+                        <span class="text-xs bg-blue-100 text-blue-800 py-1 px-2 rounded-full">${chapter.sections.length} sections</span>
+                    </div>
+                    <div class="mt-2">
+                        <div class="w-full bg-gray-200 rounded-full h-1.5">
+                            <div class="bg-blue-600 h-1.5 rounded-full progress-bar" style="width: 0%" id="progress-chapter-${chapter.id}"></div>
+                        </div>
+                    </div>
+                    ${sectionsHTML}
+                `;
+                
+                chapterListElement.appendChild(chapterElement);
+            });
+            
+            // Add event listeners to section links
+            document.querySelectorAll('.section-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    const chapterId = parseInt(this.getAttribute('data-chapter'));
+                    const sectionIndex = parseInt(this.getAttribute('data-section'));
+                    openChapter(chapterId, sectionIndex);
+                });
+            });
+        }
+
+        // Open a specific chapter and section
+        function openChapter(chapterId, sectionIndex) {
+            // Hide welcome screen
+            document.getElementById('welcome-screen').style.display = 'none';
+            
+            // Find the chapter and section
+            const chapter = chapters.find(c => c.id === chapterId);
+            if (!chapter) return;
+            
+            const section = chapter.sections[sectionIndex];
+            if (!section) return;
+            
+            // Create chapter content
+            const chapterContainer = document.getElementById('chapter-container');
+            
+            // Navigation buttons for sections
+            let prevSectionBtn = '';
+            let nextSectionBtn = '';
+            
+            if (sectionIndex > 0) {
+                prevSectionBtn = `
+                    <button class="btn-nav bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg flex items-center" 
+                            onclick="openChapter(${chapterId}, ${sectionIndex - 1})">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        Section précédente
+                    </button>
+                `;
+            }
+            
+            if (sectionIndex < chapter.sections.length - 1) {
+                nextSectionBtn = `
+                    <button class="btn-nav bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg flex items-center" 
+                            onclick="openChapter(${chapterId}, ${sectionIndex + 1})">
+                        Section suivante
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                `;
+            } else if (chapterId < chapters.length) {
+                // If this is the last section of the chapter, but not the last chapter
+                nextSectionBtn = `
+                    <button class="btn-nav bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg flex items-center" 
+                            onclick="openChapter(${chapterId + 1}, 0)">
+                        Chapitre suivant
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                `;
+            }
+            
+            // Create the content HTML
+            chapterContainer.innerHTML = `
+                <div class="mb-6">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full mr-2">Chapitre ${chapterId}</span>
+                        <h2 class="text-2xl font-bold text-gray-800">${chapter.title}</h2>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-blue-600 h-2 rounded-full" style="width: ${((sectionIndex + 1) / chapter.sections.length) * 100}%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-600 mt-1">
+                        <span>Section ${sectionIndex + 1}/${chapter.sections.length}</span>
+                        <span>${section.title}</span>
+                    </div>
+                </div>
+                
+                <div class="chapter-content active">
+                    ${section.content}
+                </div>
+                
+                <div class="mt-8 flex justify-between">
+                    ${prevSectionBtn}
+                    ${nextSectionBtn}
+                </div>
+            `;
+            
+            // Update progress
+            updateProgress();
+        }
+        
+        // Update progress indicators
+        function updateProgress() {
+            // This is a simplified version - in a real app, you'd track actual progress
+            let totalSections = 0;
+            let completedSections = 0;
+            
+            chapters.forEach(chapter => {
+                totalSections += chapter.sections.length;
+                // For demo purposes, we'll consider random sections as completed
+                const completedForChapter = Math.floor(Math.random() * chapter.sections.length);
+                completedSections += completedForChapter;
+                
+                // Update chapter progress bar
+                const progressBar = document.getElementById(`progress-chapter-${chapter.id}`);
+                if (progressBar) {
+                    progressBar.style.width = `${(completedForChapter / chapter.sections.length) * 100}%`;
+                }
+            });
+            
+            // Update global progress
+            const globalProgress = document.getElementById('global-progress');
+            if (globalProgress) {
+                globalProgress.textContent = `${Math.round((completedSections / totalSections) * 100)}%`;
+            }
+        }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961b924825fde3b5',t:'MTc1Mjk0MjI5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96224d78a5fb03c2',t:'MTc1MzAxMjg3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
