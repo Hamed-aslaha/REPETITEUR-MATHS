@@ -3,482 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Répétiteur de Mathématiques - Première D</title>
+    <title>Programme de Mathématiques - Première D Cameroun</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            background-color: #f0f4f8;
         }
         
-        .chapter-card {
+        .program-card {
             transition: all 0.3s ease;
         }
         
-        .chapter-card:hover {
+        .program-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         
-        .progress-bar {
-            transition: width 0.5s ease;
+        .flag {
+            display: inline-block;
+            position: relative;
+            width: 60px;
+            height: 40px;
         }
         
-        .chapter-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        
-        .chapter-content.active {
-            display: block;
-            opacity: 1;
-        }
-        
-        .btn-nav {
-            transition: all 0.3s ease;
-        }
-        
-        .btn-nav:hover {
-            transform: scale(1.05);
+        .flag-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
-<body class="min-h-screen">
-    <div class="container mx-auto px-4 py-8">
+<body>
+    <div class="min-h-screen">
         <!-- Header -->
-        <header class="mb-8">
-            <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-lg p-6 text-white">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div>
-                        <h1 class="text-3xl font-bold mb-2">Répétiteur de Mathématiques</h1>
-                        <p class="text-blue-100">Programme complet - Niveau Première D</p>
+        <header class="bg-gradient-to-r from-green-600 to-yellow-500 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <div class="flag mr-4">
+                        <svg class="flag-content" viewBox="0 0 900 600">
+                            <rect width="900" height="600" fill="#007a5e"/>
+                            <rect width="600" height="600" fill="#ce1126"/>
+                            <rect width="300" height="600" fill="#fcd116"/>
+                            <polygon points="450,300 480,390 400,330 500,330 420,390" fill="#fcd116"/>
+                        </svg>
                     </div>
-                    <div class="mt-4 md:mt-0">
-                        <div class="bg-white/20 rounded-lg p-3">
-                            <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                </svg>
-                                <span class="text-lg font-medium">Progression globale: <span id="global-progress">0%</span></span>
-                            </div>
-                        </div>
-                    </div>
+                    <h1 class="text-2xl md:text-3xl font-bold">Programme de Mathématiques</h1>
                 </div>
+                <div class="text-xl font-semibold">Première D - Cameroun</div>
             </div>
         </header>
 
         <!-- Main Content -->
-        <div class="flex flex-col lg:flex-row gap-8">
-            <!-- Sidebar - Chapter List -->
-            <div class="lg:w-1/3">
-                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-                    <h2 class="text-xl font-semibold mb-4 text-gray-800 border-b pb-2">Programme des chapitres</h2>
-                    <div class="space-y-3" id="chapter-list">
-                        <!-- Chapters will be generated here -->
-                    </div>
-                </div>
+        <main class="container mx-auto px-4 py-8">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-2xl font-bold text-green-700 mb-4">Présentation du Programme</h2>
+                <p class="text-gray-700 mb-4">
+                    Ce programme officiel de mathématiques pour la classe de Première D au Cameroun vise à développer 
+                    les compétences analytiques et le raisonnement logique des élèves. Il prépare aux études scientifiques 
+                    supérieures tout en mettant l'accent sur les applications pratiques des mathématiques.
+                </p>
             </div>
 
-            <!-- Chapter Content -->
-            <div class="lg:w-2/3">
-                <div class="bg-white rounded-xl shadow-md p-6" id="chapter-container">
-                    <div class="text-center py-16" id="welcome-screen">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-blue-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
-                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Bienvenue dans votre répétiteur de mathématiques</h2>
-                        <p class="text-gray-600 mb-6">Sélectionnez un chapitre dans la liste pour commencer à étudier.</p>
-                        <div class="flex justify-center">
-                            <button id="start-first-chapter" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all">
-                                Commencer par le premier chapitre
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Chapter content will be displayed here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Define chapters data
-        const chapters = [
-            {
-                id: 1,
-                title: "Algèbre",
-                sections: [
-                    {
-                        title: "Équations et inéquations du second degré",
-                        content: `
-                            <h3 class="text-xl font-semibold mb-3">Équations et inéquations du second degré</h3>
-                            <p class="mb-4">Ce chapitre traite de la résolution des équations et inéquations du second degré, ainsi que de leurs applications.</p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                                <h4 class="font-medium mb-2">Points clés :</h4>
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li>Forme canonique et discriminant</li>
-                                    <li>Résolution d'équations du second degré</li>
-                                    <li>Somme et produit des racines</li>
-                                    <li>Factorisation du trinôme</li>
-                                    <li>Résolution d'inéquations du second degré</li>
-                                    <li>Applications et problèmes concrets</li>
-                                </ul>
-                            </div>
-                        `
-                    },
-                    {
-                        title: "Fonctions polynômes",
-                        content: `
-                            <h3 class="text-xl font-semibold mb-3">Fonctions polynômes</h3>
-                            <p class="mb-4">Étude des fonctions polynômes, leurs propriétés et leurs représentations graphiques.</p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                                <h4 class="font-medium mb-2">Points clés :</h4>
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li>Définition et propriétés des polynômes</li>
-                                    <li>Opérations sur les polynômes</li>
-                                    <li>Racines et factorisation</li>
-                                    <li>Étude des variations</li>
-                                    <li>Représentation graphique</li>
-                                </ul>
-                            </div>
-                        `
-                    }
-                ]
-            },
-            {
-                id: 2,
-                title: "Analyse",
-                sections: [
-                    {
-                        title: "Limites et continuité",
-                        content: `
-                            <h3 class="text-xl font-semibold mb-3">Limites et continuité</h3>
-                            <p class="mb-4">Introduction aux concepts de limites et de continuité des fonctions.</p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                                <h4 class="font-medium mb-2">Points clés :</h4>
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li>Notion intuitive de limite</li>
-                                    <li>Calcul de limites simples</li>
-                                    <li>Limites et asymptotes</li>
-                                    <li>Continuité d'une fonction</li>
-                                    <li>Théorème des valeurs intermédiaires</li>
-                                </ul>
-                            </div>
-                        `
-                    },
-                    {
-                        title: "Dérivation",
-                        content: `
-                            <h3 class="text-xl font-semibold mb-3">Dérivation</h3>
-                            <p class="mb-4">Étude de la dérivation des fonctions et ses applications.</p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                                <h4 class="font-medium mb-2">Points clés :</h4>
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li>Nombre dérivé et tangente</li>
-                                    <li>Fonction dérivée</li>
-                                    <li>Règles de dérivation</li>
-                                    <li>Étude des variations d'une fonction</li>
-                                    <li>Extremums et optimisation</li>
-                                </ul>
-                            </div>
-                        `
-                    },
-                    {
-                        title: "Fonctions exponentielles et logarithmiques",
-                        content: `
-                            <h3 class="text-xl font-semibold mb-3">Fonctions exponentielles et logarithmiques</h3>
-                            <p class="mb-4">Introduction aux fonctions exponentielles et logarithmiques et leurs propriétés.</p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                                <h4 class="font-medium mb-2">Points clés :</h4>
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li>Fonction exponentielle : définition et propriétés</li>
-                                    <li>Fonction logarithme népérien : définition et propriétés</li>
-                                    <li>Équations et inéquations exponentielles et logarithmiques</li>
-                                    <li>Applications à la croissance et à la décroissance</li>
-                                </ul>
-                            </div>
-                        `
-                    }
-                ]
-            },
-            {
-                id: 3,
-                title: "Géométrie",
-                sections: [
-                    {
-                        title: "Géométrie dans l'espace",
-                        content: `
-                            <h3 class="text-xl font-semibold mb-3">Géométrie dans l'espace</h3>
-                            <p class="mb-4">Étude des objets géométriques dans l'espace à trois dimensions.</p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                                <h4 class="font-medium mb-2">Points clés :</h4>
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li>Droites et plans dans l'espace</li>
-                                    <li>Positions relatives</li>
-                                    <li>Orthogonalité et parallélisme</li>
-                                    <li>Solides usuels : cube, pyramide, sphère, etc.</li>
-                                    <li>Calculs de volumes et d'aires</li>
-                                </ul>
-                            </div>
-                        `
-                    },
-                    {
-                        title: "Produit scalaire",
-                        content: `
-                            <h3 class="text-xl font-semibold mb-3">Produit scalaire</h3>
-                            <p class="mb-4">Introduction au produit scalaire et ses applications en géométrie.</p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                                <h4 class="font-medium mb-2">Points clés :</h4>
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li>Définition et propriétés du produit scalaire</li>
-                                    <li>Expression analytique</li>
-                                    <li>Applications à la géométrie</li>
-                                    <li>Orthogonalité</li>
-                                    <li>Équations de droites et de cercles</li>
-                                </ul>
-                            </div>
-                        `
-                    }
-                ]
-            },
-            {
-                id: 4,
-                title: "Probabilités et Statistiques",
-                sections: [
-                    {
-                        title: "Probabilités",
-                        content: `
-                            <h3 class="text-xl font-semibold mb-3">Probabilités</h3>
-                            <p class="mb-4">Introduction au calcul des probabilités et à ses applications.</p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                                <h4 class="font-medium mb-2">Points clés :</h4>
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li>Espace probabilisé</li>
-                                    <li>Probabilité conditionnelle</li>
-                                    <li>Indépendance d'événements</li>
-                                    <li>Variables aléatoires discrètes</li>
-                                    <li>Loi binomiale</li>
-                                    <li>Espérance et variance</li>
-                                </ul>
-                            </div>
-                        `
-                    },
-                    {
-                        title: "Statistiques",
-                        content: `
-                            <h3 class="text-xl font-semibold mb-3">Statistiques</h3>
-                            <p class="mb-4">Étude des méthodes statistiques pour l'analyse de données.</p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                                <h4 class="font-medium mb-2">Points clés :</h4>
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li>Séries statistiques à une variable</li>
-                                    <li>Indicateurs de position : moyenne, médiane, mode</li>
-                                    <li>Indicateurs de dispersion : écart-type, variance</li>
-                                    <li>Représentations graphiques</li>
-                                    <li>Introduction aux séries statistiques à deux variables</li>
-                                </ul>
-                            </div>
-                        `
-                    }
-                ]
-            },
-            {
-                id: 5,
-                title: "Arithmétique",
-                sections: [
-                    {
-                        title: "Divisibilité et congruences",
-                        content: `
-                            <h3 class="text-xl font-semibold mb-3">Divisibilité et congruences</h3>
-                            <p class="mb-4">Étude des propriétés de divisibilité des entiers et des congruences.</p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                                <h4 class="font-medium mb-2">Points clés :</h4>
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li>Division euclidienne</li>
-                                    <li>PGCD et PPCM</li>
-                                    <li>Nombres premiers</li>
-                                    <li>Théorème de Bézout</li>
-                                    <li>Congruences et arithmétique modulaire</li>
-                                </ul>
-                            </div>
-                        `
-                    }
-                ]
-            }
-        ];
-
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', function() {
-            renderChapterList();
-            
-            // Event listener for starting with the first chapter
-            document.getElementById('start-first-chapter').addEventListener('click', function() {
-                openChapter(1, 0);
-            });
-        });
-
-        // Render the chapter list in the sidebar
-        function renderChapterList() {
-            const chapterListElement = document.getElementById('chapter-list');
-            
-            chapters.forEach(chapter => {
-                const chapterElement = document.createElement('div');
-                chapterElement.className = 'chapter-card bg-gray-50 hover:bg-gray-100 rounded-lg p-3 cursor-pointer';
-                
-                let sectionsHTML = '';
-                chapter.sections.forEach((section, sectionIndex) => {
-                    sectionsHTML += `
-                        <div class="ml-4 mt-2">
-                            <div class="flex items-center">
-                                <div class="h-2 w-2 rounded-full bg-blue-400 mr-2"></div>
-                                <span class="text-sm text-gray-600 hover:text-blue-600 cursor-pointer section-link" 
-                                      data-chapter="${chapter.id}" 
-                                      data-section="${sectionIndex}">
-                                    ${section.title}
-                                </span>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                chapterElement.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <h3 class="font-medium text-gray-800">${chapter.title}</h3>
-                        <span class="text-xs bg-blue-100 text-blue-800 py-1 px-2 rounded-full">${chapter.sections.length} sections</span>
-                    </div>
-                    <div class="mt-2">
-                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                            <div class="bg-blue-600 h-1.5 rounded-full progress-bar" style="width: 0%" id="progress-chapter-${chapter.id}"></div>
-                        </div>
-                    </div>
-                    ${sectionsHTML}
-                `;
-                
-                chapterListElement.appendChild(chapterElement);
-            });
-            
-            // Add event listeners to section links
-            document.querySelectorAll('.section-link').forEach(link => {
-                link.addEventListener('click', function() {
-                    const chapterId = parseInt(this.getAttribute('data-chapter'));
-                    const sectionIndex = parseInt(this.getAttribute('data-section'));
-                    openChapter(chapterId, sectionIndex);
-                });
-            });
-        }
-
-        // Open a specific chapter and section
-        function openChapter(chapterId, sectionIndex) {
-            // Hide welcome screen
-            document.getElementById('welcome-screen').style.display = 'none';
-            
-            // Find the chapter and section
-            const chapter = chapters.find(c => c.id === chapterId);
-            if (!chapter) return;
-            
-            const section = chapter.sections[sectionIndex];
-            if (!section) return;
-            
-            // Create chapter content
-            const chapterContainer = document.getElementById('chapter-container');
-            
-            // Navigation buttons for sections
-            let prevSectionBtn = '';
-            let nextSectionBtn = '';
-            
-            if (sectionIndex > 0) {
-                prevSectionBtn = `
-                    <button class="btn-nav bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg flex items-center" 
-                            onclick="openChapter(${chapterId}, ${sectionIndex - 1})">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                        </svg>
-                        Section précédente
-                    </button>
-                `;
-            }
-            
-            if (sectionIndex < chapter.sections.length - 1) {
-                nextSectionBtn = `
-                    <button class="btn-nav bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg flex items-center" 
-                            onclick="openChapter(${chapterId}, ${sectionIndex + 1})">
-                        Section suivante
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                `;
-            } else if (chapterId < chapters.length) {
-                // If this is the last section of the chapter, but not the last chapter
-                nextSectionBtn = `
-                    <button class="btn-nav bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg flex items-center" 
-                            onclick="openChapter(${chapterId + 1}, 0)">
-                        Chapitre suivant
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                `;
-            }
-            
-            // Create the content HTML
-            chapterContainer.innerHTML = `
-                <div class="mb-6">
+            <!-- Programme détaillé -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Algèbre -->
+                <div class="program-card bg-white rounded-lg shadow-md p-6">
                     <div class="flex items-center mb-4">
-                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full mr-2">Chapitre ${chapterId}</span>
-                        <h2 class="text-2xl font-bold text-gray-800">${chapter.title}</h2>
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-green-700">Algèbre</h3>
                     </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-blue-600 h-2 rounded-full" style="width: ${((sectionIndex + 1) / chapter.sections.length) * 100}%"></div>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Équations et inéquations du second degré</li>
+                        <li>Fonctions polynômes du second degré</li>
+                        <li>Suites numériques (arithmétiques et géométriques)</li>
+                        <li>Logarithmes et exponentielles</li>
+                        <li>Calcul algébrique et factorisation</li>
+                    </ul>
+                </div>
+
+                <!-- Analyse -->
+                <div class="program-card bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-yellow-600">Analyse</h3>
                     </div>
-                    <div class="flex justify-between text-sm text-gray-600 mt-1">
-                        <span>Section ${sectionIndex + 1}/${chapter.sections.length}</span>
-                        <span>${section.title}</span>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Limites et continuité des fonctions</li>
+                        <li>Dérivation et applications</li>
+                        <li>Étude des fonctions</li>
+                        <li>Fonctions trigonométriques</li>
+                        <li>Primitives et calcul intégral (introduction)</li>
+                    </ul>
+                </div>
+
+                <!-- Géométrie -->
+                <div class="program-card bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-red-600">Géométrie</h3>
+                    </div>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Géométrie analytique dans le plan</li>
+                        <li>Produit scalaire dans le plan</li>
+                        <li>Équations de droites et de cercles</li>
+                        <li>Transformations géométriques</li>
+                        <li>Vecteurs et applications</li>
+                    </ul>
+                </div>
+
+                <!-- Statistiques et Probabilités -->
+                <div class="program-card bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-600">Statistiques et Probabilités</h3>
+                    </div>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Statistique descriptive</li>
+                        <li>Mesures de tendance centrale et de dispersion</li>
+                        <li>Introduction aux probabilités</li>
+                        <li>Variables aléatoires discrètes</li>
+                        <li>Lois de probabilité usuelles</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Compétences à acquérir -->
+            <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-green-700 mb-4">Compétences à acquérir</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-green-700 mb-2">Compétences techniques</h3>
+                        <ul class="list-disc pl-6 text-gray-700 space-y-1">
+                            <li>Maîtriser les techniques de calcul algébrique</li>
+                            <li>Résoudre des problèmes d'optimisation</li>
+                            <li>Analyser et interpréter des graphiques</li>
+                            <li>Modéliser des situations concrètes</li>
+                        </ul>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-yellow-700 mb-2">Compétences méthodologiques</h3>
+                        <ul class="list-disc pl-6 text-gray-700 space-y-1">
+                            <li>Développer un raisonnement logique</li>
+                            <li>Formuler et vérifier des conjectures</li>
+                            <li>Communiquer avec précision en langage mathématique</li>
+                            <li>Utiliser des outils numériques appropriés</li>
+                        </ul>
                     </div>
                 </div>
-                
-                <div class="chapter-content active">
-                    ${section.content}
+            </div>
+
+            <!-- Évaluation -->
+            <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-green-700 mb-4">Modalités d'évaluation</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-blue-700 mb-2">Évaluations continues</h3>
+                        <p class="text-gray-700">Interrogations écrites, devoirs surveillés et travaux pratiques réguliers.</p>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-purple-700 mb-2">Examens semestriels</h3>
+                        <p class="text-gray-700">Épreuves complètes couvrant l'ensemble du programme du semestre.</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-red-700 mb-2">Préparation au BAC</h3>
+                        <p class="text-gray-700">Examens blancs et révisions ciblées pour préparer l'examen national.</p>
+                    </div>
                 </div>
-                
-                <div class="mt-8 flex justify-between">
-                    ${prevSectionBtn}
-                    ${nextSectionBtn}
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-6">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <p class="text-center md:text-left">© 2023 Ministère de l'Éducation Nationale du Cameroun</p>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flag mr-3">
+                            <svg class="flag-content" viewBox="0 0 900 600">
+                                <rect width="900" height="600" fill="#007a5e"/>
+                                <rect width="600" height="600" fill="#ce1126"/>
+                                <rect width="300" height="600" fill="#fcd116"/>
+                                <polygon points="450,300 480,390 400,330 500,330 420,390" fill="#fcd116"/>
+                            </svg>
+                        </div>
+                        <p>Programme Officiel</p>
+                    </div>
                 </div>
-            `;
-            
-            // Update progress
-            updateProgress();
-        }
-        
-        // Update progress indicators
-        function updateProgress() {
-            // This is a simplified version - in a real app, you'd track actual progress
-            let totalSections = 0;
-            let completedSections = 0;
-            
-            chapters.forEach(chapter => {
-                totalSections += chapter.sections.length;
-                // For demo purposes, we'll consider random sections as completed
-                const completedForChapter = Math.floor(Math.random() * chapter.sections.length);
-                completedSections += completedForChapter;
-                
-                // Update chapter progress bar
-                const progressBar = document.getElementById(`progress-chapter-${chapter.id}`);
-                if (progressBar) {
-                    progressBar.style.width = `${(completedForChapter / chapter.sections.length) * 100}%`;
-                }
-            });
-            
-            // Update global progress
-            const globalProgress = document.getElementById('global-progress');
-            if (globalProgress) {
-                globalProgress.textContent = `${Math.round((completedSections / totalSections) * 100)}%`;
-            }
-        }
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96224d78a5fb03c2',t:'MTc1MzAxMjg3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+            </div>
+        </footer>
+    </div>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'962290a7d1fe6930',t:'MTc1MzAxNTYyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
